@@ -6,7 +6,7 @@ This guide explains how to set up parameters in Power BI for connecting to Datab
 
 Before you begin, ensure you have the following:
 
-- [Databricks account](https://databricks.com/) and access to a Databricks workspace
+- [Databricks account](https://databricks.com/) and access to a Databricks workspace and also have DBSQL warehouse set up 
 - [Power BI Desktop](https://powerbi.microsoft.com/desktop/) installed on your machine.
 
 ## Step-by-Step Instructions
@@ -15,9 +15,12 @@ Before you begin, ensure you have the following:
 
 1. Open Power BI Desktop.
 2. Go to "Home" > "Manage Parameters."
-3. Click on "New" to create a new parameter named `DatabricksURL`.
-4. Set the data type to "Text."
+3. Click on "New" to create a new parameter named `ServerHostname`.
+4. Set the data type to "Any."
 5. Enter the default value as the URL of your Databricks workspace.
+
+![Screenshot 2023-11-13 at 5 11 51 PM](https://github.com/yati1002/PowerBi-Demo/assets/127162962/913676ca-c8ff-431e-87aa-020673d47d97)
+
 
 ### 2. Databricks Token Parameter
 
