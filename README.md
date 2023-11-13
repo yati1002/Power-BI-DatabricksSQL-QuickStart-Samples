@@ -19,6 +19,8 @@ Before you begin, ensure you have the following:
 4. Set the data type to "Any."
 5. Enter the default value as the URL of your Databricks workspace.
 
+Repeat the abpve Process and create Parameter for HTTP path from SQL warehouse. You can get the HTTP Path from DBSQL Warehouse Connection Details. It should start with "/sql/1.0" .
+Your parameters should look like below : 
 ![Screenshot 2023-11-13 at 5 11 51 PM](https://github.com/yati1002/PowerBi-Demo/assets/127162962/913676ca-c8ff-431e-87aa-020673d47d97)
 
 
