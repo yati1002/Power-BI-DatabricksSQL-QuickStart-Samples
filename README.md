@@ -45,7 +45,7 @@ Your parameters should look like below :
 
 ## Power Bi Template 
 
-To Automate the process and ease the deployment process save the report as Power Bi Template . A sample Power BI template is already present in PBI Template folder pointing to Customer Table in Sample Catalog and default Customer Table is created   . When you open the template enter ServerHostname and HTTP Path value based on your Databricks ServerHostName and HTTP Path for DBSQL . You can then add your respective catalog and tables and create report
+To Automate the process and ease the deployment process save the report as Power Bi Template . A sample Power BI template(PBI-DB-Connection.pbit)  is already present in PBI Template folder pointing to Customer Table in Sample Catalog.   . When you open the template enter ServerHostname and HTTP Path value based on your Databricks ServerHostName and HTTP Path for DBSQL ,  a default Customer Table poiniting to  Customer Table in Sample Catalog is created . You can then add your respective catalog and tables and create report
 ![Screenshot 2023-11-13 at 7 16 53 PM](https://github.com/yati1002/PowerBi-Demo/assets/127162962/f4f0d804-6e6e-402d-84a3-874443ea36be)
 
 
