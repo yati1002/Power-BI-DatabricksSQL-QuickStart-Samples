@@ -47,7 +47,7 @@ Your parameters should look like below in Power BI  :
 
 ## Power BI Template 
 
-To automate the process and ease the deployment process save the report as Power BI template . A sample Power BI template(PBI-DB-Connection.pbit)  is already present in PBI template folder pointing to customer table in sample catalog. When you open the template enter **ServerHostname** and **HTTP Path** value based on your **ServerHostName** and **HTTP Path** from DBSQL warehouse, a default report poiniting to customer table in sample catalog is created . You can then add your respective catalog and tables and create report
+To automate the process and ease the deployment process save the report as Power BI template . A sample Power BI template(PBI-DB-Connection.pbit)  is already present in [PBI template](https://github.com/yati1002/Power-BI-DatabricksSQL-QuickStart-Samples/tree/main/01%20.Connecting%20Power%20BI%20to%20Databricks%20SQL%20using%20Parameters/Sample_Template_File) folder pointing to customer table in sample catalog. When you open the template enter **ServerHostname** and **HTTP Path** value based on your **ServerHostName** and **HTTP Path** from DBSQL warehouse, a default report poiniting to customer table in sample catalog is created . You can then add your respective catalog and tables and create report
 ![Screenshot 2023-11-13 at 7 16 53 PM](https://github.com/yati1002/PowerBi-Demo/assets/127162962/f4f0d804-6e6e-402d-84a3-874443ea36be)
 
 ![Screenshot 2023-11-13 at 7 21 20 PM](https://github.com/yati1002/PowerBi-Demo/assets/127162962/92d799e5-af52-4aa9-8a6d-e939373ace2e)
