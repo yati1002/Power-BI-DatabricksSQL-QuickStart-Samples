@@ -20,7 +20,7 @@ Before you begin, ensure you have the following:
 4. Set the data type to "**Any"**.
 5. Enter the default value as the Server hostname captured from the DBSQL Warehouse connection detail .
 
-Repeat the above process and create parameter for HTTP path from SQL warehouse. You can get the HTTP Path from DBSQL Warehouse connection details. Below is a sample screen shot of DBSQL connection showing the HTTP path and Server hostname :
+Repeat the above process and create parameter for HTTP path from SQL warehouse. You can get the HTTP path from DBSQL Warehouse connection details. Below is a sample screen shot of DBSQL connection showing the HTTP path and Server hostname :
 <img width="512" alt="Screenshot 2023-12-09 at 2 32 41 PM" src="https://github.com/yati1002/Power-BI-DatabricksSQL-QuickStart-Samples/assets/127162962/e33dbf3f-1071-4836-967f-a1aafb2050db">
 
 Your parameters should look like below in Power BI  : 
@@ -46,7 +46,7 @@ Your parameters should look like below in Power BI  :
 
 ## Power BI Template 
 
-To automate the process and ease the deployment process save the report as Power BI template . A sample Power BI template(PBI-DB-Connection.pbit)  is already present in PBI template folder pointing to Customer Table in Sample Catalog.   . When you open the template enter ServerHostname and HTTP Path value based on your Databricks ServerHostName and HTTP Path for DBSQL ,  a default Customer Table poiniting to  Customer Table in Sample Catalog is created . You can then add your respective catalog and tables and create report
+To automate the process and ease the deployment process save the report as Power BI template . A sample Power BI template(PBI-DB-Connection.pbit)  is already present in PBI template folder pointing to customer table in sample catalog. When you open the template enter **ServerHostname** and **HTTP Path** value based on your **ServerHostName** and **HTTP Path** from DBSQL warehouse, a default report poiniting to customer table in sample catalog is created . You can then add your respective catalog and tables and create report
 ![Screenshot 2023-11-13 at 7 16 53 PM](https://github.com/yati1002/PowerBi-Demo/assets/127162962/f4f0d804-6e6e-402d-84a3-874443ea36be)
 
 ![Screenshot 2023-11-13 at 7 21 20 PM](https://github.com/yati1002/PowerBi-Demo/assets/127162962/92d799e5-af52-4aa9-8a6d-e939373ace2e)
