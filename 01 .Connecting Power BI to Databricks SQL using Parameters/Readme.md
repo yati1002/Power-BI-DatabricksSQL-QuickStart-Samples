@@ -1,6 +1,7 @@
-# Connecting Databricks to Power BI using Parameters
+# Connecting Power BI to Databricks SQL Using Parameters
 
-This guide explains how to set up parameters in Power BI for connecting to Databricks. Utilizing parameters allows for flexibility when connecting to different Databricks workspaces or updating authentication tokens. Follow the steps below to configure the parameters. Also guide shows how to create a Power Bi Template to help automate connecting DBSQL to Power BI 
+## Introduction
+There are instances when data analyts have to connect to different Databricks SQL environment or a different Databricks SQL instances. This can be a lot of manual work and can often lead to errors. This guide explains how to we can automate the process of connecting Databricks SQL by using parameters in Power BI . Utilizing parameters allows for flexibility when connecting to different Databricks workspaces or connecting to a different Databricks SQL instance. To create a parametrized report you can follow the steps mentioned in the [Step by Step Instructions](#step-by-step-instructions) section 
 
 ## Prerequisites
 
@@ -9,7 +10,7 @@ Before you begin, ensure you have the following:
 - [Databricks account](https://databricks.com/) and access to a Databricks workspace and also have DBSQL warehouse set up 
 - [Power BI Desktop](https://powerbi.microsoft.com/desktop/) installed on your machine.
 
-## Step-by-Step Instructions
+# Step by Step Instructions
 
 ### 1. Databricks Connection Parameter
 
