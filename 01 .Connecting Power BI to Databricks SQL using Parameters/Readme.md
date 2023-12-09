@@ -35,14 +35,15 @@ Your parameters should look like below in Power BI  :
    - Server Hostname: Enter the Server hostname value copied from DBSQL warehouse Connection detail tab.
    - HTTP Path: Enter the HTTP path value copied from DBSQL warehouse Connection detail tab.
 
-![Screenshot 2023-11-13 at 6 29 48 PM](https://github.com/yati1002/PowerBi-Demo/assets/127162962/260f1d00-fe69-49d6-80f9-82748db95061)
+<img width="713" alt="Screenshot 2023-12-09 at 3 40 46 PM" src="https://github.com/yati1002/Power-BI-DatabricksSQL-QuickStart-Samples/assets/127162962/ab02b474-6f9a-4d45-81eb-31419aa3d411">
 
 
 ### 3. Add parameters to M Query
 1. Go to **"Transform Data"** > **Open Query Editor** > Under Query Setting Click on **Source**.
 2. In the M Query under Databricks.Catalog replace HostName and HTTP Path with the parameters created in Step 1:
    
-![Screenshot 2023-11-13 at 7 09 20 PM](https://github.com/yati1002/PowerBi-Demo/assets/127162962/76de44a4-3139-4faa-b4ec-1332b6835a38)
+<img width="796" alt="Screenshot 2023-12-09 at 3 52 34 PM" src="https://github.com/yati1002/Power-BI-DatabricksSQL-QuickStart-Samples/assets/127162962/20151bdd-81d6-45c0-b3ff-57fa941fd665">
+
 
 ## Power BI Template 
 
