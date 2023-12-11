@@ -1,7 +1,7 @@
 # Connecting Power BI to Databricks SQL Using Parameters
 
 ## Introduction
-There are instances when data analysts have to connect to different Databricks SQL environments or a different Databricks SQL instances. This can be a lot of manual work and can often lead to errors. This guide explains how we can simplify the process of connecting to different Databricks SQL Warehouses by using parameters in Power BI. Utilizing parameters allows for flexibility when connecting to different Databricks workspaces or connecting to a different Databricks SQL warehouses. To create a parametrized report you can follow the steps mentioned in the [Step by Step Instructions](#step-by-step-instructions) section 
+There are instances when data analysts have to connect to different Databricks SQL environments or a different Databricks SQL instances. This can be a lot of manual work and can often lead to errors. This guide explains how we can simplify the process of connecting to different Databricks SQL Warehouses by using parameters in Power BI. Utilizing parameters allows for flexibility when connecting to different Databricks workspaces or connecting to a different Databricks SQL warehouses. To create a parametrized report you can follow the steps mentioned in the [Step by Step Instructions](#step-by-step-instructions) section.
 
 ## Pre-requisites
 
