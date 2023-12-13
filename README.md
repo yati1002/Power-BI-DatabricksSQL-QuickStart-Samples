@@ -1,5 +1,3 @@
-Test
-
 # Power BI - Databricks SQL QuickStart Samples
 
 ## Introduction
