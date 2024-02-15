@@ -10,7 +10,7 @@ Before you begin, ensure you have the following:
 - [Databricks account](https://databricks.com/) and access to a Databricks workspace and also have DBSQL warehouse set up 
 - [Power BI Desktop](https://powerbi.microsoft.com/desktop/) installed on your machine.
 
-# Step by Step Instructions
+## Step by Step Instructions
 
 ### 1. Databricks Connection Parameter
 
@@ -21,10 +21,11 @@ Before you begin, ensure you have the following:
 5. Enter the default value as the **Server hostname** captured from the Databricks SQL Warehouse connection detail .
 
 Repeat the above process and create parameter for HTTP path from SQL warehouse. You can get the HTTP path from DBSQL Warehouse connection details. Below is a sample screenshot of Databricks SQL Warehouse connection details showing the **Server hostname** and **HTTP path**:
-![Databricks SQL Warehouse connection details](./images/01.png)
+<img src="./images/01.png" alt="Databricks SQL Warehouse connection details" width="50%" height="50%">
 
-Your parameters should look like below in Power BI: 
-![Power BI parameters](./images/02.png)
+Your parameters should look like below in Power BI:
+
+<img src="./images/02.png" alt="Power BI parameters" width="50%" height="50%">s
 
 ### 2. Data Source Connection
 
