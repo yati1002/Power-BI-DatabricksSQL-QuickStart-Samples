@@ -21,15 +21,14 @@ Before you begin, ensure you have the following:
 4. Enter the following values:
    - **Server Hostname**: Enter the Server hostname value from Databricks SQL Warehouse connection details tab.
    - **HTTP Path**: Enter the HTTP path value  from Databricks SQL Warehouse connection details tab.
+
 Below is the sample screenshot of how the data source would look like
 
-![Data Source Connection](./images/03.png)
+![Data Source Connection](./ScreenShots/03.png)
 
 
-### 3. Add parameters to M Query
-1. Go to **"Transform Data"** > **Open Query Editor** > Under Query Setting Click on **Source**.
-2. In the M Query under **Databricks.Catalog** replace hardcoded Hostname and HTTP Path values with the parameter names created in Step 1:
-![Parameters in M Query](./images/04.png)
+## Best Practice 
+It is always a good practice to parameterize your connection string. This really helps ease out the development expeience as you can dynamically connect to any DBSQL warehouse. For details on how to paramterize your connection string you can refer to ![this](/01.%20Connecting%20Power%20BI%20to%20Databricks%20SQL%20using%20Parameters) article.
 
 
 ## Power BI Template 
