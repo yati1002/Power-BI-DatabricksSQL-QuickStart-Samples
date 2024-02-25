@@ -31,7 +31,7 @@ Below is the sample screenshot of how the data source would look like
 It is always a good practice to parameterize your connection string. This really helps ease out the development expeience as you can dynamically connect to any DBSQL warehouse. For details on how to paramterize your connection string you can refer to [this](/01.%20Connecting%20Power%20BI%20to%20Databricks%20SQL%20using%20Parameters) article.
 
 ## 2. Showcasing Perfromance Improvement with Aggregate Table
-In the next section we will showcase how aggregate table help improve performance of your Power BI report. We will do this by analyzing query performance of two similar reports one using Direct Query  and in the other we will create same report using Aggregate Table.
+In the next section we will showcase how aggregate table help improve performance of your Power BI report. We will do this by analyzing query performance of two similar reports one using Direct Query  and in the other we will create same report using Aggregate Table. For our testing scenario we are using a "**Small**" Pro cluster.
 ### 2.1 Data Model Creation
 To make performance testing easy to follow we will use "Samples" catalog and "TPCH" schema and ingest below tables. We will also create a empty aggregate table by running the DDL script against "HMS" catalog and "Default" schema as we cannot write into "Samples" catalog.
 
@@ -54,7 +54,16 @@ Below is the screen shot of how our star schema data model looks like
 
 ![Data Source Connection](./ScreenShots/star_schema.png)
 
-For details on different storage modes refer to [this](/02.%20DirectQuery-Dual-Import) article.
+For details on different storage modes in Power BI  refer to [this](/02.%20DirectQuery-Dual-Import) article.
+
+### 2.2 Direct Query Report 
+In order to get best results it and avoid caching it's better to run the test against warm up warehouse by running few queries against warehouse. After warehouse is warmed up follow below steps :
+1. Click **Optimize**>**Performance Analyzer** in Power BI desktop.
+2. In the Performance Analyzer tab click "**Start Recording**"
+3. Create a table visual with columns : Nation Name (From Nation Table), Sum of discount,Sum of quantity and Earliest order ShipDate (From LineItem Table).
+4. Perfromance Analyzer tab will have a Table heading and a DAX query . Click on **Copy Query** . The DAX query should look similar to [this](/Scripts/Direct_Query1.dax) script
+
+
 
 
 ## Power BI Template 
