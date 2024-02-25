@@ -33,14 +33,24 @@ It is always a good practice to parameterize your connection string. This really
 ## 2. Showcasing Perfromance Improvement with Aggregate Table
 In the next section we will showcase how aggregate table help improve performance of your Power BI report. We will do this by analyzing query performance of two similar reports one using Direct Query  and in the other we will create same report using Aggregate Table.
 ### 2.1 Data Model Creation
-To make performance testing easy to follow we will use "Samples" catalog and ingest below tables:
+To make performance testing easy to follow we will use "Samples" catalog and "TPCH" schema and ingest below tables. We will also create a empty aggregate table by running the DDL script against "HMS" catalog and "Default" schema as we cannot write into "Samples" catalog.
 
-1.Customer:Storage mode as Dual. Dimension table containing customer information and connected to nation dimension table using nationkey
-2.Nation:Storage mode as Dual. Dimension table containing nation name and details
-3.Orders:Storage mode as Direct Query. Fact table containing orders information and connected to customer dimension using customerkey
-4.LineItem:Storage mode as Direct Query. Fact table containing details like order shipment date , discount price etc. 
-5.Orders_Agg:Storage mode as Direct Query.Copy of orders table and used for aggregate table report
-6.LineItem_Agg:Storage mode as Direct Query.Copy of lineitem table and used for aggregate table report
+1.Customer:Storage mode as Dual. Dimension table containing customer information and connected to nation dimension table using nationkey.
+
+2.Nation: Storage mode as Dual. Dimension table containing nation name and details.
+
+3.Orders: Storage mode as Direct Query. Fact table containing orders information and connected to customer dimension using customerkey.
+
+4.LineItem: Storage mode as Direct Query. Fact table containing details like order shipment date , discount price etc. 
+
+5.Orders_Agg: Storage mode as Direct Query.Copy of orders table and used for aggregate table report.
+
+6.LineItem_Agg: Storage mode as Direct Query.Copy of lineitem table and used for aggregate table report.
+
+7.Aggregate_Tbl: Storage mode as Direct Query.Run
+[Data Source Connection](./Scripts/Aggregate_tbl_create) DDL script to create table in HMS. This table will be used to calculate aggregations we need for our aggegate table report. 
+
+
 
 ## Power BI Template 
 
