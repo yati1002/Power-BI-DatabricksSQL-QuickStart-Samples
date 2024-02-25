@@ -28,7 +28,7 @@ Below is the sample screenshot of how the data source would look like
 
 
 ## Best Practice 
-It is always a good practice to parameterize your connection string. This really helps ease out the development expeience as you can dynamically connect to any DBSQL warehouse. For details on how to paramterize your connection string you can refer to ![this](/01.%20Connecting%20Power%20BI%20to%20Databricks%20SQL%20using%20Parameters) article.
+It is always a good practice to parameterize your connection string. This really helps ease out the development expeience as you can dynamically connect to any DBSQL warehouse. For details on how to paramterize your connection string you can refer to [this](/01.%20Connecting%20Power%20BI%20to%20Databricks%20SQL%20using%20Parameters) article.
 
 ## 2. Showcasing Perfromance Improvement with Aggregate Table
 In the next section we will showcase how aggregate table help improve performance of your Power BI report. We will do this by analyzing query performance of two similar reports one using Direct Query  and in the other we will create same report using Aggregate Table.
