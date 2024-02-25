@@ -50,6 +50,11 @@ To make performance testing easy to follow we will use "Samples" catalog and "TP
 7.Aggregate_Tbl: Storage mode as Direct Query.Run
 [Data Source Connection](./Scripts/Aggregate_tbl_create) DDL script to create table in HMS. This table will be used to calculate aggregations we need for our aggegate table report. 
 
+Below is the screen shot of how our star schema data model looks like
+
+![Data Source Connection](./ScreenShots/star_schema.png)
+
+For details on different storage modes refer to [this](/02.%20DirectQuery-Dual-Import) article.
 
 
 ## Power BI Template 
