@@ -1,7 +1,7 @@
 # Improving Performance of Power BI Reports using Aggregation Table
 
 ## Introduction
-[Aggregation tables](https://learn.microsoft.com/en-us/power-bi/transform-model/aggregations-advanced) are the unsung heroes of Power BI, quietly optimizing performance and efficiency behind the scenes. In the dynamic world of data analysis, where speed and accuracy are paramount, these specialized tables play a crucial role in improving performance for large Power BI dataset in DirectQuery storage mode. This guide explains how we can set up Aggregation tables and also showcases how Aggregation tables help improve perfromance over Power BI dataset. You can follow the steps mentioned in the [Step by Step Instructions](#step-by-step-instructions) section.
+[Aggregation tables](https://learn.microsoft.com/en-us/power-bi/transform-model/aggregations-advanced) are the unsung heroes of Power BI, quietly optimizing performance and efficiency behind the scenes. In the dynamic world of data analysis, where speed and accuracy are paramount, these specialized tables play a crucial role in improving performance for large Power BI dataset in DirectQuery storage mode. This guide explains how we can set up Aggregation tables and also showcases how Aggregation Tables help improve perfromance over Power BI dataset. You can follow the steps mentioned in the [Step by Step Instructions](#step-by-step-instructions) section.
 
 ## Pre-requisites
 
@@ -30,6 +30,8 @@ Below is the sample screenshot of how the data source would look like
 ## Best Practice 
 It is always a good practice to parameterize your connection string. This really helps ease out the development expeience as you can dynamically connect to any DBSQL warehouse. For details on how to paramterize your connection string you can refer to ![this](/01.%20Connecting%20Power%20BI%20to%20Databricks%20SQL%20using%20Parameters) article.
 
+### 2. Showcasing Perfromance Improvement with Aggregate Table
+In the next section we will showcase how aggregate table help improve performance of your Power BI report. We will do this by analyzing query performance of two similar reports one using Direct Query  and in the other we will create same report using Aggregate Table.
 
 ## Power BI Template 
 
