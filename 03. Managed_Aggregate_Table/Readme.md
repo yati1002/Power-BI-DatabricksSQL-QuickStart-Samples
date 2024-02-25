@@ -63,6 +63,19 @@ In order to get best results it and avoid caching it's better to run the test ag
 3. Create a table visual with columns : Nation Name (From Nation Table), Sum of discount,Sum of quantity and Earliest order ShipDate (From LineItem Table).
 4. Perfromance Analyzer tab will have a Table heading and a DAX query . Click on **Copy Query** . The DAX query should look similar to [this](/Scripts/Direct_Query1.dax) script
 
+Below is the screen shot of Direct Query Report : 
+![Data Source Connection](./ScreenShots/Direct_query_Report.png)
+
+#### 2.2.1 Query Analysis : DAX Studio and DBSQl 
+To compare the performance gains between Direct Query and Aggregate Table it is important to compare the query execution times .
+1. Open **DAX Studio** and click Server Timings
+2. Open the [Direct_Query1.dax](./Scripts/Direct_Query1.dax) query stored under Scripts folder .
+3. Click Run
+
+As shown in screenshot below the query takes **5.7 sec** ![Data Source Connection](./ScreenShots/Direct_uery_DAX_Studio.png)
+You can also find the query execution time by looking at query history in DBSQL . As shown below the query took 5 sec and read **~38M** rows . 
+![Data Source Connection](./ScreenShots/Direct_Query_Execution_DBSQL.png)
+### 2.3 Direct Query Report 
 
 
 
