@@ -13,7 +13,7 @@ Before you begin, ensure you have the following:
 
 ## Step by Step Instructions
 
-### 1. Databricks Data Source Connection 
+## 1. Databricks Data Source Connection 
 
 1. Open Power BI Desktop
 2. Go to **"Home"**> **"Get Data"** > **"More..."**
@@ -30,8 +30,17 @@ Below is the sample screenshot of how the data source would look like
 ## Best Practice 
 It is always a good practice to parameterize your connection string. This really helps ease out the development expeience as you can dynamically connect to any DBSQL warehouse. For details on how to paramterize your connection string you can refer to ![this](/01.%20Connecting%20Power%20BI%20to%20Databricks%20SQL%20using%20Parameters) article.
 
-### 2. Showcasing Perfromance Improvement with Aggregate Table
+## 2. Showcasing Perfromance Improvement with Aggregate Table
 In the next section we will showcase how aggregate table help improve performance of your Power BI report. We will do this by analyzing query performance of two similar reports one using Direct Query  and in the other we will create same report using Aggregate Table.
+### 2.1 Data Model Creation
+To make performance testing easy to follow we will use "Samples" catalog and ingest below tables:
+
+1.Customer:Storage mode as Dual. Dimension table containing customer information and connected to nation dimension table using nationkey
+2.Nation:Storage mode as Dual. Dimension table containing nation name and details
+3.Orders:Storage mode as Direct Query. Fact table containing orders information and connected to customer dimension using customerkey
+4.LineItem:Storage mode as Direct Query. Fact table containing details like order shipment date , discount price etc. 
+5.Orders_Agg:Storage mode as Direct Query.Copy of orders table and used for aggregate table report
+6.LineItem_Agg:Storage mode as Direct Query.Copy of lineitem table and used for aggregate table report
 
 ## Power BI Template 
 
