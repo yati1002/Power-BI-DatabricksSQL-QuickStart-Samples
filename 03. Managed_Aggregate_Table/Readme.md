@@ -1,5 +1,5 @@
 # Improving Performance of Power BI Reports using Aggregation Table
-
+ 
 ## Introduction
 [Aggregation tables](https://learn.microsoft.com/en-us/power-bi/transform-model/aggregations-advanced) are the unsung heroes of Power BI, quietly optimizing performance and efficiency behind the scenes. In the dynamic world of data analysis, where speed and accuracy are paramount, these specialized tables play a crucial role in improving performance for large Power BI dataset in DirectQuery storage mode. This guide explains how we can set up Aggregation tables and also showcases how Aggregation Tables help improve perfromance over Power BI dataset. You can follow the steps mentioned in the [Step by Step Instructions](#step-by-step-instructions) section.
 
