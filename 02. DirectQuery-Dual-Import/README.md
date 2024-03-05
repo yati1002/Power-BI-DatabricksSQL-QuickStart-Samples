@@ -63,47 +63,30 @@ Below is the screen shot of how our star schema data model and the report with 2
 In order to get best results it and avoid caching it's better to run the test against warm up warehouse by running few queries against warehouse. After warehouse is warmed up follow below steps :
 1. Click **Optimize**>**Performance Analyzer** in Power BI desktop.
 2. In the Performance Analyzer tab click "**Start Recording**".
-3. Create a table visual with columns : Nation Name (From **Nation** table), Sum of discount,Sum of quantity and Earliest order ShipDate (From **LineItem** table).
-4. Perfromance Analyzer tab will have a Table heading and a DAX query . Click on **Copy Query** . The DAX query should look similar to [this](/Scripts/Direct_Query1.dax) script.
+3. Create a slicer visual with columns :RegionName (From **region_DQ** table), Sum of Total_Price(From **orders_DQ** table).
+   
+#### 2.2.1 Query Analysis : Performance Analyzer and DBSQl 
 
-Below is the screen shot of Direct Query Report : 
-![Data Source Connection](./ScreenShots/Direct_query_Report.png)
+As shown in screenshot of the Performance Analyzer below the Direct Query takes **953 ms** for Slicer and **946 ms** for aggregate function in card visual  ![Data Source Connection](./images/DirectQuery/PerformanceAnalyzer.png)
 
-#### 2.2.1 Query Analysis : DAX Studio and DBSQl 
-To compare the performance gains between Direct Query and Aggregate Table it is important to compare the query execution times .
-1. Open **DAX Studio** and click Server Timings.
-2. Open the [Direct_Query1.dax](./Scripts/Direct_Query1.dax) query stored under Scripts folder.
-3. Click Run.
+You can also find the query execution time by looking at query history in DBSQL . Since both the dimension(Filter visual) and the fact (Card visual) are using Direct Query there are 2 queries fired in the backend also the I/O stats shows 1 row getting read : 
+![Data Source Connection](./images/DirectQuery/QueryHistory.png)
 
-As shown in screenshot below the query takes **5.7 sec** ![Data Source Connection](./ScreenShots/Direct_uery_DAX_Studio.png)
-You can also find the query execution time by looking at query history in DBSQL . As shown below the query took 5 sec and read **~38M** rows. 
-![Data Source Connection](./ScreenShots/Direct_Query_Execution_DBSQL.png)
-### 2.3 Aggregate Table Report 
-#### 2.3.1 Manage Aggregations 
-The first step is to manage in-memory aggregations within Power BI in Aggregate_Tbl created in Step 7 of section 2.1. This helps in query performance as aggregations are pre computed without needing to read the fact tables. In order to manage aggregations within PowerBI follow below steps :
+![Data Source Connection](./images/DirectQuery/QueryStats.png)
 
-1.Open **ModelView** in Power BI desktop.
-
-2.Right Click "**Aggegate_Tbl**">"**Manage aggregations**.
-
-3.Add the summarization,detail column and detail table as shown in below screenshot
-![Data Source Connection](./ScreenShots/ManageAggregations.png)
-#### 2.3.2 Create Aggregate Table visual report
+### 2.2 Import Query Report 
 1. Click **Optimize**>**Performance Analyzer** in Power BI desktop.
 2. In the Performance Analyzer tab click "**Start Recording**".
-3. Create a table visual with columns : Nation Name (From **Nation** table), Sum of discount,Sum of quantity and Earliest order ShipDate (From **LineItem_Agg** table).
-4. Perfromance Analyzer tab will have a Table heading and a DAX query . Click on **Copy Query** . The DAX query should look similar to [this](./Scripts/Manged_agg_Table_1.dax) script.
-Below is the screen shot of Aggregate Table  Report : 
-![Data Source Connection](./ScreenShots/Direct_query_Report.png)
-#### 2.3.3 Query Analysis : DAX Studio and DBSQl 
-1. Open **DAX Studio** and click Server Timings.
-2. Open the [Manged_agg_Table_1.dax](./Scripts/Manged_agg_Table_1.dax) query stored under Scripts folder.
-3. Click Run.
-As shown in screenshot below the query takes **2.8 sec** ![Data Source Connection](./ScreenShots/Agg_table_DAX_Studio.png) Also as shown in the screenshot the first row under "**RewriteAttempted**" shows "**MatchFound**" i.e. it is able to find the aggregate table for this query . Hence during the query execution as shown in the screenshot the values are fetched from "**Aggregate_tbl**" instead of **LineItem_Agg** fact table.
-You can also find the query execution time by looking at query history in DBSQL . As shown below the query took 2 sec and read **~7M** rows (instead of ~**38M** rows). 
-![Data Source Connection](./ScreenShots/Agg_table_Execution_DBSQL.png)
+3. Create a slicer visual with columns :RegionName (From **region_Import** table), Sum of Total_Price(From **orders_DQ** table).
+   
+#### 2.2.1 Query Analysis : Performance Analyzer and DBSQl 
 
-As we can see Aggregate tables give performance benefit of ~**50%** over DirectQuery by doing in-memory aggregation and reading **5.5X** less data from Aggregate_Tbl as compared to Direct query which reads directly from fact table everytime.
+As shown in screenshot of the Performance Analyzer below the Import Query takes only **93 ms** for Slicer as the dimension is using Import method but it takes  **2529 ms** for aggregate function in card visual  ![Data Source Connection](./images/Import/PerformanceAnalyzer.png)
+
+You can also find the query execution time by looking at query history in DBSQL . Since the dimension(Filter visual) is using import method and the fact (Card visual) is using Direct Query there is only 1 query fired in the backend. Also the I/O stats shows 1 row getting read : 
+![Data Source Connection](./images/DirectQuery/QueryHistory.png)
+
+![Data Source Connection](./images/DirectQuery/QueryStats.png)
 
 ## Power BI Template 
 
