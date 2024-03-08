@@ -63,13 +63,13 @@ Below is the screen shot of how our star schema data model and the report with 2
 In order to get best results it and avoid caching it's better to run the test against warm up warehouse by running few queries against warehouse. After warehouse is warmed up follow below steps :
 1. Click **Optimize**>**Performance Analyzer** in Power BI desktop.
 2. In the Performance Analyzer tab click "**Start Recording**".
-3. Create a slicer visual with columns :RegionName (From **region_DQ** table), Sum of Total_Price(From **orders_DQ** table).
+3. Create a slicer visual with columns :RegionName (From **region_DQ** table) and Card visual with  Sum of Total_Price(From **orders_DQ** table).
    
 #### 2.2.1 Query Analysis : Performance Analyzer and DBSQl 
 
 As shown in screenshot of the Performance Analyzer below the Direct Query takes **953 ms** for Slicer and **946 ms** for aggregate function in card visual  ![Data Source Connection](./images/DirectQuery/PerformanceAnalyzer.png)
 
-You can also find the query execution time by looking at query history in DBSQL . Since both the dimension(Filter visual) and the fact (Card visual) are using Direct Query there are 2 queries fired in the backend also the I/O stats shows 1 row getting read : 
+You can also find the query execution time by looking at query history in DBSQL . Since both the dimension(Filter visual) and the fact (Card visual) are using Direct Query there are 2 queries fired in the backend also the I/O stats shows 1 row getting read based on the slicer value selected  : 
 ![Data Source Connection](./images/DirectQuery/QueryHistory.png)
 
 ![Data Source Connection](./images/DirectQuery/QueryStats.png)
@@ -77,17 +77,31 @@ You can also find the query execution time by looking at query history in DBSQL 
 ### 2.2 Import Query Report 
 1. Click **Optimize**>**Performance Analyzer** in Power BI desktop.
 2. In the Performance Analyzer tab click "**Start Recording**".
-3. Create a slicer visual with columns :RegionName (From **region_Import** table), Sum of Total_Price(From **orders_DQ** table).
+3. Create a slicer visual with columns :RegionName (From **region_Import** table) and card visual with Sum of Total_Price(From **orders_Import** table).
    
 #### 2.2.1 Query Analysis : Performance Analyzer and DBSQl 
 
 As shown in screenshot of the Performance Analyzer below the Import Query takes only **93 ms** for Slicer as the dimension is using Import method but it takes  **2529 ms** for aggregate function in card visual  ![Data Source Connection](./images/Import/PerformanceAnalyzer.png)
 
-You can also find the query execution time by looking at query history in DBSQL . Since the dimension(Filter visual) is using import method and the fact (Card visual) is using Direct Query there is only 1 query fired in the backend. Also the I/O stats shows 1 row getting read : 
-![Data Source Connection](./images/DirectQuery/QueryHistory.png)
+You can also find the query execution time by looking at query history in DBSQL . Since the dimension(Filter visual) is using import method there is no query fired in DBSQL . However the fact (Card visual) is using Direct Query , hence there is only 1 query fired in the backend.  
+![Data Source Connection](./images/Import/QueryHistory.png)
+As I/O stats shows,in this method **~500k** rows are read and returned . The data is then filtered from Power BI.This is the reason Direct Query method is faster than Import method  : 
+![Data Source Connection](./images/Import/QueryStats.png)
 
-![Data Source Connection](./images/DirectQuery/QueryStats.png)
+### 2.3 Dual Query Report 
+1. Click **Optimize**>**Performance Analyzer** in Power BI desktop.
+2. In the Performance Analyzer tab click "**Start Recording**".
+3. Create a slicer visual with columns :RegionName (From **region_Dual** table) and card visual with Sum of Total_Price(From **orders_Dual** table).
+   
+#### 2.3.1 Query Analysis : Performance Analyzer and DBSQl 
+
+As shown in screenshot of the Performance Analyzer below the Dual Query takes only **56 ms** for Slicer and takes  **805 ms** for aggregate function in card visual  ![Data Source Connection](./images/Dual/PerformanceAnalyzer.png)
+
+You can also find the query execution time by looking at query history in DBSQL.As Dual Query uses best of Import and Direct Query mode , there is no query fired in DBSQL for dimension(Filter visual) but the fact (Card visual) has it's query fired in backend.  
+![Data Source Connection](./images/Dual/QueryHistory.png)
+As I/O stats shows,in this method only **1** row is read and returned becasue the filter from slicer visual is passed to the query of Card visual . As Dual Query mode uses best features of Import and Direct mode it is faster than both Direct Query and Import.  
+![Data Source Connection](./images/Dual/QueryStats.png)
 
 ## Power BI Template 
 
-To automate the process and ease the deployment process save the report as Power BI template. A sample Power BI template [Managed_Aggregate_Template.pbit](./PBIX/Managed_Aggregate_Template.pbit) is already present in the current folder pointing to  **samples** catalog and **TPCH** tables.Please run [Aggregate_tbl_create](./Scripts/Aggregate_tbl_create) DDL script to create table in HMS before running the PowerBI template. Once done when you open the template enter respective **ServerHostname** and **HTTP Path** values of your Databricks SQL warehouse. The template will create a warmup report (to warm up warehouse),DirectQuery report using Nation and LineItem table and Aggregate_Table report using Nation and LineItem_Agg table.You can then follow secion 2.2 and 2.3 above to do performance analysis between both the reports. 
+To automate the process and ease the deployment process save the report as Power BI template. A sample Power BI template [Managed_Aggregate_Template.pbit](./DirectQuery-Dual-Import.pbit) is already present in the current folder pointing to  **samples** catalog and **TPCH** tables. When you open the template enter respective **ServerHostname** and **HTTP Path** values of your Databricks SQL warehouse. The template will create three different reports using Direct Query , Import Query and Dual Query.You can then follow secion 2.2 and 2.3 above to do performance analysis between the reports. 
