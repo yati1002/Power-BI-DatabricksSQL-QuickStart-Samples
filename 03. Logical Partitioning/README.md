@@ -1,6 +1,6 @@
 # Logical Partitioning
 ## Introduction
-[Logical Partitioning][(https://learn.microsoft.com/en-us/analysis-services/tabular-models/create-and-manage-tabular-model-partitions?view=asallproducts-allversions)] are really important aspect of Power BI. Whether you're a seasoned Power BI user or just getting started, understanding storage modes is crucial for maximizing performance and efficiently managing your data. This Read Me file serves as your roadmap, providing insights into the various storage modes offered by Power BI . In this report we will showcase and compare performance between Direct Query , Import and Dual storage mode and show how dual helps with performance of the report. You can follow the steps mentioned in the [Step by Step Instructions](#step-by-step-instructions) section.
+[Logical Partitioning](https://learn.microsoft.com/en-us/analysis-services/tabular-models/create-and-manage-tabular-model-partitions?view=asallproducts-allversions) are important feature of Power BI which help in improving the refresh time of Power Bi datasets.. In this report we will showcase and compare performance between Direct Query , Import and Dual storage mode and show how dual helps with performance of the report. You can follow the steps mentioned in the [Step by Step Instructions](#step-by-step-instructions) section.
 
 ## Pre-requisites
 
