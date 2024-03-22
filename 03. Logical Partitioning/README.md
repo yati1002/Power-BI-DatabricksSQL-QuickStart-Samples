@@ -1,6 +1,6 @@
 # Logical Partitioning
 ## Introduction
-[Logical Partitioning](https://learn.microsoft.com/en-us/analysis-services/tabular-models/create-and-manage-tabular-model-partitions?view=asallproducts-allversions) are important feature of Power BI which help in improving the refresh time of Power Bi datasets.. In this report we will showcase and compare performance between Direct Query , Import and Dual storage mode and show how dual helps with performance of the report. You can follow the steps mentioned in the [Step by Step Instructions](#step-by-step-instructions) section.
+[Logical Partitioning](https://learn.microsoft.com/en-us/analysis-services/tabular-models/create-and-manage-tabular-model-partitions?view=asallproducts-allversions) is important feature of Power BI which help in improving the refresh time of Power Bi datasets. In this report we will showcase and compare how Logical Partitioning will allow a faster & reliable refresh of new data simply because with partitions you can divide the table data into logical parts that can be managed & refreshed individually. You can follow the steps mentioned in the [Step by Step Instructions](#step-by-step-instructions) section.
 
 ## Pre-requisites
 
@@ -8,6 +8,7 @@ Before you begin, ensure you have the following:
 
 - [Databricks account](https://databricks.com/) and access to a Databricks workspace and also have DBSQL warehouse set up 
 - [Power BI Desktop](https://powerbi.microsoft.com/desktop/) installed on your machine.
+- Logical Partition only works with Power Bi Premium subscription
 
 
 ## Step by Step Instructions
