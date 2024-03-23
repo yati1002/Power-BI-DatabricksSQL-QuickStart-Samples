@@ -21,6 +21,7 @@ Before you begin, ensure you have the following:
 5. Enter the default value as the **Server hostname** captured from the Databricks SQL Warehouse connection detail .
 
 Repeat the above process and create parameter for HTTP path from SQL warehouse. You can get the HTTP path from DBSQL Warehouse connection details. Below is a sample screenshot of Databricks SQL Warehouse connection details showing the **Server hostname** and **HTTP path**:
+
 <img src="./images/01.png" alt="Databricks SQL Warehouse connection details" width="50%" height="50%">
 
 Your parameters should look like below in Power BI:
