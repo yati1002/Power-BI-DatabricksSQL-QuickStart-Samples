@@ -1,73 +1,107 @@
-# Using storage modes - Direct Query vs Dual vs Import
+# Using storage modes - DirectQuery vs Dual vs Import
 
 ## Introduction
-Power BI provides 3 different storage modes - **Import**, **Direct Query**, and **Dual**. When using Databrics Lakehouse, **Direct Query** mode is a great choice because it provides an ability to query huge amounts of data which can exceed **Import** mode capacity in order of magnitude. However, obviously **Direct Query** mode comes with extra query latency compared to **Import** mode.
-
-There is a best practice on chosing storage modes in Power BI described by Phil Seamark in his blog post [Power BI Storage Modes for Aggregations](!https://dax.tips/2021/10/11/power-bi-storage-modes-for-aggregations/) which is unfortunately often not followed.
-
-In this sample we will consider practical aspects of chosing different storage modes in Power BI model.
+[Storage Modes](https://learn.microsoft.com/en-us/power-bi/transform-model/desktop-storage-mode) are really important aspect of Power BI. Whether you're a seasoned Power BI user or just getting started, understanding storage modes is crucial for maximizing performance and efficiently managing your data. This Read Me file serves as your roadmap, providing insights into the various storage modes offered by Power BI . In this report we will showcase and compare performance between Direct Query , Import and Dual storage mode and show how dual helps with performance of the report. You can follow the steps mentioned in the [Step by Step Instructions](#step-by-step-instructions) section.
 
 ## Pre-requisites
-1. Databricks workspace.
-2. Databricks SQL Warehouse, Small cluster size.
-3. Power BI Desktop, latest version is recommended.
 
-## Step by Step Walkthrough
-### Report Design
-Our report is based on **samples** catalog, **tpch** schema. It uses **orders** as fact table in **Direct Query** mode and **region**, **nation**, and **customer** as dimension tables in different modes.
-The report visuals include a filter on **region** table and a card displaying aggregation of **o_totalprice** column in **orders** fact table.
-![Data model](./images/DataModel.png)
+Before you begin, ensure you have the following:
 
-### Direct Query mode
-First, let's explore the behavior of Power BI when dimension tables are set to **Direct Query** mode.
-In Performance Analyzer after refreshing visuals we can see that refreshing both visuals (the Filter and the Card) took roughly 1 second.
-![Direct Query mode - Power BI Performance Analyzer](./images/DirectQuery/PerformanceAnalyzer.png)
-
-In Databricks SQL Query History expectedly we can see 2 SQL-queries. The first query retrieved records for the Filter visual, i.e. from **region** table. The second query retrieved the records to render the Card visual, i.e. from **orders** table.
-![Direct Query mode - Databricks SQL Query History](./images/DirectQuery/QueryHistory.png)
-
-In the second query profile we can see that it returned only 1 record.
-![Direct Query mode - Query Statistics](./images/DirectQuery/QueryStats.png)
-
-### Import mode
-In the previous section we saw the report performance when using Direct Query mode for dimension tables. It looked quite good. However, on larger datasets a Power BI developer may decide to optimize the model and set dimension tables to **Import** mode. So Power BI will serve dimension tables from in-memory cache which should boost performance.
-Let's now explore the behavior of Power BI when dimension tables are set to **Import** mode.
-In Performance Analyzer after refreshing visuals we can see that refreshing the Filter visual is now much faster (less than 100ms), however refreshing the Card visual took much longer, i.e. over 2.5 seconds!!!
-
-![Import mode - Power BI Performance Analyzer](./images/Import/PerformanceAnalyzer.png)
-
-In Databricks SQL Query History expectedly we can see only 1 SQL-query. This query retrieves the records to render the Card visual, i.e. from **orders** table. It's pretty fast, i.e. less than 200ms.
-![Import mode - Databricks SQL Query History](./images/Import/QueryHistory.png)
-
-However, in the query profile we can see that it returned almost 500,000 records. This obviously cause extra network latency and processing on Power BI end. This is the reason why refreshing the Card visual took longer than 2.5 seconds.
-![Import mode - Query Statistics](./images/Import/QueryStats.png)
-
-As we can see here, instead of performance boost we actually get performance decline with this "optimization".
-
-### Dual mode
-Let's now explore the behavior of Power BI when dimension tables are set to **Dual** mode.
-In Performance Analyzer after refreshing visuals we can see that refreshing the Filter visual is still very fast (less than 100ms). And refreshing the Card visual is now also pretty fast, i.e. ~800ms.
-![Dual mode - Power BI Performance Analyzer](./images/Dual/PerformanceAnalyzer.png)
-
-In Databricks SQL Query History we can see only 1 SQL-query. This query retrieves the records to render the Card visual, i.e. from **orders** table. 
-![Dual mode - Databricks SQL Query History](./images/Dual/QueryHistory.png)
-
-And in the query profile we can see that it returned only 1 record. Hence, the processing on Power BI end was very efficient. 
-![Dual mode - Query Statistics](./images/Dual/QueryStats.png)
+- [Databricks account](https://databricks.com/) and access to a Databricks workspace and also have DBSQL warehouse set up 
+- [Power BI Desktop](https://powerbi.microsoft.com/desktop/) installed on your machine.
 
 
-## Conclusion
-As we saw in this example, though when using **Import** mode data is stored in in-memory cache, it is not a silver bullet for performance optimizations. When working with large data volumes we recommend using storage modes as per the following recommendations.
+## Step by Step Instructions
 
-Table function	| Recommended Storage Mode
-| ------------- | ------ |
-Large Fact Table | **Direct Query**
-Dimension Tables | **Dual** (not Import!!)
-Aggregation Table | Import (or Direct Query)
+## 1. Databricks Data Source Connection 
 
-By following these recommendations you can ensure the best possible user experience and minimize the workload on Power BI and Databricks SQL.
-Please note that switching storage mode to Import is irreversible operation. Therefore, we strongly recommend creating a backup of your reports before switching tables to **Import** modef for experimentation purposes.
+1. Open Power BI Desktop
+2. Go to **"Home"**> **"Get Data"** > **"More..."**
+3. Search for **"Databricks"** and select **"Azure Databricks"** (or **"Databricks"** when using Databricks on AWS or GCP).
+4. Enter the following values:
+   - **Server Hostname**: Enter the Server hostname value from Databricks SQL Warehouse connection details tab.
+   - **HTTP Path**: Enter the HTTP path value  from Databricks SQL Warehouse connection details tab.
 
+Below is the sample screenshot of how the data source would look like
+
+![Data Source Connection](./images/conneciton.png)
+
+
+## Best Practice 
+It is always a good practice to parameterize your connection string. This really helps ease out the development expeience as you can dynamically connect to any DBSQL warehouse. For details on how to paramterize your connection string you can refer to [this](/01.%20Connecting%20Power%20BI%20to%20Databricks%20SQL%20using%20Parameters) article.
+
+## 2. Showcasing perfromance with storage modes for dimension table
+In the next section we will compare different storage modes and showcase which storage mode is good for dimension table.There are two common query patterns generated against Dimension tables : 1. Using query slicer/filter  , 2.Aggregation on the Fact table using data in the dimension table.  For our testing scenario we are using a "**Small**" Pro cluster and we will create report with both query pattterns highlighted above. 
+### 2.1 Data Model Creation
+To make performance testing easy to follow we will use "Samples" catalog and "TPCH" schema and ingest below tables. In order to compare the performance between three modes we will ingest dimension table with different storage modes and analyze time taken based on each mode.
+
+1.region_DQ:Region dimension table ingested with storage mode as Direct Query.
+
+2.nation_DQ:Nation dimension table containing nation name and details ingested with storage mode as Direct Query.
+
+3.customer_DQ:Customer dimesntion table containg customer details ingested with storage mode as Direct Query.
+
+4.region_Dual:Region dimension table ingested with storage mode as Dual. 
+
+5.nation_Dual:Nation dimension table containing nation name and details ingested with storage mode as Dual.
+
+6.customer_Dual:Customer dimesntion table containg customer details ingested with storage mode as Dual.
+
+7.region_Import:Region dimension table ingested with storage mode as Import. 
+
+8.nation_Import:Nation dimension table containing nation name and details ingested with storage mode as Import.
+
+9.customer_Import:Customer dimesntion table containg customer details ingested with storage mode as Import.
+
+10.orders_DQ:Orders fact table ingestd with storage mode as Direct Quary.
+
+Below is the screen shot of how our star schema data model and the report with 2 dimension scenario's mentioned above looks like:
+
+![Data Source Connection](./images/DataModel.png)
+
+### 2.2 Direct Query Report 
+In order to get best results it and avoid caching it's better to run the test against warm up warehouse by running few queries against warehouse. After warehouse is warmed up follow below steps :
+1. Click **Optimize**>**Performance Analyzer** in Power BI desktop.
+2. In the Performance Analyzer tab click "**Start Recording**".
+3. Create a slicer visual with columns :RegionName (From **region_DQ** table) and Card visual with  Sum of Total_Price(From **orders_DQ** table).
+   
+#### 2.2.1 Query Analysis : Performance Analyzer and DBSQl 
+
+As shown in screenshot of the Performance Analyzer below the Direct Query takes **953 ms** for Slicer and **946 ms** for aggregate function in card visual  ![Data Source Connection](./images/DirectQuery/PerformanceAnalyzer.png)
+
+You can also find the query execution time by looking at query history in DBSQL . Since both the dimension(Filter visual) and the fact (Card visual) are using Direct Query there are 2 queries fired in the backend also the I/O stats shows 1 row getting read based on the slicer value selected  : 
+![Data Source Connection](./images/DirectQuery/QueryHistory.png)
+
+![Data Source Connection](./images/DirectQuery/QueryStats.png)
+
+### 2.2 Import Query Report 
+1. Click **Optimize**>**Performance Analyzer** in Power BI desktop.
+2. In the Performance Analyzer tab click "**Start Recording**".
+3. Create a slicer visual with columns :RegionName (From **region_Import** table) and card visual with Sum of Total_Price(From **orders_Import** table).
+   
+#### 2.2.1 Query Analysis : Performance Analyzer and DBSQl 
+
+As shown in screenshot of the Performance Analyzer below the Import Query takes only **93 ms** for Slicer as the dimension is using Import method but it takes  **2529 ms** for aggregate function in card visual  ![Data Source Connection](./images/Import/PerformanceAnalyzer.png)
+
+You can also find the query execution time by looking at query history in DBSQL . Since the dimension(Filter visual) is using import method there is no query fired in DBSQL . However the fact (Card visual) is using Direct Query , hence there is only 1 query fired in the backend.  
+![Data Source Connection](./images/Import/QueryHistory.png)
+As I/O stats shows,in this method **~500k** rows are read and returned . The data is then filtered from Power BI.This is the reason Direct Query method is faster than Import method  : 
+![Data Source Connection](./images/Import/QueryStats.png)
+
+### 2.3 Dual Query Report 
+1. Click **Optimize**>**Performance Analyzer** in Power BI desktop.
+2. In the Performance Analyzer tab click "**Start Recording**".
+3. Create a slicer visual with columns :RegionName (From **region_Dual** table) and card visual with Sum of Total_Price(From **orders_Dual** table).
+   
+#### 2.3.1 Query Analysis : Performance Analyzer and DBSQl 
+
+As shown in screenshot of the Performance Analyzer below the Dual Query takes only **56 ms** for Slicer and takes  **805 ms** for aggregate function in card visual  ![Data Source Connection](./images/Dual/PerformanceAnalyzer.png)
+
+You can also find the query execution time by looking at query history in DBSQL.As Dual Query uses best of Import and Direct Query mode , there is no query fired in DBSQL for dimension(Filter visual) but the fact (Card visual) has it's query fired in backend.  
+![Data Source Connection](./images/Dual/QueryHistory.png)
+As I/O stats shows,in this method only **1** row is read and returned becasue the filter from slicer visual is passed to the query of Card visual . As Dual Query mode uses best features of Import and Direct mode it is faster than both Direct Query and Import.  
+![Data Source Connection](./images/Dual/QueryStats.png)
 
 ## Power BI Template 
-A sample Power BI template [DirectQuery-Dual-Import.pbit](DirectQuery-Dual-Import.pbit) is present in the current folder. When opening the template, enter respective **ServerHostname** and **HTTP Path** values of your Databricks SQL Warehouse. The template uses **samples** catalog, therefore you don't need to prepare any additional data for this report.
+
+To automate the process and ease the deployment process save the report as Power BI template. A sample Power BI template [DirectQuery-Dual-Import.pbit](./DirectQuery-Dual-Import.pbit) is already present in the current folder pointing to  **samples** catalog and **TPCH** tables. When you open the template enter respective **ServerHostname** and **HTTP Path** values of your Databricks SQL warehouse. The template will create three different reports using Direct Query , Import Query and Dual Query.You can then follow secion 2.2 and 2.3 above to do performance analysis between the reports. 
