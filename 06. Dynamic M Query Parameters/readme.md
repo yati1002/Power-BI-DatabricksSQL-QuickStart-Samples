@@ -12,7 +12,7 @@ As per Microsoft [documenation](!https://learn.microsoft.com/en-us/power-bi/conn
 1. We have an initial Power BI dataset which is based on **samples** catalog, **tpch** schema. There is only one fact table **lineitem** which is set to **Direct Query** mode.
 2. Next, in the Power Query Editor, we define 2 parameters - **ShipStartDateParameter** and **ShipEndDateParameter** - which we will use to filter data in the fact table.
 
-    ![Parameters](./images/Parameters.png)
+    ![Parameters](./images/Parameters.PNG)
 
 3. Next we adjust M-query for **lineitem** table as follows. Here we add an extra operation to filter the records based on **l_shipdate** column and **ShipStartDateParameter**/**ShipEndDateParameter** parameter values.
     ```
@@ -34,9 +34,9 @@ As per Microsoft [documenation](!https://learn.microsoft.com/en-us/power-bi/conn
 5. At the next step we bind previously created parameters to the columns in date tables.
     - ShipStartDateParameter --> ShipStartDates.ShipStartDate
     - ShipEndDateParameter --> ShipEndDates.ShipEndDate
-    ![Parameters binding](./images/Parameters-Binding.png)
+    ![Parameters binding](./images/Parameters-Binding.PNG)
 6. Finally, we can build a sample report and filter data based on **ShipStartDate** and **ShipEndDate** columns.
-![Report Layout](./images/Report-Layout.png)
+![Report Layout](./images/Report-Layout.PNG)
 
     The report generates the following SQL-query.
     ```sql
