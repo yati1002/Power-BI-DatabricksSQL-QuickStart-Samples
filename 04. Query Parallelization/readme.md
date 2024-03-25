@@ -16,7 +16,7 @@ In this sample we will see some of the aspects of query parallelization in Power
 ## Step by Step Walkthrough
 ### Report Design
 Our report is based on **samples** catalog, **tpch** schema. It used **orders** as fact table in **Direct Query** mode and **region**, **nation**, and **customer** as dimension tables in different modes.
-![Data model](./images/DataModel.png)
+![Data model](./images/DataModel.PNG)
 
 There are also 20 calculated measures defined in the model in **MeasuresTable**.
 ```
@@ -27,7 +27,8 @@ _TotalPrice02 = CALCULATE([_SumTotalPrice], part[p_container]="JUMBO BOX")
 ```
 
 The report layout include a single table where all 20 calculated measures are displayed (the screenshot is clipped to 5 measures only).
-![Report Layout](./images/ReportLayout.png)
+
+![Report Layout](./images/ReportLayout.PNG)
 
 
 ### Testing Approach
@@ -140,4 +141,4 @@ Please note that actual query parallelism is always limited by the lowest of all
 4. Power BI Gateway capacity (if used).
 
 ## Power BI Template 
-A sample Power BI template [Query-Parallelization.pbit](Query-Parallelization.pbit)) is present in the current folder. When opening the template, enter respective **ServerHostname** and **HTTP Path** values of your Databricks SQL Warehouse. The template uses **samples** catalog, therefore you don't need to prepare any additional data for this report.
+A sample Power BI template [Query-Parallelization.pbit](Query-Parallelization.pbit) is present in the current folder. When opening the template, enter respective **ServerHostname** and **HTTP Path** values of your Databricks SQL Warehouse. The template uses **samples** catalog, therefore you don't need to prepare any additional data for this report.
