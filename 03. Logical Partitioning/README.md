@@ -19,10 +19,12 @@ Before you begin, ensure you have the following:
 ![Data Source Connection](./images/Partitioned.png)
 4. To showcase the execution time difference we process both the **orders-partitioned** and **orders-non-partitioned**. As shown in the screenshots below , non paritioned tables process **~7.5M** records in default paritition in **8min25sec** whereas parititioned table finishes processing the same **~7.5M** records in just under **4min** . 
    
-**orders-non-partitioned**
+**Orders-Non-Partitioned table**
+
 ![Data Source Connection](./images/03.png)
 
-**orders-partitioned**
+**Orders-Partitioned table**
+
 ![Data Source Connection](./images/04.png)
 
 As when you refresh logical paritions ,every paritition divides the data based on the partition type and now rather than 1 partition processing entire dataset parallelism is introduced and multiple parallel queries running each partitions data is run against DBSQl therby giving **~50%** improvement in processing times
