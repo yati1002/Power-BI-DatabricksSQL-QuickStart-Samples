@@ -1,2 +1,3 @@
 *.pbix
 _*
+**/.DS_Store
