@@ -1,13 +1,13 @@
 # Improving Performance of Power BI Reports using User-defined Aggregations
  
 ## Introduction
-[User-defined aggregations](https://learn.microsoft.com/en-us/power-bi/transform-model/aggregations-advanced) are the unsung heroes of Power BI, quietly optimizing performance and efficiency behind the scenes. In the dynamic world of data analysis, where speed and accuracy are paramount, these specialized tables play a crucial role in improving performance for large Power BI dataset in DirectQuery storage mode. This guide explains how we can set up **User-defined aggregations** and also showcases how **User-defined aggregations** help improve performance of Power BI datasets. You can follow the steps mentioned in the [Step by Step Instructions](#step-by-step-instructions) section.
+[User-defined aggregations](https://learn.microsoft.com/en-us/power-bi/transform-model/aggregations-advanced) are the unsung heroes of Power BI, quietly optimizing performance and efficiency behind the scenes. In the dynamic world of data analysis, where speed and accuracy are paramount, these specialized tables play a crucial role in improving performance for large Power BI semantic models using DirectQuery storage mode. This guide explains how we can set up **User-defined aggregations** and also showcases how **User-defined aggregations** help improve performance of Power BI semantic models. You can follow the steps mentioned in the [Step by Step Instructions](#step-by-step-instructions) section.
 
 ## Pre-requisites
 
 Before you begin, ensure you have the following:
 
-- [Databricks account](https://databricks.com/) and access to a Databricks workspace and also have Databricks SQL Warehouse set up .
+- [Databricks account](https://databricks.com/), access to a Databricks workspace, and Databricks SQL Warehouse set up.
 - [Power BI Desktop](https://powerbi.microsoft.com/desktop/) installed on your machine.
 
 
@@ -31,25 +31,25 @@ Below is the sample screenshot of how the data source would look like
 It is always a good practice to parameterize your connection string. This really helps ease out the development expeience as you can dynamically connect to any Databricks SQL Warehouse. For details on how to paramterize your connection string you can refer to [this](/01.%20Connecting%20Power%20BI%20to%20Databricks%20SQL%20using%20Parameters) article.
 
 ### 2. Perfromance Improvement with User-defined Aggregations
-In the next section we will showcase how **User-defined Aggregation** table help improve performance of your Power BI report. We will do this by analyzing query performance of two similar reports. The first will be using original tables using Direct Query mode and in the other we will be using **User-defined Aggregation** table. For our testing scenario we are using a "**Small**" Pro cluster.
+In the next section we will showcase how **User-defined Aggregation** table help improve performance of your Power BI report. We will do this by analyzing query performance of two similar reports. The first will be using original tables using Direct Query mode and in the other we will be using **User-defined Aggregation** table. For our testing scenario we are using a **Small** Pro SQL Warehouse.
 
-#### 2.1 Data Model Creation
+#### 2.1. Data Model
 To make performance testing easy to follow we will use **samples** catalog and **tpch** schema which are available in any Databricks Workspace and add below mentioned tables. We will also create an aggregate table by running the DDL script against **hive_metastore** catalog and **default** schema as **samples** catalog is read-only.
 
-1. **customer**: Storage mode as Dual. Dimension table containing customer information and connected to nation dimension table using nationkey.
+1. **customer** - Dual storage mode. Dimension table containing customer information and connected to nation dimension table using nationkey.
 
-2. **nation**: Storage mode as Dual. Dimension table containing nation name and details.
+2. **nation** - Dual storage mode. Dimension table containing nation name and details.
 
-3. **orders**: Storage mode as Direct Query. Fact table containing orders information and connected to customer dimension using customerkey.
+3. **orders** - Direct Query storage mode. Fact table containing orders information and connected to customer dimension using customerkey.
 
-4. **lineitem**: Storage mode as Direct Query. Fact table containing details like order shipment date , discount price etc. 
+4. **lineitem** - Direct Query storage mode. Fact table containing details like order shipment date, discount price etc. 
 
-5. **orders_agg**: Storage mode as Direct Query. Copy of **orders** table and used for aggregate table report.
+5. **orders_agg** - Direct Query storage mode. Copy of **orders** table and used for aggregate table report.
 
-6. **lineitem_agg**: Storage mode as Direct Query. Copy of **lineitem** table and used for aggregate table report.
+6. **lineitem_agg** - Direct Query storage mode. Copy of **lineitem** table and used for aggregate table report.
 
-7. **lineitem_by_nation_agg**: Storage mode as Direct Query.Run
-[lineitem_by_customer_agg.sql](./scripts/lineitem_by_customer_agg.sql) DDL script to create table in hive_metastore. This table will be used to calculate aggregations we need for our aggreegate table report. 
+7. **lineitem_by_nation_agg** - Direct Query storage mode. Pre-aggregated version if **lineitem** table. Run
+[lineitem_by_customer_agg.sql](./scripts/lineitem_by_customer_agg.sql) DDL script to create the table in hive_metastore. This table will be used to calculate aggregations we need for our aggreegate table report. 
 
 Below is the screenshot of how our data model looks like.
 
@@ -57,12 +57,12 @@ Below is the screenshot of how our data model looks like.
 
 For details on different storage modes in Power BI  refer to [this](/02.%20DirectQuery-Dual-Import) article.
 
-#### 2.2 Direct Query report page 
-In order to get best results and avoid caching it's better to run the test against warmed up SQL Warehouse by running few queries against SQL Warehouse. After SQL Warehouse is warmed up, follow below steps:
+#### 2.2. Direct Query report page 
+In order to get best results it's better to run the test against warmed up SQL Warehouse by running few queries against SQL Warehouse. After SQL Warehouse is warmed up, follow below steps:
 1. Click **Optimize** -> **Performance Analyzer** in Power BI desktop.
 2. In the Performance Analyzer tab click "**Start Recording**".
 3. Create a table visual with columns: nation name (from **nation** table), Sum of discount, Sum of quantity, and Earliest order ShipDate (from **lineitem** table).
-4. Perfromance Analyzer tab will have a Table heading and a DAX query. Click on **Copy Query**. The DAX query should look similar to [Sample DAX Query](./scripts/Sample_DAX_Query.dax) script.
+4. Perfromance Analyzer tab will have a Table visual and a DAX query. Click on **Copy Query**. The DAX query should look similar to [Sample DAX Query](./scripts/Sample_DAX_Query.dax) script.
 
 Below is the screenshot of Direct Query report page: 
 ![Data Source Connection](./images/DirectQueryReport.png)
@@ -78,23 +78,21 @@ As shown in screenshot below the query takes **5.7s**. ![Data Source Connection]
 You can also find the query execution time by looking at query history in Databricks SQL. As shown below the query took **~3.7s** and read **~38M** rows. 
 ![Data Source Connection](./images/DirectQueryExecutionQueryHistory.png)
 
-#### 2.3 User-defined Aggregation report page
-##### 2.3.1 Manage Aggregations 
-The first step is to configure Power BI model to use **lineitem_by_nation_agg** table created in Step 7 of section 2.1 as source of aggregated data. This helps with query performance as aggregations are pre-computed and Power BI will not need to read the whole fact table. In order to configure user-defined aggregations within Power BI follow below steps :
+#### 2.3. User-defined Aggregation report page
+##### 2.3.1. Manage Aggregations 
+The first step is to configure Power BI model to use **lineitem_by_nation_agg** table created in Step 7 of section 2.1 as source of aggregated data. This helps with query performance as aggregations are pre-computed and Power BI will not need to read the whole fact table. In order to configure user-defined aggregations within Power BI follow below steps:
 
 1. Open **Model view** in Power BI Desktop.
-
 2. Right Click **lineitem_by_nation_agg** -> **Manage aggregations**.
-
-3. Add the summarization, detail column and detail table as shown in below screenshot
+3. Add the summarization, detail column and detail table as shown in below screenshot.
 ![Manage aggregations](./images/ManageAggregations.png)
 
-##### 2.3.2 Create Aggregate Table visual report
+##### 2.3.2. Create Aggregate Table visual report
 1. Click **Optimize** -> **Performance Analyzer** in Power BI Desktop.
 2. In the Performance Analyzer tab click **Start Recording**.
 3. Create a table visual with columns: nation name (from **nation** table), Sum of discount, Sum of quantity, and Earliest order ShipDate (from **lineitem_agg** table).
 4. Perfromance Analyzer tab will have a Table heading and a DAX query. Click on **Copy Query**. The DAX query should look similar to [Sample_DAX_Query_Using_Aggregations](./scripts/Sample_DAX_Query_Using_Aggregations.dax) script.
-Below is the screenshot of **User-defined Aggregation** report page: 
+Below is the screenshot of **User-defined Aggregation** report page.
 ![Data Source Connection](./images/AggTableReport.png)
 
 ##### 2.3.3 Query Analysis: DAX Studio and Databricks SQL 

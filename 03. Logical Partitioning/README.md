@@ -1,12 +1,12 @@
 # Logical Partitioning
 ## Introduction
-[Logical Partitioning](https://learn.microsoft.com/en-us/analysis-services/tabular-models/create-and-manage-tabular-model-partitions?view=asallproducts-allversions) is an important feature of Power BI which help in improving the refresh time of Power BI datasets. In this example we will showcase and compare how Logical Partitioning can provide a faster data refresh by enabling parallel processing of multiple partitions.. You can follow the steps mentioned in the [Step by Step Instructions](#step-by-step-instructions) section.
+[Logical Partitioning](https://learn.microsoft.com/en-us/analysis-services/tabular-models/create-and-manage-tabular-model-partitions?view=asallproducts-allversions) is an important feature of Power BI which helps improving the refresh time of Power BI semantic models. In this example we will showcase and compare how Logical Partitioning can provide a faster data refresh by enabling parallel processing of multiple partitions. You can follow the steps mentioned in the [Step by Step Instructions](#step-by-step-instructions) section.
 
 ## Pre-requisites
 
 Before you begin, ensure you have the following:
 
-- [Databricks account](https://databricks.com/) and access to a Databricks workspace and also have Databricks SQL Warehouse set up 
+- [Databricks account](https://databricks.com/), access to a Databricks workspace, and Databricks SQL Warehouse set up 
 - [Power BI Desktop](https://powerbi.microsoft.com/desktop/) installed on your machine.
 - Power BI **Premium** workspace
 - [DAX Studio](https://daxstudio.org/)
@@ -16,19 +16,17 @@ Before you begin, ensure you have the following:
 ## Step by Step Instructions
 1. We have an initial Power BI dataset which is based on **samples** catalog, **tpch** schema. There is only one table **orders** which is set to Import mode.
 2. Publish this report to a **Premium** workspace.
-2. Next, we connect to XMLA-endpoint of the published dataset using [SQL Server Management Studio](https://aka.ms/ssmsfullsetup) and created a non-partitioned version of **orders** table - **orders-non-partitioned** - by executing [Create-non-partitioned-table.xmla](./Create-non-partitioned-table.xmla) script.
+2. Next, we connect to XMLA-endpoint of the published dataset using [SQL Server Management Studio](https://aka.ms/ssmsfullsetup) and create a non-partitioned version of **orders** table - **orders-non-partitioned** - by executing [Create-non-partitioned-table.xmla](./Create-non-partitioned-table.xmla) script.
 As shown below you can use [DAX Studio](https://daxstudio.org/) to see that the table consists of a single partition: ![Non partitioned table](./images/Nonpartitioned.png)
-3. Next, we created another version of **orders** table - **orders-partitioned** - using [Create-partitioned-table.xmla](./Create-partitioned-table.xmla) script.
-we create another copy of orders table and name it as **orders-partitioned**. Alternatively, you can use [Tabular Editor](https://tabulareditor.com/) to create logical partition. [This](https://www.youtube.com/watch?v=6CRqdsLjHNA) video showcases how you can create logical parititons. In our example we have created these partitions based on the **o_priority** column which results in even data distribution. As shown below in DAX Studio screenshot, 5 parittions are created in **orders-partitioned** table and every partition contains ~1.5M records:
+3. Next, we create another version of **orders** table - **orders-partitioned** - using [Create-partitioned-table.xmla](./Create-partitioned-table.xmla) script.
+ Alternatively, you can use [Tabular Editor](https://tabulareditor.com/) to create partitions. [This](https://www.youtube.com/watch?v=6CRqdsLjHNA) video demonstrates how you can create parititons. In our example we have created these partitions based on the **o_priority** column which results in even data distribution. As shown below in DAX Studio screenshot, 5 parittions are created in **orders-partitioned** table and every partition contains ~1.5M records:
 ![Partitioned table](./images/Partitioned.png)
 4. To showcase the benefits of partioning we process both the **orders-partitioned** and **orders-non-partitioned** tables using [SQL Server Management Studio](https://aka.ms/ssmsfullsetup). As shown below, it took **8min25sec** to process non-paritioned table. Whereas the processing of parititioned table took just under **4min** for the same total number of records. 
    
 **orders-non-partitioned**
-
 ![Processing orders-non-partitioned table](./images/03.png)
 
 **orders-partitioned**
-
 ![Processing orders-non-partitioned](./images/04.png)
 
 ## Conclusion

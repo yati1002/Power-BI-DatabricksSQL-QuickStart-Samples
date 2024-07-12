@@ -1,12 +1,12 @@
 # Dynamic M Query Parameters
 
 ## Introduction
-As per Microsoft [documenation](!https://learn.microsoft.com/en-us/power-bi/connect-data/desktop-dynamic-m-query-parameters), With dynamic M query parameters, model authors can configure the filter or slicer values that report viewers can use for an M query parameter. Dynamic M query parameters give model authors more control over the filter selections to incorporate into DirectQuery source queries. With dynamic M query parameters, model authors can ensure that filter selections incorporate into source queries at the right point to achieve the intended results with optimum performance. Dynamic M query parameters can be especially useful for query performance optimization.
+As per Microsoft [documenation](!https://learn.microsoft.com/en-us/power-bi/connect-data/desktop-dynamic-m-query-parameters), with dynamic M query parameters, model authors can configure the filter or slicer values that report viewers can use as an M query parameter. Dynamic M query parameters give model authors more control over the filter selections to incorporate into Direct Query source queries. With dynamic M query parameters, model authors can ensure that filter selections incorporate into source queries at the right point to achieve the intended results with optimum performance. Dynamic M query parameters can be especially useful for query performance optimization.
 
 ## Pre-requisites
-1. Databricks workspace.
+1. [Databricks account](https://databricks.com/), access to a Databricks workspace.
 2. Databricks SQL Warehouse.
-3. Power BI Desktop, latest version is recommended.
+3. [Power BI Desktop](https://powerbi.microsoft.com/desktop/), latest version is recommended.
 
 ## Step by Step Walkthrough
 1. We have an initial Power BI dataset which is based on **samples** catalog, **tpch** schema. There is only one fact table **lineitem** which is set to **Direct Query** mode.
@@ -34,7 +34,7 @@ As per Microsoft [documenation](!https://learn.microsoft.com/en-us/power-bi/conn
 5. At the next step we bind previously created parameters to the columns in date tables.
     - ShipStartDateParameter --> ShipStartDates.ShipStartDate
     - ShipEndDateParameter --> ShipEndDates.ShipEndDate
-    ![Parameters binding](./images/Parameters-Binding.PNG)
+    ![Parameters binding](./images/Parameter-Binding.PNG)
 6. Finally, we can build a sample report and filter data based on **ShipStartDate** and **ShipEndDate** columns.
 ![Report Layout](./images/Report-Layout.PNG)
 
