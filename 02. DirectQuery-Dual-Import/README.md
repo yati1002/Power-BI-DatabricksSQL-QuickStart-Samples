@@ -105,8 +105,11 @@ As I/O stats shows, in this case only **1** row was returned because the value f
 ![Data Source Connection](./images/Dual/QueryStats.png)
 
 ## Conclusion
-As we could see above using Import storage mode to improve performance of Power BI semantic models does not always lead to positive outcomes. In certain cases it can actually decrease performance. Below you can see our general recommendation for using different storage modes for typical star schema data models.
+As we could see above using **Import** storage mode to improve performance of Power BI semantic models does not always lead to positive outcomes. In certain cases it can actually decrease performance. Below you can see our general recommendation for using different storage modes for typical star schema data models.
+
 ![Summary](./images/Summary.png)
+
+By following these recommendations you can ensure the best possible user experience and minimize the workload on Power BI and Databricks SQL. Please note that switching storage mode to Import is irreversible operation. Therefore, we strongly recommend creating a backup of your reports before switching tables to Import mode for experimentation purposes.
 
 ## Power BI Template 
 To automate the process and ease the deployment process save the report as Power BI template. A sample Power BI template [DirectQuery-Dual-Import.pbit](./DirectQuery-Dual-Import.pbit) is already present in the current folder pointing to  **samples** catalog and **tpch** tables. When you open the template enter respective **ServerHostname** and **HTTP Path** values of your Databricks SQL warehouse. The template will contain three report pages using Direct Query, Import, and Dual storage modes for dimension tables. You can then follow secion 2.2 and 2.3 above to compare behaviour and performance. 
