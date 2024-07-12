@@ -1,7 +1,7 @@
 # Query Parallelization
 
 ## Introduction
-When using Databrics Lakehouse, one of the greatest benefits of using Power BI is that we can build report which process hundreds gigabytes or even terabytes of data. That is possible when using **Direct Query** mode which uses Databricks SQL as the backend and does not require loading all data into in-memory cache. Therefore, in order to achieve optimal performance it's important to understand to understand how Power BI generates and executes SQL-query when using **Direct Query** mode.
+When using Databrics Lakehouse, one of the greatest benefits of using Power BI is that we can build reports which process hundreds gigabytes or even terabytes of data. That is possible when using **Direct Query** mode which uses Databricks SQL as the backend and does not require loading all data into in-memory cache. Therefore, in order to achieve optimal performance it's important to understand to understand how Power BI generates and executes SQL-query when using **Direct Query** mode.
 
 In this sample we will see some of the aspects of query parallelization in Power BI model when using Direct Query mode.
 
@@ -15,7 +15,7 @@ In this sample we will see some of the aspects of query parallelization in Power
 
 ## Step by Step Walkthrough
 ### Report Design
-Our report is based on **samples** catalog, **tpch** schema. It used **orders** as fact table in **Direct Query** mode and **region**, **nation**, and **customer** as dimension tables in different modes.
+Our report is based on **samples** catalog, **tpch** schema. It uses **orders** as fact table and **region**, **nation**, and **customer** as dimension tables. All tables are set to **Direct Query** storage mode.
 ![Data model](./images/DataModel.PNG)
 
 There are also 20 calculated measures defined in the model in **MeasuresTable**.
@@ -26,10 +26,8 @@ _TotalPrice02 = CALCULATE([_SumTotalPrice], part[p_container]="JUMBO BOX")
 ...
 ```
 
-The report layout include a single table where all 20 calculated measures are displayed (the screenshot is clipped to 5 measures only).
-
+The report layout include a single table visual where all 20 calculated measures are displayed (the screenshot is clipped to 5 measures only).
 ![Report Layout](./images/ReportLayout.PNG)
-
 
 ### Testing Approach
 The report is purposefully designed in such way that it generates **20** separate SQL-queries to render the Table visual.
@@ -98,18 +96,18 @@ So we achieved the following results.
 
 As we can see the query parallelism increases with the SKU, hence the performance. However, when using P4/A7 and higher SKU the query parallelism does not grow further, because it's limited by Data Source Default Max Connection setting in the report which is equal **10** by default. 
 
-***Please note that: 1) performance numbers are not precise. You may observer different performance in your environment; 2) Microsoft has not documented the default behaviour of query parallelism, hence it may change and your results may be different.***
+***Please note that: 1) performance numbers are not precise. You may observe different performance in your environment; 2) Microsoft has not documented the default behaviour of query parallelism, hence it may change and your results may be different.***
 
 ### Adjusting Model Properties
 As we may not be satisfied with the achieved query parallelisation and overall performance, we may want to increase query parallelism. This was introduced by Microsoft back in March 2023 and described in the following blog post - 
 [Query parallelization helps to boost Power BI dataset performance in DirectQuery mode](!https://powerbi.microsoft.com/en-us/blog/query-parallelization-helps-to-boost-power-bi-dataset-performance-in-directquery-mode/).
-According to Microsoft blog post, we change the properties of the published datasets with the help of [Tabular Editor](!https://tabulareditor.com/). We change the properties as follows:
+According to Microsoft blog post, we change the properties of the published semantic models with the help of [Tabular Editor](!https://tabulareditor.com/). We change the properties as follows:
 1. Database Compatibility Level = 1569 to unlock new settings
 2. Max Parallelism Per Query = 20 to parallelize all 20 queries in our report
 3. Data Source Default Max Connections = 20 to enable 20 connections to Databricks SQL.
 ![Model Properties](./images/Model-Properties.PNG)
 
-Additionally we need to make sure that our backend, i.e. Databricks SQL Warehouse, is capable to handle 20 SQL-queries simultaneously. Therefore, we recommend setting **min** number of clusters as 2.
+Additionally we need to make sure that our backend, i.e. Databricks SQL Warehouse, is capable to handle more SQL-queries concurrently. Therefore, we recommend setting **min** number of clusters as at least 2 in order to get more concurrency.
 
 
 ### Increased Query Parallelization
@@ -133,7 +131,7 @@ So we achieved the following results.
 | P4/A7  | 64      |     20      |        860 ms          |
 
 ## Conclusion
-As we saw in this example, with the fine tuning of the datasets in Power BI Premium SKUs we can achieve a better query parallelism, hence better performance and user experience.
+As we saw in this example, with the fine tuning of the semantic models in Power BI Premium SKUs we can achieve a better query parallelism, hence better performance and user experience.
 Please note that actual query parallelism is always limited by the lowest of all limiting factors which include:
 1. Max Parallelism Per Query
 2. Data Source Default Max Connections

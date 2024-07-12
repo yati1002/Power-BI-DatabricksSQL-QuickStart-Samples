@@ -30,7 +30,7 @@ Your parameters should look like below in Power BI:
 
 ### 2. Data Source Connection
 
-1. Go to **"Home"**> **"Get Data"** > **"More..."**
+1. Go to **"Home"** > **"Get Data"** > **"More..."**
 2. Search for **"Databricks"** and select **"Azure Databricks"** (or **"Databricks"** when using Databricks on AWS or GCP).
 3. Enter the following values:
    - **Server Hostname**: Enter the Server hostname value copied from Databricks SQL Warehouse connection details tab.
