@@ -23,9 +23,13 @@ Before you begin, ensure you have the following:
 ![sample report](./images/DQ_Report_1.png)
 
 
-3. When we first run the report, the query hit the Databricks SQL Warehouse. The query took 10.5 sec and read 38M records. See the screenshot below. 
+3. As shown below when we run the report it Power BI takes ~20sec to run the query . Below is the snapshot from the Network Trace :
 
-![sample report](./images/DBSQL_DQ.png)
+![sample report](./images/PreeAA.png)
+
+Also below screenshot shows query hit the Databricks SQL Warehouse and read 38M records. 
+
+![sample report](./images/PreAADBSQL.png)
 
 
 4. Now publish this report to a **Premium** workspace.
@@ -45,7 +49,10 @@ Before you begin, ensure you have the following:
 
 ![sample report](./images/TrainAA.png)
    
-8. Once the model is trained, Power BI will have aggregated values in in-memory cache. The next time you interact with the report using similar patterns (dimensions, measures, filters) Power BI will leverage cached aggregations to server the queries and will not send queries to Databricks SQL Warehouse. Hence, you may expect sub-second report refresh performance. 
+8. Once the model is trained, Power BI will have aggregated values in in-memory cache. The next time you interact with the report using similar patterns (dimensions, measures, filters) Power BI will leverage cached aggregations to server the queries and will not send queries to Databricks SQL Warehouse. Hence, you may expect sub-second report refresh performance.
+Below screenshot shows how post enabling Automatic Aggregation no queries are fired as the data is read from cache.
+
+![sample report](./images/postAA.png)
 
 ## Conclusion
 When using **Direct Query** storage mode in Power BI, configuring [Automatic Aggregations](https://learn.microsoft.com/en-us/power-bi/enterprise/aggregations-auto) may significantly improve overall 
