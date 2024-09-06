@@ -1,20 +1,96 @@
 # Query optimization using primary key constraints
 
 ## Introduction
+
+Primary key constraints, which capture relationships between fields in tables, can help users and tools understand relationships in your data. Though primary key constraints are not enforced, Databricks offers **RELY** option for primary key constraints which can be leveraged by the engine to improve performance in certain scenarios. This feature is discussed in depth in [Query optimization using primary key constraints](https://learn.microsoft.com/en-us/azure/databricks/sql/user/queries/query-optimization-constraints) article.
+
 ...
 [Query optimization using primary key constraintss](!https://learn.microsoft.com/en-us/azure/databricks/sql/user/queries/query-optimization-constraints)
 
 ## Pre-requisites
-1. Databricks workspace.
-2. Databricks SQL Warehouse.
-3. Power BI Desktop, latest version is recommended.
+- [Databricks account](https://databricks.com/), access to a Databricks workspace, and Databricks SQL Warehouse. 
+- [Power BI Desktop](https://powerbi.microsoft.com/desktop/) installed on your machine. Latest version is highly recommended.
 
-## Step by Step Walkthrough
-...
+## Step by Step Instructions
+1. Create separate catalog and a schema in Databricks Unity Catalog.
+    ```sql
+    CREATE CATALOG IF NOT EXISTS join_optimization;
+    CREATE SCHEMA IF NOT EXISTS join_optimization.tpch;
+    ```
+
+2. Create tables in the new catalog by replicating tables from **samples** catalog.
+    ```sql
+    -- Create test tables based on samples.tpch dataset
+    CREATE OR REPLACE TABLE lineitem AS SELECT * FROM samples.tpch.lineitem;
+    CREATE OR REPLACE TABLE orders AS SELECT * FROM samples.tpch.orders;
+    CREATE OR REPLACE TABLE part AS SELECT * FROM samples.tpch.part;
+    CREATE OR REPLACE TABLE supplier AS SELECT * FROM samples.tpch.supplier;
+    CREATE OR REPLACE TABLE customer AS SELECT * FROM samples.tpch.customer;
+    CREATE OR REPLACE TABLE nation AS SELECT * FROM samples.tpch.nation;
+    CREATE OR REPLACE TABLE region AS SELECT * FROM samples.tpch.region;
+    ```
+
+3. Drop primary keys on the tables which may exist if you already had the tables since previous experiments.
+    ```sql
+    ALTER TABLE orders DROP PRIMARY KEY IF EXISTS;
+    ALTER TABLE part DROP PRIMARY KEY IF EXISTS;
+    ALTER TABLE supplier DROP PRIMARY KEY IF EXISTS;
+    ALTER TABLE customer DROP PRIMARY KEY IF EXISTS;
+    ALTER TABLE nation DROP PRIMARY KEY IF EXISTS;
+    ALTER TABLE region DROP PRIMARY KEY IF EXISTS;
+    ```
+
+4. Create a view over fact tables which you will be using in Power BI report. This view combines **orders** and ***lineitem*** data in the same tabular object (view).
+    ```sql
+    CREATE OR REPLACE VIEW v_lineitems as
+    SELECT 
+        l_orderkey, l_partkey, l_suppkey, l_quantity, l_tax, l_discount
+        , o_orderkey, o_custkey, o_totalprice, o_orderstatus, o_orderdate, o_orderpriority
+    FROM lineitem
+        LEFT JOIN orders ON l_orderkey=o_orderkey;
+    ```
+
+5. Create a Power BI report, connect to Databricks SQL Warehouse, **join_optimization** catalog, add tables **region**, **nation**, **customer**, **part**, **supplier**, and the view **v_lineitems**. Use **Direct Query** mode for all tables. Create relationships as show on the screenshot.
+![Power BI data model](./images/DataModel.png)
+
+6. On a report page, add a table visual, add columns:
+    - part[p_brand], **NO** aggregation
+    - v_lineitems[l_quantity], **SUM** aggregation
+    - v_lineitems[l_tax], **SUM** aggregation
+
+7. In Databricks Query History you should be able to see the query profile for the SQL-query executed by Power BI. The engine scanned 3 tables **lineitem**, **orders**, and **part** and **261 MB** of data.
+![Query profile #1](./images/QueryProfile-01.png)
+
+8. Now add primary key constraints with **RELY** option to the tables by executing the following SQL-statements.
+    ```sql
+    ALTER TABLE orders ALTER COLUMN o_orderkey SET NOT NULL;
+    ALTER TABLE orders ADD PRIMARY KEY (o_orderkey) RELY;
+    ALTER TABLE part ALTER COLUMN p_partkey SET NOT NULL;
+    ALTER TABLE part ADD PRIMARY KEY (p_partkey) RELY;
+    ALTER TABLE supplier ALTER COLUMN s_suppkey SET NOT NULL;
+    ALTER TABLE supplier ADD PRIMARY KEY (s_suppkey) RELY;
+    ALTER TABLE customer ALTER COLUMN c_custkey SET NOT NULL;
+    ALTER TABLE customer ADD PRIMARY KEY (c_custkey) RELY;
+    ALTER TABLE nation ALTER COLUMN n_nationkey SET NOT NULL;
+    ALTER TABLE nation ADD PRIMARY KEY (n_nationkey) RELY;
+    ALTER TABLE region ALTER COLUMN r_regionkey SET NOT NULL;
+    ALTER TABLE region ADD PRIMARY KEY (r_regionkey) RELY;
+    ```
+
+9. Refresh data in the Power BI report. In Databricks Query History you should be able to see a new query profile for the SQL-query executed by Power BI. Now the engine scanned only 2 tables **lineitem** and **part** and **181 MB** of data.
+This query execution was more efficient because Databricks SQL engine leveraged primary key constraint **RELY** option and identified that there is no need to scan **orders** table. **RELY** option in this case helped the engine to understand that joining **orders** table to **lineitem** table in **v_lineitem** view does not change the result of the query generated by Power BI, hence that join operation was skipped.
+![Query profile #2](./images/QueryProfile-02.png)
+
+    **Please note** that using **RELY** option is only safe when you ensure data uniqueness in the respective column. Setting this option for non-unique primary key columns may lead to incorrect results.
+
+10. Clean up your environment by dropping the catalog.
+    ```sql
+    DROP CATALOG IF EXISTS join_optimization CASCADE;
+    ```
 
 ## Conclusion
-...
+As you could see in this example, the proper use of primary key constraints with **RELY** option can significantly improve the efficiency of SQL-queries. This is especially important for BI-workloads, such as Power BI, where star-schema is the recommended data modelling approach, hence joining multiple tables is common. More efficient query execution (less storage scan operations, lower CPU usage) is even more important in high-concurrency scenarios where multiple users generate 100s or even 1,000s queries per minute.
 
 
 ## Power BI Template 
-A sample Power BI template [Dynamic_M_Query_Parameters.pbit](./Dynamic_M_Query_Parameters.pbit) is present in the current folder. When opening the template, enter respective **ServerHostname** and **HTTP Path** values of your Databricks SQL Warehouse. The template uses **samples** catalog, therefore you don't need to prepare any additional data for this report.
+A sample Power BI template [Query optimization using PK.pbit](./Query%20optimization%20using%20PK.pbit) is present in the current folder. When opening the template, enter respective **ServerHostname** and **HTTP Path** values of your Databricks SQL Warehouse. The template uses **samples** catalog, therefore you don't need to prepare any additional data for this report.
