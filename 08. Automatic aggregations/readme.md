@@ -16,15 +16,17 @@ Before you begin, ensure you have the following:
 ## Step by Step Instructions
 1. Create an initial Power BI dataset based on **samples** catalog, **tpch** schema. Add tables and relationships as shown on the screenshot below. The dimension tables **customer** and **nation** should be set to Dual storage mode. The fact tables **orders** and **lineitem** should be set to Direct Query storage mode. Below is the data model for the sample report.
 
-![sample report](./images/Datamodel.png)
+![sample report](./images/DataModel.png)
 
 2. Create a simple tabular report showing the **count** of orders and **min** shipment date, **sum** of discounts and **sum** of quantities . Also add the slicer with **nation** names, as shown below.
 
 ![sample report](./images/DQ_Report_1.png)
 
+
 3. When we first run the report, the query hit the Databricks SQL Warehouse. The query took 10.5 sec and read 38M records. See the screenshot below. 
 
 ![sample report](./images/DBSQL_DQ.png)
+
 
 4. Now publish this report to a **Premium** workspace.
 
