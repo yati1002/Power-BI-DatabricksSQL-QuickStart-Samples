@@ -9,23 +9,24 @@ Before you begin, ensure you have the following:
 - [Databricks account](https://databricks.com/), access to a Databricks workspace, and Databricks SQL Warehouse set up 
 - [Power BI Desktop](https://powerbi.microsoft.com/desktop/) installed on your machine.
 - Power BI **Premium** workspace
+- DAX Studio](https://daxstudio.org/)
 
   
 ## Step by Step Instructions
-1. We have an initial Power BI dataset which is based on **samples** catalog, **tpch** schema. All the dimension tables **customer** and **nation** are set up as Dual storage mode . The fact table  **orders** and **lineitem** are set to Direct Query mode. Below is the datamodel for the sample report 
-3. Publish this report to a **Premium** workspace.
-2. Next, we connect to XMLA-endpoint of the published dataset using [SQL Server Management Studio](https://aka.ms/ssmsfullsetup) and create a non-partitioned version of **orders** table - **orders-non-partitioned** - by executing [Create-non-partitioned-table.xmla](./Create-non-partitioned-table.xmla) script.
-As shown below you can use [DAX Studio](https://daxstudio.org/) to see that the table consists of a single partition: ![Non partitioned table](./images/Nonpartitioned.png)
-3. Next, we create another version of **orders** table - **orders-partitioned** - using [Create-partitioned-table.xmla](./Create-partitioned-table.xmla) script.
- Alternatively, you can use [Tabular Editor](https://tabulareditor.com/) to create partitions. [This](https://www.youtube.com/watch?v=6CRqdsLjHNA) video demonstrates how you can create parititons. In our example we have created these partitions based on the **o_priority** column which results in even data distribution. As shown below in DAX Studio screenshot, 5 parittions are created in **orders-partitioned** table and every partition contains ~1.5M records:
-![Partitioned table](./images/Partitioned.png)
-4. To showcase the benefits of partioning we process both the **orders-partitioned** and **orders-non-partitioned** tables using [SQL Server Management Studio](https://aka.ms/ssmsfullsetup). As shown below, it took **8min25sec** to process non-paritioned table. Whereas the processing of parititioned table took just under **4min** for the same total number of records. 
+1. We have an initial Power BI dataset which is based on **samples** catalog, **tpch** schema. All the dimension tables **customer** and **nation** are set up as Dual storage mode . The fact table  **orders** and **lineitem** are set to Direct Query mode. Below is the datamodel for the sample report
+![sample report](./images/Datamodel.png)
+2. Created a simple tabular report showing the count of order and min shipment date  , sum of discounts and sum of quantities . Also there is slicer with nation names , as shown below
+![sample report](./images/DQ_Report_1.png)
+3. As seen below the quire hit the DBSQL warehouse . The query took 10.5 sec and read 38M records . 
+![sample report](./images/DBSQL_DQ.png)
+4. Publish this report to a **Premium** workspace.
+5. Enable the Automatic Aggregation in Power BI Service by opening the setting of the Semantic Model and enabling Automatic Aggregation Training . You can set the Query Coverage according to your needs. This setting will increase the Number of user queries analyzed and stored in cache. The higher % od Query Coverage will lead to more queries getting cached but will increase the Query Log refresh time . 
+![sample report](./images/AAenablement.png)
+6. For Power BI to automatically create aggregates and populate the query log , Power BI needs to analyze the user queries. You can either open the deplopyed Power BI Report and interact with report by selecting different Nation Names in the slicer or you can open the DAX studio and run the sample DAX query mentioned  [here](./DAX/Dax_query) .
    
-**orders-non-partitioned**
-![Processing orders-non-partitioned table](./images/03.png)
+**Please note** for better trainig the model just change the nation names in the DAX query and run for different nations. 
 
-**orders-partitioned**
-![Processing orders-non-partitioned](./images/04.png)
+7. 
 
 ## Conclusion
 When using **Import** mode in Power BI, configuring partitions for large tables may significantly improve overall table processing performance. While for a non-partitioned table Power BI uses a single thread and ingests and compresses data as a single chunk, for a partitioned table Power BI uses multiple threads where each thread ingests and compresses own chunk of data. Therefore, end-to-end table processing is much faster.
