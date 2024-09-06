@@ -26,13 +26,14 @@ Before you begin, ensure you have the following:
    
 **Please note** for better trainig the model just change the nation names in the DAX query and run for different nations. 
 
-7. 
+7. You can train the model immediately or can also schedule refresh of the query log of model . ![sample report](./images/TrainAA.png)
+   
+8. Once the model is trained and query log cache is populated. The next time you inteact with the report the queries will be retrieved from cache and not from DBSQL . Hence you will see sub sec report performance as data is reteievd from cache , this improving the report perfromance. 
 
 ## Conclusion
-When using **Import** mode in Power BI, configuring partitions for large tables may significantly improve overall table processing performance. While for a non-partitioned table Power BI uses a single thread and ingests and compresses data as a single chunk, for a partitioned table Power BI uses multiple threads where each thread ingests and compresses own chunk of data. Therefore, end-to-end table processing is much faster.
-As we saw above in our case the performance gain was **~50%**. For bigger tables the performance gain can be even higher.
+When using **Direct Query** mode in Power BI, configuring Automatic Aggregation for large tables may significantly improve overall report  performance and unlike user-defined aggregations, automatic aggregations don’t require extensive data modeling and query-optimization skills to configure and maintain. Automatic aggregations are both self-training and self-optimizing
 
 ## Power BI Template 
 
-A sample Power BI template [Logical-Partitioning.pbit](./Logical-Partitioning.pbit) is present in the current folder. When opening the template, enter respective **ServerHostname** and **HTTP Path** values of your Databricks SQL Warehouse. The template uses **samples** catalog, therefore you don't need to prepare any additional data for this report.
+A sample Power BI template [Automatic_Aggregate_Template.pbit](./Automatic_Aggregate_Template.pbit) is present in the current folder. When opening the template, enter respective **ServerHostname** and **HTTP Path** values of your Databricks SQL Warehouse. The template uses **samples** catalog, therefore you don't need to prepare any additional data for this report.
 
