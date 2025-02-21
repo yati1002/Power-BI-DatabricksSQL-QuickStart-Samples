@@ -8,9 +8,10 @@ When deploying Databricks with enhanced security, customers can choose from thre
 
 ## Connecting Power BI to a Private Databricks Workspaces
 While private networking enhances security, it can require additional connection configurations from SaaS services like Power BI. Power BI offers two primary methods for secure connections to data sources with private networking:
-1. [On-premises data gateway](https://learn.microsoft.com/en-us/data-integration/gateway/service-gateway-onprem): an application that gets installed on a Virtual Machine that has a direct networking connection to the data source. It allows Power BI to connect to data sources that don’t allow public connections
-2. [Virtual Network Data Gateway](https://learn.microsoft.com/en-us/data-integration/vnet/overview): a managed (virtual/serverless) data gateway that gets created and managed by the Power BI service.  Connections work by allowing Power BI to delegate into a VNet for secure connectivity to the data source.
-While Power BI offers these two options, many customers prefer not to manage additional infrastructure or configurations required for these gateways. In such cases, Power BI can be allowed to access the private Databricks workspace through the IP Access List.
+A. [On-premises data gateway](https://learn.microsoft.com/en-us/data-integration/gateway/service-gateway-onprem): an application that gets installed on a Virtual Machine that has a direct networking connection to the data source. It allows Power BI to connect to data sources that don’t allow public connections
+B. [Virtual Network Data Gateway](https://learn.microsoft.com/en-us/data-integration/vnet/overview): a managed (virtual/serverless) data gateway that gets created and managed by the Power BI service.  Connections work by allowing Power BI to delegate into a VNet for secure connectivity to the data source.
+
+While Power BI offers these two options, many customers prefer not to manage additional infrastructure or configurations required for these gateways. In such cases, Power BI can be allowed to access the private Databricks workspace through the IP Access List via the Public Endpoint. This is an option for scenarios #1 and #3 in the Private Networking Options for Databricks list above.
 
 ## Implementing Power BI Connectivity via IP Access List
 To enable the Power BI Service connectivity to a private Databricks workspace using an IP Access List:
