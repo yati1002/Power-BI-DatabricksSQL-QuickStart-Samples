@@ -2,7 +2,7 @@
 
 ## Private Networking Options for Databricks
 When deploying Databricks with enhanced security, customers can choose from three main private networking configurations:
-1. Public Endpoint with an [IP Access List](https://learn.microsoft.com/en-us/azure/databricks/security/network/front-end/ip-access-list) for the [Workspace](https://learn.microsoft.com/en-us/azure/databricks/security/network/front-end/ip-access-list-workspace): This option exposes a public endpoint for the Databricks workspace but restricts access to specific IP ranges.
+1. Public Endpoint with an [IP Access List](https://learn.microsoft.com/en-us/azure/databricks/security/network/front-end/ip-access-list){:target="_blank"} for the [Workspace](https://learn.microsoft.com/en-us/azure/databricks/security/network/front-end/ip-access-list-workspace): This option exposes a public endpoint for the Databricks workspace but restricts access to specific IP ranges.
 2. [Databricks Private Link](https://learn.microsoft.com/en-us/azure/databricks/security/network/classic/private-link): Front-end private link provides fully private connectivity, routing all traffic through private endpoints.
 3. Hybrid Deployment: Combines front-end private link with a public endpoint protected by a Workspace IP Access List which is typically used for SaaS service connections.
 
