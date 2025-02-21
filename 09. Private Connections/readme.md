@@ -1,4 +1,4 @@
-#Power BI Service Connections to Databricks with Private Networking
+# Power BI Service Connections to Databricks with Private Networking
 
 ## Private Networking Options for Databricks
 When deploying Databricks with enhanced security, customers can choose from three main private networking configurations:
