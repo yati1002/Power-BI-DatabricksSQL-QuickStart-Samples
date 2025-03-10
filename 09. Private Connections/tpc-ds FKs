@@ -1,5 +1,3 @@
-%sql
-
 ALTER TABLE customer
 ADD CONSTRAINT c_current_hdemo_sk_household_demographics_hd_demo_sk FOREIGN KEY (c_current_hdemo_sk) REFERENCES household_demographics (hd_demo_sk);
 
