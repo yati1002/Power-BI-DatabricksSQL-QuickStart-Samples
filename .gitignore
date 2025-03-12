@@ -1,3 +1,4 @@
 *.pbix
 _*
 **/.DS_Store
+*.log
