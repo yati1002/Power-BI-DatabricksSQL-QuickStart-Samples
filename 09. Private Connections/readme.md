@@ -81,15 +81,11 @@ Valid Locations: `westeurope`, `eastus2`, etc.
 
 In order to enable IP Access List use the following Databricks CLI command:
 ```
-databricks  ip-access-lists update 'Power-BI-IP-for-Databricks-IP-ACLs-Automation' --json '{
-  "enabled": true
-}'
+databricks ip-access-lists update 'Power-BI-IP-for-Databricks-IP-ACLs-Automation' --json '{ "enabled": true }'
 ```
 In order to disable IP Access List use the following Databricks CLI command:
 ```
-databricks  ip-access-lists update 'Power-BI-IP-for-Databricks-IP-ACLs-Automation' --json '{
-  "enabled": false
-}'
+databricks ip-access-lists update 'Power-BI-IP-for-Databricks-IP-ACLs-Automation' --json '{ "enabled": false }'
 ```
 
 #### Common issues
