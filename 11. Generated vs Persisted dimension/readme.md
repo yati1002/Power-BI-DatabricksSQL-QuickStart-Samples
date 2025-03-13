@@ -1,6 +1,7 @@
 # Generated vs Persisted dimension
 ## Introduction
 Dimensions play a very big role in data modelling . In Power BI you can either use DAX within PowerBI to Generate dimension table or you can Persist dimension in the source system . Carefully selecting the method to generate these dimensions are really important because report latency and end user experience may be impacted if a report generates multiple SQL-queries. Hence it's important to build efficient semantic models in Power BI by leveraging both Databricks SQL and Power BI capabilities wisely. 
+
 In the present quickstart sample we will showcase the benefits of Persisted dimension over Generated dimension by using example of date dimension . Persisted dimension helps generate fewer SQL-queries, hence achieving overall better performance and user experience.
 
 
@@ -15,10 +16,13 @@ Before you begin, ensure you have the following:
   
 ## Step by Step Instructions
 1. Copy-paste the code from [GeneratedvsPersisted.sql](./Generated%20vs%20Persisted%20dimension.sql) SQL-script to Databricks SQL Editor and execute the script to create the objects required for this example. This includes **powerbisamples** catalog, **tpch** schema, as well as tables.
+   
 2. Open Power BI Desktop, create a new report.
+   
 3. Connect to Databricks SQL Warehouse, **powerbisamples** catalog, **tpch** schema, and add the following tables from  to the semantic model
     - orders -> Direct Query 
-    - dim_date -> Dual Mode. Rename the table as **date_persisted** in Power BI 
+    - dim_date -> Dual Mode. Rename the table as **date_persisted** in Power BI
+      
 4. Create a Generated date dimension table (**date_generated**) from **orders** table by running the below DAX. This geenrated table contains the dates based on Min and Max Orderdate,
   ```
     date_generated = 
@@ -33,16 +37,23 @@ RETURN
         , "Quarter", QUARTER([Date])
     )
  ```
+
 5. Configure table relationships as shown on the picture below.
 ![Data model](./images/generated.png)
+
 6. Create a table visual and add **date_generated.Year** column, as well as **CountofOrderkeys**. Turn off Totals for the table visual.
-![Table visual](./images/generated_report.png)
+![Table visual](./images/generate_table.png)
+
 7. Refresh visuals using [Performance Analyzer](https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-performance-analyzer) in Power BI Desktop.
+   
 8. Check the number of SQL-queries in Databricks Query History. You should see 8 SQL-queries, 1-sql query to retrieve records for **date_generated** table and 7 SQL-queries to calculate disctinct count of order per year
-![Query History](./images/generate_queries.png) 
+![Query History](./images/generate_queries.png)
+
 9. Next create a table visual and add **date_persisted.year** column, as well as **CountofOrderkeys**. Turn off Totals for the table visual.
-![Table visual](./images/persisted.png)
+![Table visual](./images/persist_table.png)
+
 10. Refresh visuals using [Performance Analyzer](https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-performance-analyzer) in Power BI Desktop.
+    
 11. Check the number of SQL-queries in Databricks Query History. You should see only 1 SQL-queries to retrieve distinct count of orders for all years at once. As **date_persisted** is set to Dual mode , data is cached in memory 
 ![Query History](./images/persisted_queries.png) 
 
