@@ -18,8 +18,8 @@ Before you begin, ensure you have the following:
 2. Open Power BI Desktop, create a new report.
 3. Connect to Databricks SQL Warehouse, **powerbisamples** catalog, **tpch** schema, and add the following tables from  to the semantic model
     - orders -> Direct Query 
-    - dim_date -> Dual Mode
-4. Create a Generated date dimension table from **orders** table by running the below DAX. This geenrated table contains the dates based on Min and Max Orderdate,
+    - dim_date -> Dual Mode. Rename the table as **date_persisted** in Power BI 
+4. Create a Generated date dimension table (**date_generated**) from **orders** table by running the below DAX. This geenrated table contains the dates based on Min and Max Orderdate,
   ```
     date_generated = 
 VAR StartDate = CALCULATE(MIN('orders'[o_orderdate]))
@@ -34,49 +34,21 @@ RETURN
     )
  ```
 5. Configure table relationships as shown on the picture below.
-![Data model](./images/DataModel.PNG)
-7. In **orders** table create 3 calculated measures using the following DAX-formulas. These measures calculate the number of orders where an order item is delivered in Large, Medium, or Small bag.
-    ```
-    CountOrdersLargeBag = CALCULATE(COUNT(orders[o_orderkey]), 'part'[p_container]="LG BAG")
-    CountOrdersMediumBag = CALCULATE(COUNT(orders[o_orderkey]), 'part'[p_container]="MED BAG")
-    CountOrdersSmallBag = CALCULATE(COUNT(orders[o_orderkey]), 'part'[p_container]="SM BAG")
-    ```
-8. Create a table visual and add **region.r_name** column, as well as prevously created measures **CountOrdersLargeBag**, **CountOrdersMediumBag**, and **CountOrdersSmallBag**. Turn off Totals for the table visual.
-![Table visual](./images/TableVisual1.PNG)
-9. Refresh visuals using [Performance Analyzer](https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-performance-analyzer) in Power BI Desktop.
-10. Check the number of SQL-queries in Databricks Query History. You should see 3 SQL-queries, each calculating one of the measures used in the table visual.
-![Query History](./images/QueryHistory1.PNG) 
-The reason why Power BI generated 3 SQL-queries is that the measures use related table **part** to filter data. Therefore, Power BI is not able to combine these 3 queries into a single one.
+![Data model](./images/generated.png)
+6. Create a table visual and add **date_generated.Year** column, as well as **CountofOrderkeys**. Turn off Totals for the table visual.
+![Table visual](./images/generated_report.png)
+7. Refresh visuals using [Performance Analyzer](https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-performance-analyzer) in Power BI Desktop.
+8. Check the number of SQL-queries in Databricks Query History. You should see 8 SQL-queries, 1-sql query to retrieve records for **date_generated** table and 7 SQL-queries to calculate disctinct count of order per year
+![Query History](./images/generate_queries.png) 
+9. Next create a table visual and add **date_persisted.year** column, as well as **CountofOrderkeys**. Turn off Totals for the table visual.
+![Table visual](./images/persisted.png)
+10. Refresh visuals using [Performance Analyzer](https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-performance-analyzer) in Power BI Desktop.
+11. Check the number of SQL-queries in Databricks Query History. You should see only 1 SQL-queries to retrieve distinct count of orders for all years at once. As **date_persisted** is set to Dual mode , data is cached in memory 
+![Query History](./images/persisted_queries.png) 
 
-11. Next we will be using **orders_transformed** view which for every order item identifies the type of bag.  
-    ``` sql
-    create or replace view powerbisamples.tpch.orders_transformed as
-    select o_orderkey, o_custkey, o_orderstatus, o_totalprice, o_orderdate, o_orderpriority, o_clerk, o_shippriority
-        , max(if(p_container='SM BAG', 1, 0)) as sm_bag
-        , max(if(p_container='MED BAG', 1, 0)) as med_bag
-        , max(if(p_container='LG BAG', 1, 0)) as lg_bag
-    from powerbisamples.tpch.orders
-        join powerbisamples.tpch.lineitem on o_orderkey=l_orderkey
-        join powerbisamples.tpch.part on l_partkey=p_partkey
-    group by all;
-    ```
-
-12. In Power BI semantic model in **orders_transformed** table create 3 calculated measures using the following DAX-formulas. These measures produce the same results as original measures.
-    ```
-    CountOrdersLargeBag_v2 = SUM(orders_transformed[lg_bag])
-    CountOrdersMediumBag_v2 = SUM(orders_transformed[med_bag])
-    CountOrdersSmallBag_v2 = SUM(orders_transformed[sm_bag])
-    ```
-13. Create a table visual and add **region.r_name** column, as well as prevously created measures **CountOrdersLargeBag_v2**, **CountOrdersMediumBag_v2**, and **CountOrdersSmallBag_v2**. Turn off Totals for the table visual.
-![Table visual](./images/TableVisual2.PNG)
-14. Refresh visuals using [Performance Analyzer](https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-performance-analyzer) in Power BI Desktop.
-
-15. Check the number of SQL-queries in Databricks Query History. You should see only 1 SQL-queries.
-![Query History](./images/QueryHistory2.PNG) 
-The reason why Power BI generated only 1 SQL-queries in this case is that the measures use SUM aggregation function over columns in the same table **orders_transformed**. Therefore, Power BI could use as single SQL-query.
 
 ## Conclusion
-...
+As we saw in this example, by explicitly persisting dimension in data source, i.e. Databricks SQL and setting it to Dual mode, it is possible to significantly decrease the number of SQL-queries generated by Power BI, hence enabling much better performance and end user experience. Such technique allows decrease overall workload both on Databricks SQL and Power BI, thus serving more users at lower cost.
 
 ## Power BI Template 
 
