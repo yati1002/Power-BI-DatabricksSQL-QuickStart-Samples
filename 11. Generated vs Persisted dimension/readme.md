@@ -56,11 +56,7 @@ Before you begin, ensure you have the following:
 
 10. Refresh visuals using [Performance Analyzer](https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-performance-analyzer) in Power BI Desktop.
     
-<<<<<<< HEAD
-11. Check the number of SQL-queries in Databricks Query History. You should see only 1 SQL-query to retrieve distinct count of orders for all years at once. As **date_persisted** table is set to Dual mode, data for this table is cached in memory.
-=======
-11. Check the number of SQL-queries in Databricks Query History. You should see only 1 SQL-query to retrieve distinct count of orders for all years at once. As **date_persisted** is set to Dual mode, data for this table is cached in memory.
->>>>>>> 711e48a77ad622831dfa23d1459fa71c8197b660
+11. Check the number of SQL-queries in Databricks Query History. You should see only 1 SQL-query to retrieve counts of orders for all years at once. As **date_persisted** table is set to Dual mode, data for this table is cached in memory.
 
     ![Query History](./images/persisted_queries.png) 
 
