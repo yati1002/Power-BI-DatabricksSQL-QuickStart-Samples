@@ -41,20 +41,24 @@ Before you begin, ensure you have the following:
 ![Data model](./images/DataModel.png)
 
 6. Create a table visual and add **Year** column from **date_generated** table, as well as **Count of o_orderkey**. Turn off Totals for the table visual.
-![Table visual](./images/generate_table.png)
+    
+    ![Table visual](./images/generate_table.png)
 
 7. Refresh visuals using [Performance Analyzer](https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-performance-analyzer) in Power BI Desktop.
    
-8. Check the number of SQL-queries in Databricks Query History. You should see 8 SQL-queries, 1-sql query to retrieve records for **date_generated** table and 7 SQL-queries to calculate counts of orders per year
-![Query History](./images/generate_queries.png)
+8. Check the number of SQL-queries in Databricks Query History. You should see 8 SQL-queries, 1-sql query to retrieve records for **date_generated** table and 7 SQL-queries to calculate counts of orders per year.
+
+    ![Query History](./images/generate_queries.png)
 
 9. Next create a table visual and add **year** column from **date_persisted** table, as well as **Count of o_orderkeys**. Turn off Totals for the table visual.
-![Table visual](./images/persist_table.png)
+
+    ![Table visual](./images/persist_table.png)
 
 10. Refresh visuals using [Performance Analyzer](https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-performance-analyzer) in Power BI Desktop.
     
 11. Check the number of SQL-queries in Databricks Query History. You should see only 1 SQL-query to retrieve distinct count of orders for all years at once. As **date_persisted** is set to Dual mode, data for this table is cached in memory.
-![Query History](./images/persisted_queries.png) 
+
+    ![Query History](./images/persisted_queries.png) 
 
 
 ## Conclusion
