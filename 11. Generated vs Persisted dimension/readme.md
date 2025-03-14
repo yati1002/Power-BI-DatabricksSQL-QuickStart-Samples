@@ -19,8 +19,8 @@ Before you begin, ensure you have the following:
 2. Open Power BI Desktop, create a new report.
    
 3. Connect to Databricks SQL Warehouse, **powerbisamples** catalog, **tpch** schema, and add the following tables to the semantic model
-    - orders → Direct Query 
-    - dim_date → Dual Mode. Rename the table as **date_persisted** in Power BI
+    - **orders** → Direct Query 
+    - **dim_date** → Dual Mode. Rename the table to **date_persisted**.
       
 4. Create a calculated **date_generated** table by using the below DAX-formula. This geenrated table contains the dates based on minimum and maximum o_orderdate values in **orders** table
   ```

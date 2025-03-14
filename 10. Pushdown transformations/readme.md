@@ -17,7 +17,7 @@ Before you begin, ensure you have the following:
 ## Step by Step Instructions
 1. Copy-paste the code from [Pushdown Transformations.sql](./Pushdown%20Transformations.sql) SQL-script to Databricks SQL Editor and execute the script to create the objects required for this example. This includes **powerbisamples** catalog, **tpch** schema, as well as tables and a view.
 2. Open Power BI Desktop, create a new report.
-3. Connect to Databricks SQL Warehouse, **powerbisamples** catalog, **tpch** schema, and add the following tables/views from  to the semantic model
+3. Connect to Databricks SQL Warehouse, **powerbisamples** catalog, **tpch** schema, and add the following tables/views to the semantic model. All tables should be set to **DirectQuery** storage mode.
     - region
     - nation
     - part
