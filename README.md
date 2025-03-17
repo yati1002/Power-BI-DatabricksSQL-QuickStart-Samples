@@ -16,4 +16,4 @@ This repo contains the samples demonstrating the usage of [Power BI](https://pow
 | 07   | [Query optimization using PK](./07.%20Query%20optimization%20using%20PK/)    |  Query optimization using primary key constraints   |
 | 08   | [Automatic aggregations](./08.%20Automatic%20aggregations/)    |  Improving performance of Power BI reports using Automatic aggregations   |
 | 09   | [Private Connections](./09.%20Private%20Connections/)    |  Making private connections to the Databricks Workspace from the Power BI Service   |
-| 10   | [Pushdown transformations](./10.%20Pushdown%20transformations/)    |  Improve performance of DirectQuery and Composite models by pushing some calculations down to Databricks SQL  |
+| 10   | [Pushdown Calculations](10.%20Pushdown%20Calculations/)    |  Improve performance of DirectQuery and Composite models by pushing calculations down to Databricks SQL  |

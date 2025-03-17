@@ -1,4 +1,4 @@
-# Pushdown Transformations
+# Pushdown Calculations
 
 ## Introduction
 When using Power BI on top of Databrics Lakehouse, Power BI developers can build reports which consume hundreds gigabytes or even terabytes of data using DirectQuery mode. Though Databricks SQL engine provides superb performance for individual queries, end user experience may be impacted if a report generates multiple SQL-queries. That is it's important to build efficient semantic models in Power BI by leveraging both Databricks SQL and Power BI capabilities wisely. For example, even relatively simple DAX-measures may result in generating multiple SQL-queries. 
@@ -15,7 +15,7 @@ Before you begin, ensure you have the following:
 
   
 ## Step by Step Instructions
-1. Copy-paste the code from [Pushdown Transformations.sql](./Pushdown%20Transformations.sql) SQL-script to Databricks SQL Editor and execute the script to create the objects required for this example. This includes **powerbisamples** catalog, **tpch** schema, as well as tables and a view.
+1. Copy-paste the code from [Pushdown Calculations.sql](./Pushdown%20Calculations.sql) SQL-script to Databricks SQL Editor and execute the script to create the objects required for this example. This includes **powerbisamples** catalog, **tpch** schema, as well as tables and a view.
 2. Open Power BI Desktop, create a new report.
 3. Connect to Databricks SQL Warehouse, **powerbisamples** catalog, **tpch** schema, and add the following tables/views to the semantic model. All tables should be set to **DirectQuery** storage mode.
     - region
@@ -73,5 +73,5 @@ As we saw in this example, by explicitly pushing calculations (or some part of t
 
 ## Power BI Template 
 
-A sample Power BI template [Pushdown Transformations.pbit](./Pushdown%20Transformations.pbit) is present in the current folder. When opening the template, enter respective **ServerHostname** and **HTTP Path** values of your Databricks SQL Warehouse as well as the name of **Catalog** (default *powerbisamples*) and **Schema** (default *tpch*).
+A sample Power BI template [Pushdown Calculations.pbit](./Pushdown%20Calculations.pbit) is present in the current folder. When opening the template, enter respective **ServerHostname** and **HTTP Path** values of your Databricks SQL Warehouse as well as the name of **Catalog** (default *powerbisamples*) and **Schema** (default *tpch*).
 
