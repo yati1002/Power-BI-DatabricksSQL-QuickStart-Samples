@@ -23,7 +23,7 @@ Before you begin, ensure you have the following:
     - **dim_date** → Dual Mode. Rename the table to **date_persisted**.
       
 4. Create a calculated **date_generated** table by using the below DAX-formula. This geenrated table contains the dates based on minimum and maximum o_orderdate values in **orders** table
-  ```
+    ```
     date_generated = 
     VAR StartDate = CALCULATE(MIN('orders'[o_orderdate]))
     VAR EndDate = CALCULATE(MAX('orders'[o_orderdate]))
@@ -35,7 +35,7 @@ Before you begin, ensure you have the following:
             , "Day", DAY([Date])
             , "Quarter", QUARTER([Date])
         )
- ```
+    ```
 
 5. Configure table relationships as shown on the picture below.
 ![Data model](./images/data_model.png)
