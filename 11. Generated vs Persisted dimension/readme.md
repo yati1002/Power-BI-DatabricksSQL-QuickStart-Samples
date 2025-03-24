@@ -46,7 +46,7 @@ Before you begin, ensure you have the following:
 
 7. Refresh visuals using [Performance Analyzer](https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-performance-analyzer) in Power BI Desktop.
    
-8. Check the number of SQL-queries in Databricks Query History. You should see 8 SQL-queries, 1-sql query to retrieve records for **date_generated** table and 7 SQL-queries to calculate counts of orders per year.
+8. Check the number of SQL-queries in Databricks Query History. You should see 8 SQL-queries, 1 SQL-query to retrieve records for **date_generated** table and 7 SQL-queries to calculate counts of orders per year.
 
     ![Query History](./images/generate_queries.png)
 
