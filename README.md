@@ -5,7 +5,7 @@ This repo contains the samples demonstrating the usage of [Power BI](https://pow
 
 For quick access to the repo please use the QR-code below. 👇
 <p align="center">
-  <img width="15%" src="./images/qr-code.png" />
+  <img width="20%" src="./images/qr-code.png" />
 </p>
 
 ## Table of Contents
