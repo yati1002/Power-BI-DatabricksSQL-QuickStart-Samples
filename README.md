@@ -1,7 +1,12 @@
-# Power BI - Databricks SQL QuickStart Samples
+# Power BI on Databricks SQL - QuickStart Samples
 
 ## Introduction
 This repo contains the samples demonstrating the usage of [Power BI](https://powerbi.microsoft.com/) with [Databricks SQL](https://www.databricks.com/product/databricks-sql). The objective of these samples is to demonstrate reference implementation and some of the best practices using Power BI with Databricks SQL.
+
+For quick access to the repo please use the QR-code below. 👇
+<p align="center">
+  <img width="20%" src="./images/qr-code.png" />
+</p>
 
 ## Table of Contents
 
@@ -16,3 +21,4 @@ This repo contains the samples demonstrating the usage of [Power BI](https://pow
 | 07   | [Query optimization using PK](./07.%20Query%20optimization%20using%20PK/)    |  Query optimization using primary key constraints   |
 | 08   | [Automatic aggregations](./08.%20Automatic%20aggregations/)    |  Improving performance of Power BI reports using Automatic aggregations   |
 | 09   | [Private Connections](./09.%20Private%20Connections/)    |  Making private connections to the Databricks Workspace from the Power BI Service   |
+| 10   | [Pushdown Calculations](10.%20Pushdown%20Calculations/)    |  Improve performance of DirectQuery and Composite models by pushing calculations down to Databricks SQL  |
