@@ -3,6 +3,11 @@
 ## Introduction
 This repo contains the samples demonstrating the usage of [Power BI](https://powerbi.microsoft.com/) with [Databricks SQL](https://www.databricks.com/product/databricks-sql). The objective of these samples is to demonstrate reference implementation and some of the best practices using Power BI with Databricks SQL.
 
+For quick access to the repo please use the QR-code below. 👇
+<p align="center">
+  <img width="25%" src="./images/qr-code.png" />
+</p>
+
 ## Table of Contents
 
 | #    | Folder | Description |
