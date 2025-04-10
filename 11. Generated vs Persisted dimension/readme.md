@@ -22,7 +22,7 @@ Before you begin, ensure you have the following:
     - **orders** → Direct Query 
     - **dim_date** → Dual Mode. Rename the table to **date_persisted**.
       
-4. Create a calculated **date_generated** table by using the below DAX-formula. This geenrated table contains the dates based on minimum and maximum o_orderdate values in **orders** table
+4. Create a calculated **date_generated** table by using the below DAX-formula. This generated table contains the dates based on minimum and maximum o_orderdate values in **orders** table
     ```
     date_generated = 
     VAR StartDate = CALCULATE(MIN('orders'[o_orderdate]))
