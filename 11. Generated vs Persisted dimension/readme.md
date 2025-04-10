@@ -2,7 +2,7 @@
 ## Introduction
 Dimensions play a crucial role in data modelling. For reference dimensions such as Date dimension, in Power BI you can either use either DAX-generated tables (*Generated dimension*) or you can use a persisted tables (*Persisted dimension*) in the data source, e.g. Delta-table in Databricks Unity Catalog. As the behavior of Power BI when using these two types of dimensions differs, choosing the right approach is crucial to achieve the best performance and end user experience. 
 
-In the present quickstart sample we will showcase the benefits of Persisted dimension over Generated dimension by using example of **Date** dimension. Persisted dimension helps generate fewer SQL-queries, hence achieving overall better performance and user experience when using **DirectQuery** or **Composite models**.
+In this quickstart sample we will showcase the benefits of Persisted dimension over Generated dimension by using example of **Date** dimension. Persisted dimension helps generate fewer SQL-queries, hence achieving overall better performance and user experience when using **DirectQuery** or **Composite models**.
 
 
 ## Pre-requisites
@@ -66,4 +66,4 @@ As we saw in this example, by using a dimension table persisted in data source, 
 
 ## Power BI Template 
 
-A sample Power BI template [Generate vs Persisted dimension.pbit](./Generated%20vs%20Persisted%20dimension.pbit) is present in the current folder. When opening the template, enter respective **ServerHostname** and **HTTP Path** values of your Databricks SQL Warehouse. The template uses **samples** catalog as well as the name of **Catalog** (default *powerbisamples*) and **Schema** (default *tpch*).
+A sample Power BI template [Generate vs Persisted dimension.pbit](./Generated%20vs%20Persisted%20dimension.pbit) is available in the current folder. When opening the template, enter respective **ServerHostname** and **HTTP Path** values of your Databricks SQL Warehouse. The template uses **samples** catalog as well as the name of **Catalog** (default *powerbisamples*) and **Schema** (default *tpch*).
