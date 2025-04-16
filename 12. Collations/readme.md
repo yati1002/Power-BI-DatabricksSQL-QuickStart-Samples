@@ -25,19 +25,19 @@ Before you begin, ensure you have the following:
       
 4. Create a table visual, add **c_mktsegment** and **c_custkey** columns, configure the latter to use Count aggregation.
     
-    ![Table visual](./images/Table.png)
+    ![Table visual](./images/Table.PNG)
 
 7. Add **c_mktsegment** column to Filters, configure it to use Advanced filtering and *contains* filter. 
    
-    ![Filter](./images/Filter.png)
+    ![Filter](./images/Filter.PNG)
 
 8. Specify value ```MACH``` (upper case) and Apply filter.
 
-    ![Filtered Table](./images/FilteredTable.png)
+    ![Filtered Table](./images/FilteredTable.PNG)
 
 8. Specify value ```mach``` (lower case) and Apply filter.
 
-    ![Filtered Table](./images/FilteredTable.png)
+    ![Filtered Table](./images/FilteredTable.PNG)
 
 ## Conclusion
 As we saw in this example, now by leveraging a ```LCASE``` collation for table columns in Unity Catalog we can achieve proper data filtering in Power BI when using **DirectQuery** mode. When using ```LCASE``` collation Databricks SQL converts strings to lower case when comparing strings, hence string becomes case insensitive.
