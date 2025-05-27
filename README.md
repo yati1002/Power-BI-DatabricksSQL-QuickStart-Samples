@@ -5,8 +5,15 @@ This repo contains the samples demonstrating the usage of [Power BI](https://pow
 
 For quick access to the repo please use the QR-code below. 👇
 <p align="center">
-  <img width="20%" src="./images/qr-code.png" />
+  <img width="20%" src="./images/qrcode-repo.png" />
 </p>
+
+For quick access to [this repository](.) and [Best Practices Cheat Sheet](https://www.databricks.com/sites/default/files/2025-04/2025-04-power-bi-on-databricks-best-practices-cheat-sheet.pdf) please use the QR-code below. 👇
+
+
+| QuickStart Samples repo | Best Practices Cheat Sheet |
+| ------ | ----------- |
+| <p align="center"> <img width="35%" src="./images/qrcode-repo.png" /> </p> | <p align="center"> <img width="30%" src="./images/qrcode-cheatsheet.png" /> </p> |
 
 ## Table of Contents
 
