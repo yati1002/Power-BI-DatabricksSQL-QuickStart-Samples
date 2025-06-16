@@ -42,7 +42,9 @@ Before you begin, ensure you have the following:
 ## Conclusion
 As we saw in this example, now by leveraging a ```LCASE``` collation for table columns in Unity Catalog we can achieve proper data filtering in Power BI when using **DirectQuery** mode. When using ```LCASE``` collation Databricks SQL converts strings to lower case when comparing strings, hence string becomes case insensitive.
 
-Previously case-insensitive filtering in Power BI required additional tricks, e.g. creating additional columns containing values in upper or lower case only. Now case-insensitive data filtering in Power BI is possible without additional tricks when using Databricks thanks to [Collations](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-collation).
+Previously, due to default UTF8_BINARY collation, case-insensitive filtering in Power BI required additional tricks, e.g. creating additional columns containing values in upper or lower case only. Now case-insensitive data filtering in Power BI is possible without additional tricks when using Databricks thanks to [Collations](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-collation).
+
+For more information about Collations, including locales and case and accent modifiers, please refer to Databricks documentation - [Collations](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-collation).
 
 
 ## Power BI Template 
