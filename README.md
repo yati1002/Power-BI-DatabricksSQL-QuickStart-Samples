@@ -14,6 +14,7 @@ For quick access to [this repository](.) and [Best Practices Cheat Sheet](https:
 
 | #    | Folder | Description |
 | ---- | ------ | ----------- |
+| 00   | [Best Practices Cheat Sheet](00.%20Best%20Practices%20Cheat%20Sheet/)    | Power BI on Databricks Best Practices Cheat Sheet    |
 | 01   | [Connection Parameters](01.%20Connection%20Parameters/)    | Using Power BI parameters to efficiently manage connections to Databricks SQL    |
 | 02   | [DirectQuery-Dual-Import](./02.%20DirectQuery-Dual-Import/)    | Using different storage modes - Direct Query vs Dual vs Import    |
 | 03   | [Logical Partitionoing](./03.%20Logical%20Partitioning/)    | Improving data refresh performance with Power BI partitioning    |
