@@ -26,3 +26,4 @@ For quick access to [this repository](.) and [Best Practices Cheat Sheet](https:
 | 09   | [Private Connections](./09.%20Private%20Connections/)    |  Making private connections to the Databricks Workspace from the Power BI Service   |
 | 10   | [Pushdown Calculations](10.%20Pushdown%20Calculations/)    |  Improve performance of DirectQuery and Composite models by pushing calculations down to Databricks SQL  |
 | 11   | [Generated vs Persisted dimensions](./11.%20Generated%20vs%20Persisted%20dimension/)    |  Improve performance of DirectQuery and Composite models by using generated vs persisted dimension tables  |
+| 12   | [Collations](./12.%20Collations/)    |  Using Collations for case-insensitive search and filtering  |
