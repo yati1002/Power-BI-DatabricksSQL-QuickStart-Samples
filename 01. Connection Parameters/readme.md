@@ -1,55 +1,106 @@
-# Connecting Power BI to Databricks SQL Using Parameters
+# Power BI Parameters for Databricks connections
 
 ## Introduction
-There are instances when data analysts have to connect to different Databricks SQL environments or a different Databricks SQL instances. This can be a lot of manual work and can often lead to errors. This guide explains how we can simplify the process of connecting to different Databricks SQL Warehouses by using parameters in Power BI. Utilizing parameters allows for flexibility when connecting to different Databricks workspaces or connecting to a different Databricks SQL warehouses. To create a parametrized report you can follow the steps mentioned in the [Step by Step Instructions](#step-by-step-instructions) section.
+Switching between Databricks SQL Warehouses or even Databricks workspaces can be a time-consuming and error-prone process for Power BI developers and administrators. This repository provides a streamlined approach to managing these connections by leveraging Power BI parameters. By using parameters, you can easily and flexibly connect to various Databricks workspaces and SQL Warehouses without repetitive manual configuration.
 
-## Pre-requisites
+This guide will walk you through how to set up and use parameters in Power BI for Databricks connections. To get started with creating a parameterized report, please refer to the [Step by Step Instructions](#step-by-step-instructions) section.
+
+## Prerequisites
 
 Before you begin, ensure you have the following:
 
-- [Databricks account](https://databricks.com/) and access to a Databricks workspace and also have DBSQL warehouse set up 
-- [Power BI Desktop](https://powerbi.microsoft.com/desktop/) installed on your machine.
+- [Databricks account](https://databricks.com/)
+- Access to a Databricks workspace, as well as SQL Warehouse 
+- [Power BI Desktop](https://powerbi.microsoft.com/desktop/) installed on your machine
+- [Power BI](https://powerbi.com) subscription 
+
 
 ## Step by Step Instructions
 
-### 1. Databricks Connection Parameter
+### 1. Connect to Databricks data
 
-1. Open Power BI Desktop.
-2. Go to **"Home"** > "**Manage Parameters**".
-3. Click on **"New"** to create a new parameter named `ServerHostname`.
-4. Set the data type to "**Any"**.
-5. Enter the default value as the **Server hostname** captured from the Databricks SQL Warehouse connection detail .
+1. Open Databricks workspace in a browser.
+2. Open **SQL Warhouses** → select your SQL Warehouse → **Connection details**.
+3. Note **Server hostname** and **HTTP path** values. We will use these values later on.
 
-Repeat the above process and create parameter for HTTP path from SQL warehouse. You can get the HTTP path from DBSQL Warehouse connection details. Below is a sample screenshot of Databricks SQL Warehouse connection details showing the **Server hostname** and **HTTP path**:
+   <img width="400" src="./images/01.png" alt="SQL Warehouse connection details" />
 
-<img src="./images/01.png" alt="Databricks SQL Warehouse connection details" width="50%" height="50%">
+4. Open Power BI Desktop. Create a Blank report.
+5. Click **Home** → **Get data** → **More** → Search for **Databricks** and select **Azure Databricks** (or **Databricks** when using Databricks on AWS or GCP).
+6. Paste the values of **Server hostname** and **HTTP Path** previously noted.
 
-Your parameters should look like below in Power BI:
+   <img width="400" src="./images/02.png" alt="Azure Databricks connection" />
 
-<img src="./images/02.png" alt="Power BI parameters" width="50%" height="50%">s
+7. Choose any Data Connectivity mode - either **Import** or **DirectQuery**.
+8. Click **OK**. If prompted, enter authentication details.
+9. Search for **samples** catalog, **tpch** schema, **customer** table.
 
-### 2. Data Source Connection
+   <img width="400" src="./images/03.png" alt="Customer table" />
 
-1. Go to **"Home"** > **"Get Data"** > **"More..."**
-2. Search for **"Databricks"** and select **"Azure Databricks"** (or **"Databricks"** when using Databricks on AWS or GCP).
-3. Enter the following values:
-   - **Server Hostname**: Enter the Server hostname value copied from Databricks SQL Warehouse connection details tab.
-   - **HTTP Path**: Enter the HTTP path value copied from Databricks SQL Warehouse connection details tab.
-![Data Source Connection](./images/03.png)
+10. Select it and click **Load**.
 
 
-### 3. Add parameters to M Query
-1. Go to **"Transform Data"** > **Open Query Editor** > Under Query Setting Click on **Source**.
-2. In the M Query under **Databricks.Catalog** replace hardcoded Hostname and HTTP Path values with the parameter names created in Step 1:
-![Parameters in M Query](./images/04.png)
+### 2. Create parameters
+
+1. Click **Home** → **Transform data** → **Manage Parameters**.
+2. Click **New** to create a new parameter. Use the following properties:
+   - Name - `Hostname`
+   - Required - `No`
+   - Type - `Text`
+   - Current Value - `Server hostname of your SQL Warehouse`
+3. Click **New** to create a new parameter. Use the following properties:
+   - Name - `HttpPath`
+   - Required - `No`
+   - Type - `Text`
+   - Current Value - `HTTP path of your SQL Warehouse`
+
+      <img width="400" src="./images/04.png" alt="Parameters" />
+4. Click **OK**.
 
 
-## Power BI Template 
+### 3. Add parameters to M-query
 
-To automate the process and ease the deployment process save the report as Power BI template. A sample Power BI template [DBSQL-Parameterized-Connection.pbit](DBSQL-Parameterized-Connection.pbit) is already present in the current folder pointing to **customer** table in **samples** catalog. When you open the template enter respective **ServerHostname** and **HTTP Path** values of your Databricks SQL warehouse, a default report poiniting to **customer** table in **samples** catalog is created. You can then add your respective catalog and tables and create report.
-![Template connection](./images/05.png)
+1. Select **customer** → click **Advanced Editor**.
+2. Change the code as shown below.
+   - Before:
+   ```
+   Source = Databricks.Catalogs("adb-2219810816778143.3.azuredatabricks.net", "/sql/1.0/warehouses/a5ad4687dadae274", [Catalog=null, Database=null, EnableAutomaticProxyDiscovery=null]),
+   ```
+   - After:
+   ```
+   Source = Databricks.Catalogs(Hostname, HttpPath, [Catalog=null, Database=null, EnableAutomaticProxyDiscovery=null]),
+   ```
+3. Click **Done** → **Close & Apply**.
+4. Saved the file.
 
-![Sample report](./images/06.png)
+
+### 4. Validate in Power BI Service
+
+1. Click **Publish** → choose Power BI workspace to which you would like to publish the report.
+
+   <img width="400" src="./images/05.png" alt="Publish to Power BI" />
+
+2. Once publish is complete, open Power BI workspace in a web browser.
+3. Open the settings of published semantic model → expand **Parameters**.
+
+> Now you can easily change the values of **Hostname** and **HttpPath** parameters without the need for changing these values in Power BI Desktop and republishing the semantic model.
+
+<img width="400" src="./images/06.png" alt="Semantic model parameters" />
 
 
+### 5. Power BI Template 
+1. Switch to Power BI Desktop.
+2. Click **File** → **Save as** → choose path → Save as type **Power BI template files (*.pbit)**
+3. When prompted, optionally add template description. Click **OK**.
+
+> Now you can use this template to create new report with the same structure. However, Power BI Desktop will prompt for parameter values. Therefore, you can build the same report using a different Databricks workspace or SQL Warehouse.
+
+<img width="400" src="./images/07.png" alt="Creating a report using a template" />
+
+
+
+
+## Conclusion
+
+Using parameters in Power BI when connecting to Databricks SQL offers significant benefits by simplifying and streamlining the process of managing connections to different Databricks workspaces and SQL Warehouses. Instead of manually updating connection details each time you need to switch environments — a process prone to errors and inefficiency — parameters enable you to define key connection attributes like the server hostname and HTTP path as configurable values. This not only makes the workflow more flexible and efficient, but also reduces the chances of mistakes. With parameters, you can easily change connections directly within Power BI Service or when reusing a template, allowing for quicker report deployment and adaptability across various projects and teams.
 
