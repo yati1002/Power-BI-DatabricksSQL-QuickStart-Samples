@@ -2,8 +2,10 @@
 -- 1. Create test catalog and schema
 -- =====================================================================================================================
 
-CREATE CATALOG IF NOT EXISTS join_optimization;
-CREATE SCHEMA IF NOT EXISTS join_optimization.tpch;
+CREATE CATALOG IF NOT EXISTS powerbiquickstarts;
+USE CATALOG powerbiquickstarts;
+CREATE SCHEMA IF NOT EXISTS tpch;
+USE SCHEMA tpch;
 
 -- =====================================================================================================================
 -- 2. Create test tables without PK constraints
@@ -76,4 +78,4 @@ ALTER TABLE region ADD PRIMARY KEY (r_regionkey) RELY;
 -- 6. Cleanup
 -- =====================================================================================================================
 
-DROP CATALOG IF EXISTS join_optimization CASCADE;
+DROP CATALOG IF EXISTS powerbiquickstarts CASCADE;
