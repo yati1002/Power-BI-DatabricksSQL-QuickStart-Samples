@@ -6,8 +6,8 @@ Understanding the relationships between columns in your tables is essential for 
 
 
 ## Pre-requisites
-- [Databricks account](https://databricks.com/), access to a Databricks workspace, Unity Catalog, and SQL Warehouse. 
-- [Power BI Desktop](https://powerbi.microsoft.com/desktop/) installed on your machine. Latest version is highly recommended.
+- [Databricks account](https://databricks.com/), access to a Databricks workspace, Unity Catalog, and SQL Warehouse
+- [Power BI Desktop](https://powerbi.microsoft.com/desktop/) installed, latest version is highly recommended
 
 ## Step by Step Instructions
 1. Create separate catalog and a schema in Databricks Unity Catalog.

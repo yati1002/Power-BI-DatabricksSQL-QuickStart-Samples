@@ -9,9 +9,8 @@ This guide will walk you through how to set up and use parameters in Power BI fo
 
 Before you begin, ensure you have the following:
 
-- [Databricks account](https://databricks.com/)
-- Access to a Databricks workspace, as well as SQL Warehouse 
-- [Power BI Desktop](https://powerbi.microsoft.com/desktop/) installed on your machine
+- [Databricks account](https://databricks.com/), access to a Databricks workspace, Unity Catalog, and SQL Warehouse
+- [Power BI Desktop](https://powerbi.microsoft.com/desktop/) installed, latest version is highly recommended
 - [Power BI](https://powerbi.com) subscription 
 
 
