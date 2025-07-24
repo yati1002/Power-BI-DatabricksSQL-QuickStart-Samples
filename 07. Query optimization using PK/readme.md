@@ -10,7 +10,7 @@ Understanding the relationships between columns in your tables is essential for 
 - [Power BI Desktop](https://powerbi.microsoft.com/desktop/) installed, latest version is highly recommended
 
 ## Step by Step Instructions
-1. Create separate catalog and a schema in Databricks Unity Catalog.
+1. Create a catalog and a schema in Databricks Unity Catalog.
     ```sql
     CREATE CATALOG IF NOT EXISTS powerbiquickstarts;
     USE CATALOG powerbiquickstarts;

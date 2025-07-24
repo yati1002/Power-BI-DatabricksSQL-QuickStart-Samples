@@ -1,7 +1,18 @@
-create catalog if not exists powerbisamples;
-create schema if not exists powerbisamples.tpch;
+-- =====================================================================================================================
+-- 1. Create test catalog and schema
+-- =====================================================================================================================
 
-create or replace table powerbisamples.tpch.customer_lcase (
+CREATE CATALOG IF NOT EXISTS powerbiquickstarts;
+USE CATALOG powerbiquickstarts;
+CREATE SCHEMA IF NOT EXISTS tpch;
+USE SCHEMA tpch;
+
+
+-- =====================================================================================================================
+-- 2. Create test tables with COLLATION
+-- =====================================================================================================================
+
+CREATE OR REPLACE TABLE table customer_lcase (
   c_custkey bigint,
   c_name string,
   c_address string,
@@ -11,5 +22,12 @@ create or replace table powerbisamples.tpch.customer_lcase (
   c_mktsegment string COLLATE UTF8_LCASE,
   c_comment string);
 
-insert into powerbisamples.tpch.customer_lcase
-select * from samples.tpch.customer;
+INSERT INTO customer_lcase
+SELECT * FROM samples.tpch.customer;
+
+
+-- =====================================================================================================================
+-- 3. Cleanup
+-- =====================================================================================================================
+
+DROP CATALOG IF EXISTS powerbiquickstarts CASCADE;
