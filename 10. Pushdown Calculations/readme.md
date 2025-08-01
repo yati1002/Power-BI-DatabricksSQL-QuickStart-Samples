@@ -65,8 +65,8 @@ Before you begin, ensure you have the following:
 
     <img width="800" src="./images/03.png" alt="Query history" /> 
 
-    [!IMPORTANT]
-    The reason why Power BI generated 3 SQL-queries is that the measures use related table **`part`** to filter data. Therefore, Power BI is not able to combine these 3 queries into a single one.
+    > [!IMPORTANT]
+    >  The reason why Power BI generated 3 SQL-queries is that the measures use related table **`part`** to filter data. Therefore, Power BI is not able to combine these 3 queries into a single one.
 
 9. Next we will be using **`orders_transformed`** view which for every order item identifies the type of bag.  
     ``` sql
@@ -96,8 +96,8 @@ Before you begin, ensure you have the following:
 13. Check the number of SQL-queries in Databricks Query History. You should see only 1 SQL-queries.
     <img width="800" src="./images/05.png" alt="Query history" />
 
-    [!IMPORTANT]
-    The reason why Power BI generated only 1 SQL-queries in this case is that the measures use SUM aggregation function over columns in the same table **`orders_transformed`**. Therefore, Power BI could use as single SQL-query.
+    > [!IMPORTANT]
+    > The reason why Power BI generated only 1 SQL-queries in this case is that the measures use SUM aggregation function over columns in the same table **`orders_transformed`**. Therefore, Power BI could use as single SQL-query.
 
 
 14. Clean up your environment by dropping the catalog.
