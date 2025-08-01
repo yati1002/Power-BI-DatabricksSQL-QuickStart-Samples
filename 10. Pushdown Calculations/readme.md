@@ -63,6 +63,7 @@ Before you begin, ensure you have the following:
 
 8. Check the number of SQL-queries in Databricks Query History. You should see 3 SQL-queries, each calculating one of the measures used in the table visual.
     <img width="800" src="./images/03.png" alt="Query history" /> 
+   
     The reason why Power BI generated 3 SQL-queries is that the measures use related table **`part`** to filter data. Therefore, Power BI is not able to combine these 3 queries into a single one.
 
 9. Next we will be using **`orders_transformed`** view which for every order item identifies the type of bag.  
