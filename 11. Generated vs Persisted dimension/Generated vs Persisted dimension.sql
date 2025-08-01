@@ -1,10 +1,21 @@
-create catalog if not exists powerbisamples;
-create schema if not exists powerbisamples.tpch;
+-- =====================================================================================================================
+-- 1. Create test catalog and schema
+-- =====================================================================================================================
 
-create or replace table powerbisamples.tpch.orders as select * from samples.tpch.orders;
+CREATE CATALOG IF NOT EXISTS powerbiquickstarts;
+USE CATALOG powerbiquickstarts;
+CREATE SCHEMA IF NOT EXISTS tpch;
+USE SCHEMA tpch;
 
-create or replace table powerbisamples.tpch.dim_date as
-select distinct
+
+-- =====================================================================================================================
+-- 2. Create test tables
+-- =====================================================================================================================
+
+CREATE OR REPLACE TABLE orders AS SELECT * FROM samples.tpch.orders;
+
+CREATE OR REPLACE TABLE dim_date AS
+SELECT DISTINCT
   o_orderdate as date,
   year(o_orderdate) as year,
   month(o_orderdate) as month,
@@ -12,5 +23,11 @@ select distinct
   dayofweek(o_orderdate) as day_of_week,
   weekofyear(o_orderdate) as week_of_year,
   quarter(o_orderdate) as quarter
-from powerbisamples.tpch.orders;
+FROM orders;
 
+
+-- =====================================================================================================================
+-- 3. Cleanup
+-- =====================================================================================================================
+
+DROP CATALOG IF EXISTS powerbiquickstarts CASCADE;

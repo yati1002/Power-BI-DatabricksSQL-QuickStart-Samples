@@ -1,28 +1,55 @@
 # Generated vs Persisted dimension
+
 ## Introduction
-Dimensions play a crucial role in data modelling. For reference dimensions such as Date dimension, in Power BI you can either use either DAX-generated tables (*Generated dimension*) or you can use a persisted tables (*Persisted dimension*) in the data source, e.g. Delta-table in Databricks Unity Catalog. As the behavior of Power BI when using these two types of dimensions differs, choosing the right approach is crucial to achieve the best performance and end user experience. 
 
-In this quickstart sample we will showcase the benefits of Persisted dimension over Generated dimension by using example of **Date** dimension. Persisted dimension helps generate fewer SQL-queries, hence achieving overall better performance and user experience when using **DirectQuery** or **Composite models**.
+Dimensions are fundamental to effective data modeling. When working with reference dimensions like the Date dimension, Power BI developers can choose between creating DAX-generated tables (*Generated dimensions*) or leveraging persisted tables (*Persisted dimensions*) stored in the data source, such as a Delta table in Databricks Unity Catalog. The way Power BI interacts with these dimension types can significantly impact report performance and user experience, making it essential to pick the right strategy.
+
+In this quickstart, we'll highlight the advantages of using a *Persisted dimension* over a *Generated dimension*, focusing on the Date dimension as a practical example. Leveraging a persisted dimension can reduce the number of SQL queries generated - especially when working with *DirectQuery* or *Composite models* - leading to improved performance and a smoother experience for your end users.
 
 
-## Pre-requisites
+
+## Prerequisites
 
 Before you begin, ensure you have the following:
 
-- [Databricks account](https://databricks.com/), access to a Databricks workspace, and Databricks SQL Warehouse. 
-- [Power BI Desktop](https://powerbi.microsoft.com/desktop/) installed on your machine. Latest version is highly recommended.
+- [Databricks account](https://databricks.com/), access to a Databricks workspace, Unity Catalog, and SQL Warehouse
+- [Power BI Desktop](https://powerbi.microsoft.com/desktop/) installed, latest version is highly recommended
+
 
   
 ## Step by Step Instructions
-1. Copy-paste the code from [Generated vs Persisted.sql](./Generated%20vs%20Persisted%20dimension.sql) SQL-script to Databricks SQL Editor and execute the script to create the objects required for this example. This includes **powerbisamples** catalog, **tpch** schema, as well as tables and views.
-   
+
+1. Create a catalog and a schema in Databricks Unity Catalog.
+    ```sql
+    CREATE CATALOG IF NOT EXISTS powerbiquickstarts;
+    USE CATALOG powerbiquickstarts;
+    CREATE SCHEMA IF NOT EXISTS tpch;
+    USE SCHEMA tpch;
+    ```
+
+2. Create test tables in the catalog by replicating tables from **`samples`** catalog.
+    ```sql
+    CREATE OR REPLACE TABLE orders as SELECT * FROM samples.tpch.orders;
+
+    CREATE OR REPLACE TABLE dim_date as
+    SELECT DISTINCT
+    o_orderdate as date,
+    year(o_orderdate) as year,
+    month(o_orderdate) as month,
+    day(o_orderdate) as day,
+    dayofweek(o_orderdate) as day_of_week,
+    weekofyear(o_orderdate) as week_of_year,
+    quarter(o_orderdate) as quarter
+    FROM orders;
+    ```
+
 2. Open Power BI Desktop, create a new report.
    
-3. Connect to Databricks SQL Warehouse, **powerbisamples** catalog, **tpch** schema, and add the following tables to the semantic model
-    - **orders** → Direct Query 
-    - **dim_date** → Dual Mode. Rename the table to **date_persisted**.
+3. Connect to Databricks SQL Warehouse, **`powerbiquickstarts`** catalog, **`tpch`** schema, and add the following tables to the semantic model
+    - **`orders`** → Direct Query 
+    - **`dim_date`** → Dual Mode. Rename the table to **`date_persisted`**.
       
-4. Create a calculated **date_generated** table by using the below DAX-formula. This generated table contains the dates based on minimum and maximum o_orderdate values in **orders** table
+4. Create a calculated **`date_generated`** table by using the below DAX-formula. This generated table contains the dates based on minimum and maximum **`o_orderdate`** values in **`orders`** table
     ```
     date_generated = 
     VAR StartDate = CALCULATE(MIN('orders'[o_orderdate]))
@@ -37,33 +64,33 @@ Before you begin, ensure you have the following:
         )
     ```
 
-5. Configure table relationships as shown on the picture below.
-![Data model](./images/data_model.png)
+5. Create table relationships as shown on the picture below.
+    <img width="600" src="./images/data_model.png" alt="Data model" />
 
-6. Create a table visual and add **Year** column from **date_generated** table, as well as **Count of o_orderkey**. Turn off Totals for the table visual.
-    
-    ![Table visual](./images/generate_table.png)
+6. Create a table visual and add **`Year`** column from **`date_generated`** table, as well as **`Count of o_orderkey`**. Turn off Totals for the table visual.
+    <img width="200" src="./images/generate_table.png" alt="Table visual" />
 
 7. Refresh visuals using [Performance Analyzer](https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-performance-analyzer) in Power BI Desktop.
    
 8. Check the number of SQL-queries in Databricks Query History. You should see 8 SQL-queries, 1 SQL-query to retrieve records for **date_generated** table and 7 SQL-queries to calculate counts of orders per year.
+    <img width="800" src="./images/generate_queries.png" alt="Query History" />
 
-    ![Query History](./images/generate_queries.png)
-
-9. Next create a table visual and add **year** column from **date_persisted** table, as well as **Count of o_orderkeys**. Turn off Totals for the table visual.
-
-    ![Table visual](./images/persist_table.png)
+9. Next create a table visual and add **`year`** column from **`date_persisted`** table, as well as **`Count of o_orderkey`**. Turn off Totals for the table visual.
+    <img width="200" src="./images/persist_table.png" alt="Table visual" />
 
 10. Refresh visuals using [Performance Analyzer](https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-performance-analyzer) in Power BI Desktop.
     
-11. Check the number of SQL-queries in Databricks Query History. You should see only 1 SQL-query to retrieve counts of orders for all years at once. As **date_persisted** table is set to Dual mode, data for this table is cached in memory.
+11. Check the number of SQL-queries in Databricks Query History. You should see only 1 SQL-query to retrieve counts of orders for all years at once. As **`date_persisted`** table is set to Dual mode, data for this table is cached in memory.
+    <img width="800" src="./images/persisted_queries.png" alt="Query History" />
 
-    ![Query History](./images/persisted_queries.png) 
 
 
 ## Conclusion
-As we saw in this example, by using a dimension table persisted in data source, i.e. Delta-table in Unity Catalog, and setting it to **Dual** storage mode in Power BI semantic model, we achieved much better performance and end user experience by decreasing the number of SQL-queries generated by Power BI when using DirectQuery or Composite models. Such technique allows decrease overall workload both on Databricks SQL and Power BI, thus serving more users at lower cost.
+
+Persisting dimension tables in the data source, such as Delta tables in Unity Catalog, and configuring them with _Dual_ storage mode in Power BI, reduces the number of SQL queries Power BI generates when using _DirectQuery_ or _Composite models_, leading to significantly improved performance and a more responsive end-user experience. This approach lowers the workload on both Databricks SQL and Power BI, enabling organizations to serve more users efficiently while costs down.
+
+
 
 ## Power BI Template 
 
-A sample Power BI template [Generate vs Persisted dimension.pbit](./Generated%20vs%20Persisted%20dimension.pbit) is available in the current folder. When opening the template, enter respective **ServerHostname** and **HTTP Path** values of your Databricks SQL Warehouse. The template uses **samples** catalog as well as the name of **Catalog** (default *powerbisamples*) and **Schema** (default *tpch*).
+A Power BI template [Generate vs Persisted dimension.pbit](./Generated%20vs%20Persisted%20dimension.pbit) and [Generate vs Persisted dimension.sql](./Generated%20vs%20Persisted%20dimension.sql) script are provided in this folder to demonstrate the approach of using persisted dimensions outlined above. To use the template, simply enter your Databricks SQL Warehouse's **`ServerHostname`** and **`HttpPath`**, along with the **`Catalog`** and **`Schema`** names that correspond to the environment set up in the instructions above.

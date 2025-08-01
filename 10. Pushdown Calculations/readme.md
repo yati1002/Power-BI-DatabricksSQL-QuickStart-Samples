@@ -114,4 +114,4 @@ By pushing calculations - or portions of them - down to the Databricks SQL data 
 
 ## Power BI template
 
-A Power BI template [Pushdown Calculations.pbit](./Pushdown%20Calculations.pbit) and [Pushdown Calculations.sql](./Pushdown%20Calculations.sql) are provided in this folder to demonstrate the approach of pushing down calculations outlined above. To use the template, simply enter your Databricks SQL Warehouse's **`ServerHostname`** and **`HttpPath`**, along with the **`Catalog`** and **`Schema`** names that correspond to the environment set up in the instructions above.
+A Power BI template [Pushdown Calculations.pbit](./Pushdown%20Calculations.pbit) and [Pushdown Calculations.sql](./Pushdown%20Calculations.sql) script are provided in this folder to demonstrate the approach of pushing down calculations outlined above. To use the template, simply enter your Databricks SQL Warehouse's **`ServerHostname`** and **`HttpPath`**, along with the **`Catalog`** and **`Schema`** names that correspond to the environment set up in the instructions above.

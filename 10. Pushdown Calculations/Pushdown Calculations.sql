@@ -9,15 +9,15 @@ USE SCHEMA tpch;
 
 
 -- =====================================================================================================================
--- 2. Create test tables with COLLATION
+-- 2. Create test tables
 -- =====================================================================================================================
 
-CREATE OR REPLACE TABLE TABLE region AS SELECT * FROM samples.tpch.region;
-CREATE OR REPLACE TABLE TABLE nation AS SELECT * FROM samples.tpch.nation;
-CREATE OR REPLACE TABLE TABLE customer AS SELECT * FROM samples.tpch.customer;
-CREATE OR REPLACE TABLE TABLE part AS SELECT * FROM samples.tpch.part;
-CREATE OR REPLACE TABLE TABLE orders AS SELECT * FROM samples.tpch.orders;
-CREATE OR REPLACE TABLE TABLE lineitem AS SELECT * FROM samples.tpch.lineitem;
+CREATE OR REPLACE TABLE region AS SELECT * FROM samples.tpch.region;
+CREATE OR REPLACE TABLE nation AS SELECT * FROM samples.tpch.nation;
+CREATE OR REPLACE TABLE customer AS SELECT * FROM samples.tpch.customer;
+CREATE OR REPLACE TABLE part AS SELECT * FROM samples.tpch.part;
+CREATE OR REPLACE TABLE orders AS SELECT * FROM samples.tpch.orders;
+CREATE OR REPLACE TABLE lineitem AS SELECT * FROM samples.tpch.lineitem;
 
 CREATE OR REPLACE VIEW orders_transformed AS
 SELECT o_orderkey, o_custkey, o_orderstatus, o_totalprice, o_orderdate, o_orderpriority, o_clerk, o_shippriority

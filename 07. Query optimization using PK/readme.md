@@ -5,9 +5,15 @@
 Understanding the relationships between columns in your tables is essential for effective data management and analytics. Primary key constraints play a crucial role in defining these relationships, making it easier for users and tools to interpret data structure. In Databricks, while primary key constraints are not enforced, the platform provides a **RELY** option for primary key constraints. This option allows the Databricks engine to utilize these constraints as hints for optimizing query performance in certain scenarios. For a detailed explanation of how this feature can enhance query optimization, refer to the [Query optimization using primary key constraints](https://learn.microsoft.com/en-us/azure/databricks/sql/user/queries/query-optimization-constraints) article.
 
 
-## Pre-requisites
+
+## Prerequisites
+
+Before you begin, ensure you have the following:
+
 - [Databricks account](https://databricks.com/), access to a Databricks workspace, Unity Catalog, and SQL Warehouse
 - [Power BI Desktop](https://powerbi.microsoft.com/desktop/) installed, latest version is highly recommended
+
+
 
 ## Step by Step Instructions
 1. Create a catalog and a schema in Databricks Unity Catalog.
@@ -90,11 +96,13 @@ This query execution was more efficient because Databricks SQL engine leveraged 
     DROP CATALOG IF EXISTS powerbiquickstarts CASCADE;
     ```
 
+
 ## Conclusion
 As you could see in this example, the proper use of primary key constraints with **RELY** option can significantly improve the efficiency of SQL-queries. This is especially important for BI-workloads, such as Power BI, where star-schema is the recommended data modelling approach, hence joining multiple tables is common. More efficient query execution (less storage scan operations, lower CPU usage) is even more important in high-concurrency scenarios where multiple users generate 100s or even 1,000s queries per minute.
 
 Adding primary key constraints with the **RELY** option allows the Databricks SQL engine to use these constraints as trusted hints for optimizing query performance, even though the constraints themselves are not enforced. When **RELY** is set, Databricks SQL can recognize uniqueness in key columns and make smarter decisions during query planning, such as avoiding unnecessary joins and reducing data scanned, which leads to more efficient query execution. For example, after applying **RELY** primary key constraints, Databricks was able to skip scanning and joining a table that did not affect the query result, thereby decreasing the data read and improving performance. This not only delivers significantly faster and more consistent query performance, but is also crucial in environments where many users are executing queries simultaneously, as it minimizes query latency and resource contention. However, this benefit relies on the data actually being unique in the constrained columns; otherwise, it may lead to incorrect query results.
 
 
+
 ## Power BI template 
-A Power BI template [Query optimization using PK.pbit](./Query%20optimization%20using%20PK.pbit) is provided in this folder to demonstrate the query optimization concepts outlined above. To use the template, simply enter your Databricks SQL Warehouse's **ServerHostname** and **HttpPath**, along with the **Catalog** and **Schema** names that correspond to the environment set up in the instructions above.
+A Power BI template [Query optimization using PK.pbit](./Query%20optimization%20using%20PK.pbit) and [Query optimization using PK.sql](./Query%20optimization%20using%20PK.sql) script are provided in this folder to demonstrate the query optimization concepts outlined above. To use the template, simply enter your Databricks SQL Warehouse's **ServerHostname** and **HttpPath**, along with the **Catalog** and **Schema** names that correspond to the environment set up in the instructions above.
