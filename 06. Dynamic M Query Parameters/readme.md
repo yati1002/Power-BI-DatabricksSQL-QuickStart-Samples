@@ -2,7 +2,7 @@
 
 ## Introduction
 
-[Dynamic M query parameters](!https://learn.microsoft.com/en-us/power-bi/connect-data/desktop-dynamic-m-query-parameters) empower model authors to let report viewers set filter or slicer values that are directly passed as M query parameters. This powerful capability allows authors to precisely control how filter selections are incorporated into _DirectQuery_ source queries, ensuring that queries are constructed for optimal performance and accuracy. By using dynamic M query parameters, you can fine-tune your Power BI reports to deliver more efficient, responsive analytics - making them especially valuable for optimizing query performance in complex data scenarios
+[Dynamic M query parameters](https://learn.microsoft.com/en-us/power-bi/connect-data/desktop-dynamic-m-query-parameters) empower model authors to let report viewers set filter or slicer values that are directly passed as M query parameters. This powerful capability allows authors to precisely control how filter selections are incorporated into _DirectQuery_ source queries, ensuring that queries are constructed for optimal performance and accuracy. By using dynamic M query parameters, you can fine-tune your Power BI reports to deliver more efficient, responsive analytics - making them especially valuable for optimizing query performance in complex data scenarios
 
 
 
