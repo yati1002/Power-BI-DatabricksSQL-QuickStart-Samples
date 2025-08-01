@@ -30,7 +30,7 @@ Before you begin, ensure you have the following:
 
 
 > [!TIP]
-> It is always a good practice to parameterize your connection string. This really helps ease out the development expeience as you can dynamically connect to any Databricks SQL warehouse. For details on how to paramterize your connection string you can refer to [this](/01.%20Connecting%20Power%20BI%20to%20Databricks%20SQL%20using%20Parameters) article.
+> It is always a good practice to parameterize your connections. This really helps ease out the development expeience as you can dynamically connect to any Databricks SQL warehouse. For details on how to paramterize your connection string you can refer to [this](/01.%20Connecting%20Power%20BI%20to%20Databricks%20SQL%20using%20Parameters) article.
 
 
 ## 2. Performance with different storage modes for dimension table
@@ -99,6 +99,7 @@ Also the I/O stats show 1 row returned for the Card visual query.
 3. Open **Import** report page and change the region in the respective Filter visual.
 
 As shown on the screenshot of the Performance Analyzer below, the query for the Slicer visual took only **93 ms** as the dimension table is set to *Import* method. However, it took **2529 ms** for the Card visual query. This is much slower than in the previous setup where we used *DirectQuery* mode for both fact and dimension tables.
+
 <img width="600" src="./images/Import/PerformanceAnalyzer.png" alt="Performance Analyzer" />
 
 You can also find the query execution time by looking at Databricks Query History. Since the dimension table is set to *Import* mode the Filter visual did not fire a query. Because the fact table is set to *DirectQuery* mode the Card visual fired 1 query.  
@@ -116,6 +117,7 @@ As I/O stats shows, in this setup almost **500k** rows are returned. This result
 3. Open **Dual** report page and change the region in the respective Filter visual.
 
 As shown on the screenshot of the Performance Analyzer below the Slicer visual query took only **56 ms** and Card visual query took **805 ms**.
+
 <img width="600" src="./images/Dual/PerformanceAnalyzer.png" alt="Performance Analyzer" />
 
 You can also find the query execution time by looking at Databricks Query History. When using *Dual* mode, Power BI provides the benefits of both *Import* and *DirectQuery* modes by intelligently deciding when to use which approach. In this case, there was no query fired in Databricks SQL for the Filter visual. However, there was a query fired for the Card visual.
@@ -132,7 +134,7 @@ As I/O stats shows, in this case only **1** row was returned because the value f
 
 As we could see above using **Import** storage mode to improve performance of Power BI semantic models does not always lead to positive outcomes. In certain cases it can actually decrease performance. Below you can see our general recommendation for using different storage modes for typical star schema data models.
 
-![Summary](./images/Summary.png)
+<img width="600" src="./images/Summary.png" alt="Summary" />
 
 Using **Dual** mode for dimension tables in Power BI offers key benefits over Import mode, especially when working with DirectQuery fact tables. **Dual** mode enables Power BI to intelligently switch between *Import* and *DirectQuery* behaviors based on the visual and context: simple slicers or filters can leverage fast, cached data (like Import mode), resulting in very quick response times; meanwhile, aggregations or visuals involving the fact table can operate in *DirectQuery* mode, ensuring only the necessary data is queried from the source. In practice, this reduces unnecessary large data transfers - unlike Import mode, which can force Power BI to retrieve and process entire datasets on the client side, often leading to slower performance and heavier workload. By using **Dual** mode, reports achieve both the efficiency of in-memory querying for dimension-only visuals and the accuracy and freshness of *DirectQuery* for interactions with large fact tables, ultimately resulting in faster query times, reduced backend workload, and a much smoother end-user experience.
 
