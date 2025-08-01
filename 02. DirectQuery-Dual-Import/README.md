@@ -27,7 +27,7 @@ In the next section we will compare different storage modes and showcase which s
 For our testing scenario we use a **Small** Pro SQL Warehouse. We will create report with both query pattterns highlighted above. 
 
 
-### 1. Databricks connection 
+### 1. Data Model
 
 1. Open Power BI Desktop → **"Home"** → **"Get Data"** → **"More..."**.
 
@@ -42,11 +42,8 @@ For our testing scenario we use a **Small** Pro SQL Warehouse. We will create re
 > [!TIP]
 > It is always a good practice to parameterize your connections. This really helps ease out the development expeience as you can dynamically connect to any Databricks SQL warehouse. For details on how to paramterize your connection string you can refer to [this](/01.%20Connecting%20Power%20BI%20to%20Databricks%20SQL%20using%20Parameters) article.
 
-
-### 2.1. Data Model
-1. Open Power BI Desktop, create a new report.
-2. Connect to Databricks SQL warehouse, **`samples`** catalog, **`tpch`** schema.
-3. Add test tables as follows.
+4. Connect to **`samples`** catalog, **`tpch`** schema.
+5. Add tables as follows.
    - **`region_DQ`** - *region* dimension table set to **DirectQuery** storage mode.
    - **`nation_DQ`** - *nation* dimension table set to **DirectQuery** storage mode.
    - **`customer_DQ`** - *customer* dimension table set to **DirectQuery** storage mode.
@@ -61,12 +58,12 @@ For our testing scenario we use a **Small** Pro SQL Warehouse. We will create re
 > [!TIP]
 > First, add fact table and the first set of dimension tables using *DirectQuery* mode. Then, replicate and rename dimension tables by using *Duplicate* capability. Once all tables added, set desired storage mode in *Model view*.
 
-4. Create table relationsships as follows.
+6. Create table relationsships as follows.
    - **`region_DQ`** → **`nation_DQ`** → **`customer_DQ`** → **`orders_DQ`**
    - **`region_Import`** → **`nation_Import`** → **`customer_Import`** → **`orders_DQ`**
    - **`region_Dual`** → **`nation_Dual`** → **`customer_Dual`** → **`orders_DQ`**
 
-5. Create 3 report pages for 3 storage modes. Each page should contain a Card visual displaying **`Sum of o_totalprice`** and a Filter displaying **`r_name`** column.
+7. Create 3 report pages for 3 storage modes. Each page should contain a Card visual displaying **`Sum of o_totalprice`** and a Filter displaying **`r_name`** column.
    - **DirectQuery** page - use **`r_name`** column from **`region_DQ`** table
    - **Import** page - use **`r_name`** column from **`region_Import`** table
    - **Dual** page - use **`r_name`** column from **`region_Dual`** table.
