@@ -24,6 +24,7 @@ Before you begin, ensure you have the following:
 3. Add **`lineitem`** table. Set the table to **DirectQuery** mode.
 
 4. Next, in the Power Query Editor, define 2 parameters - **`ShipStartDateParameter`** and **`ShipEndDateParameter`** - which we will use to filter data in the fact table.
+
     <img width="400" src="./images/01.png" alt="Parameters" />
 
 5. Next, adjust M-query for **`lineitem`** table as follows. Here, add an extra operation to filter the records based on **`l_shipdate`** column and **`ShipStartDateParameter`**/**`ShipEndDateParameter`** parameter values.
