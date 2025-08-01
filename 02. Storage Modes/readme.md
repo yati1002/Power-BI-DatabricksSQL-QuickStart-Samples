@@ -58,6 +58,10 @@ For our testing scenario we use a **Small** Pro SQL Warehouse. We will create re
 > [!TIP]
 > First, add fact table and the first set of dimension tables using *DirectQuery* mode. Then, replicate and rename dimension tables by using *Duplicate* capability. Once all tables added, set desired storage mode in *Model view*.
 
+> [!WARNING]
+> Switching storage mode to *Import* is irreversible operation. Therefore, we strongly recommend creating a backup of your reports before switching tables to *Import* mode for experimentation purposes.
+
+
 6. Create table relationsships as follows.
    - **`region_DQ`** → **`nation_DQ`** → **`customer_DQ`** → **`orders_DQ`**
    - **`region_Import`** → **`nation_Import`** → **`customer_Import`** → **`orders_DQ`**
@@ -138,8 +142,6 @@ As we could see above using **Import** storage mode to improve performance of Po
 
 Using **Dual** mode for dimension tables in Power BI offers key benefits over Import mode, especially when working with DirectQuery fact tables. **Dual** mode enables Power BI to intelligently switch between *Import* and *DirectQuery* behaviors based on the visual and context: simple slicers or filters can leverage fast, cached data (like Import mode), resulting in very quick response times; meanwhile, aggregations or visuals involving the fact table can operate in *DirectQuery* mode, ensuring only the necessary data is queried from the source. In practice, this reduces unnecessary large data transfers - unlike Import mode, which can force Power BI to retrieve and process entire datasets on the client side, often leading to slower performance and heavier workload. By using **Dual** mode, reports achieve both the efficiency of in-memory querying for dimension-only visuals and the accuracy and freshness of *DirectQuery* for interactions with large fact tables, ultimately resulting in faster query times, reduced backend workload, and a much smoother end-user experience.
 
-> [!WARNING]
-> Switching storage mode to Import is irreversible operation. Therefore, we strongly recommend creating a backup of your reports before switching tables to Import mode for experimentation purposes.
 
 
 ## Power BI Template 
