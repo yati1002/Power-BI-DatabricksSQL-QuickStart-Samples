@@ -37,11 +37,6 @@ Before you begin, ensure you have the following:
     CREATE OR REPLACE TABLE lineitem AS SELECT * FROM samples.tpch.lineitem;
     ```
 
-3. Open Power BI Desktop, create a new report.
-
-        1. Copy-paste the code from [Pushdown Calculations.sql](./Pushdown%20Calculations.sql) SQL-script to Databricks SQL Editor and execute the script to create the objects required for this example. This includes **powerbisamples** catalog, **tpch** schema, as well as tables and a view.
-        2. Open Power BI Desktop, create a new report.
-
 3. Connect to Databricks SQL Warehouse, **powerbiquickstarts** catalog, **tpch** schema, and add the following tables/views to the semantic model. All tables should be set to **DirectQuery** storage mode.
     - `region`
     - `nation`
