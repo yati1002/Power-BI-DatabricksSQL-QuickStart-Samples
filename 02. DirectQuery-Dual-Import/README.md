@@ -1,115 +1,144 @@
 # Using storage modes - DirectQuery vs Dual vs Import
 
 ## Introduction
-[Storage Modes](https://learn.microsoft.com/en-us/power-bi/transform-model/desktop-storage-mode) are really important aspect of Power BI. Whether you're a seasoned Power BI user or just getting started, understanding storage modes is crucial for maximizing performance and efficiently managing your data. This readme file serves as your roadmap, providing insights into the various storage modes offered by Power BI. In this example we will showcase and compare performance between Direct Query, Import, and Dual storage modes and show how Dual helps with performance of the report. You can follow the steps mentioned in the [Step by Step Instructions](#step-by-step-instructions) section.
 
-## Pre-requisites
+[Storage modes](https://learn.microsoft.com/en-us/power-bi/transform-model/desktop-storage-mode) are a critical component of Power BI data modeling. Whether you’re a seasoned practitioner or just getting started, grasping how storage modes work is key to optimizing report performance and managing data efficiently. This quickstart will help you navigate the different storage modes available in Power BI - _DirectQuery_, _Import_, and _Dual_ - and explains how each option impacts performance and user experience. Through practical examples, you’ll see side-by-side comparisons and learn how leveraging _Dual_ storage mode can significantly enhance report responsiveness. To get started, follow the detailed instructions in the [Step by Step Instructions](#step-by-step-instructions) section.
+
+
+
+## Prerequisites
 
 Before you begin, ensure you have the following:
 
-- [Databricks account](https://databricks.com/) and SQL warehouse set up 
-- [Power BI Desktop](https://powerbi.microsoft.com/desktop/) installed on your machine.
+- [Databricks account](https://databricks.com/), access to a Databricks workspace, Unity Catalog, and SQL Warehouse
+- [Power BI Desktop](https://powerbi.microsoft.com/desktop/) installed, latest version is highly recommended
 
 
 ## Step by Step Instructions
 
 ## 1. Databricks Data Source Connection 
 
-1. Open Power BI Desktop
-2. Go to **"Home"** > **"Get Data"** > **"More..."**
-3. Search for **"Databricks"** and select **"Azure Databricks"** (or **"Databricks"** when using Databricks on AWS or GCP).
-4. Enter the following values:
+1. Open Power BI Desktop → **"Home"** → **"Get Data"** → **"More..."**.
+
+2. Search for **Databricks** and select **Azure Databricks** (or **Databricks** when using Databricks on AWS or GCP).
+
+3. Enter the following values:
    - **Server Hostname**: Enter the Server hostname value from Databricks SQL Warehouse connection details tab.
    - **HTTP Path**: Enter the HTTP path value  from Databricks SQL Warehouse connection details tab.
 
-Below is the sample screenshot of how the data source would look like
-
-![Data Source Connection](./images/conneciton.png)
+   <img width="600" src="./images/01-1.png" alt="Azure Databricks connection" />
 
 
-## Best Practice 
-It is always a good practice to parameterize your connection string. This really helps ease out the development expeience as you can dynamically connect to any Databricks SQL warehouse. For details on how to paramterize your connection string you can refer to [this](/01.%20Connecting%20Power%20BI%20to%20Databricks%20SQL%20using%20Parameters) article.
+> [!TIP]
+> It is always a good practice to parameterize your connection string. This really helps ease out the development expeience as you can dynamically connect to any Databricks SQL warehouse. For details on how to paramterize your connection string you can refer to [this](/01.%20Connecting%20Power%20BI%20to%20Databricks%20SQL%20using%20Parameters) article.
+
 
 ## 2. Performance with different storage modes for dimension table
-In the next section we will compare different storage modes and showcase which storage mode is good for dimension table. There are two common query patterns for dimension tables:
+In the next section we will compare different storage modes and showcase which storage mode is a good fit for dimension table. There are two common query patterns for dimension tables:
 1. Retrieving values for slicers/filters.
 2. Aggregation on fact tables using dimension data.
 
-For our testing scenario we are using a "**Small**" Pro SQL Warehouse and we will create report with both query pattterns highlighted above. 
+For our testing scenario we use a **Small** Pro SQL Warehouse and we will create report with both query pattterns highlighted above. 
 
-### 2.1. Data Model Creation
-To make performance testing easy to follow we will use **samples** catalog and **tpch** schema and use below tables. In order to compare the performance between three modes we will use dimension tables with different storage modes and analyze time taken based on each mode.
+### 2.1. Data Model
+1. Open Power BI Desktop, create a new report.
+2. Connect to Databricks SQL warehouse, **`samples`** catalog, **`tpch`** schema.
+3. Add test tables as follows.
+   - **`region_DQ`** - *region* dimension table set to **DirectQuery** storage mode.
+   - **`nation_DQ`** - *nation* dimension table set to **DirectQuery** storage mode.
+   - **`customer_DQ`** - *customer* dimension table set to **DirectQuery** storage mode.
+   - **`region_Dual`** - *region* dimension table set to **Dual** storage mode. 
+   - **`nation_Dual`** - *nation* dimension table set toset **Dual** storage mode.
+   - **`customer_Dual`** - *customer* dimesntion table set to **Dual** storage mode.
+   - **`region_Import`** - *region* dimension table set to use **Import** storage mode. 
+   - **`nation_Import`** - *nation* dimension table set to **Import** storage mode.
+   - **`customer_Import`** - *customer* dimension table set to **Import** storage mode.
+   - **`orders_DQ`** - *orders* fact table set to **DirectQuery** storage mode.
 
-1. **region_DQ** - *region* dimension table configured to use **Direct Query** storage mode.
+> [!TIP]
+> First, add fact table and the first set of dimension tables using *DirectQuery* mode. Then, replicate and rename dimension tables by using *Duplicate* capability. Once all tables added, set desired storage mode in *Model view*.
 
-2. **nation_DQ** - nation dimension table configured to use **Direct Query** storage mode.
+4. Create table relationsships as follows.
+   - **`region_DQ`** → **`nation_DQ`** → **`customer_DQ`** → **`orders_DQ`**
+   - **`region_Import`** → **`nation_Import`** → **`customer_Import`** → **`orders_DQ`**
+   - **`region_Dual`** → **`nation_Dual`** → **`customer_Dual`** → **`orders_DQ`**
 
-3. **customer_DQ** - customer dimesntion table configured to use **Direct Query** storage mode.
+5. Create 3 report pages for 3 storage modes. Each page should contain a Card visual displaying **`Sum of o_totalprice`** and a Filter displaying **`r_name`** column.
+   - **DirectQuery** page - use **`r_name`** column from **`region_DQ`** table
+   - **Import** page - use **`r_name`** column from **`region_Import`** table
+   - **Dual** page - use **`r_name`** column from **`region_Dual`** table.
 
-4. **region_Dual** - region dimension table configured to use **Dual** storage mode. 
+Below is the screenshot demonstrating the resulting data model and a report.
+<img width="1000" src="./images/DataModel.png" alt="Data model" />
 
-5. **nation_Dual** - nation dimension table configured to use **Dual** storage mode.
 
-6. **customer_Dual** - customer dimesntion table configured to use **Dual** storage mode.
+### 2.2. Direct Query 
+> [!Note]
+> In order to get similar results we recommend running the test on a SQL Warehouse which is already started.
 
-7. **region_Import** - region dimension table configured to use **Import** storage mode. 
+1. In Power BI Desktop, click **Optimize** → **Performance Analyzer**.
+2. In the Performance Analyzer tab, click **Start Recording**.
+3. Open **DirectQuery** report page and change the region in the respective Filter visual.
 
-8. **nation_Import** - nation dimension table configured to use **Import** storage mode.
+As shown on the screenshot of the Performance Analyzer below, in our environment the query took **953 ms** for the flicer and **946 ms** for the card visual.
 
-9. **customer_Import** - customer dimesntion table configured to use **Import** storage mode.
+<img width="600" src="./images/DirectQuery/PerformanceAnalyzer.png" alt="Performance Analyzer" />
 
-10. **orders_DQ** - orders fact table configured to use **Direct Query** storage mode.
+You can also find the query execution time by looking at Databricks Query History. Since both the dimension and fact tables are set to *DirectQuery* mode, the Filter and the Card visuals fired 2 queries in the backend. 
 
-Below is the screenshot of how our data model and the report with 2 dimension scenario's mentioned above looks like:
-![Data Source Connection](./images/DataModel.png)
+<img width="1000" src="./images/DirectQuery/QueryHistory.png" alt="Query History" />
 
-### 2.2. Direct Query mode 
-In order to get best results it's better to run the test against already started SQL Warehouse by running few samples queries against it. After warehouse is warmed up follow below steps:
-1. Click **Optimize** > **Performance Analyzer** in Power BI Desktop.
-2. In the Performance Analyzer tab click "**Start Recording**".
-3. Open **DirectQuery** report page and change the region in the respective filter visual.
-   
-#### 2.2.1 Query analysis: Performance Analyzer and DBSQL
-As shown on the screenshot of the Performance Analyzer below the query took **953 ms** for the flicer and **946 ms** for the card visual.  ![Data Source Connection](./images/DirectQuery/PerformanceAnalyzer.png)
+Also the I/O stats show 1 row returned for the Card visual query.
 
-You can also find the query execution time by looking at query history in Databricks SQL. Since both the dimension and fact tables are set to Direct Query mode, Filter Card visuals fired 2 queries in the backend. Also the I/O stats show 1 row returned for the Card visual query.
-![Data Source Connection](./images/DirectQuery/QueryHistory.png)
+<img width="400" src="./images/DirectQuery/QueryIO.png" alt="Query I/O" />
 
-![Data Source Connection](./images/DirectQuery/QueryStats.png)
 
-### 2.2 Import mode 
-1. Click **Optimize**>**Performance Analyzer** in Power BI desktop.
-2. In the Performance Analyzer tab click "**Start Recording**".
-3. Open **Import** report page and change the region in the respective filter visual.
-   
-#### 2.2.1 Query analysis: Performance Analyzer and DBSQL
-As shown on the screenshot of the Performance Analyzer below the query for Slicer visual took only **93 ms** as the dimension table is set to Import method. However, it took **2529 ms** for the Card visual query![Data Source Connection](./images/Import/PerformanceAnalyzer.png)
+### 2.2 Import 
+1. In Power BI Desktop, click **Optimize** → **Performance Analyzer**.
+2. In the Performance Analyzer tab, click **Start Recording**.
+3. Open **Import** report page and change the region in the respective Filter visual.
 
-You can also find the query execution time by looking at query history in Databricks SQL. Since the dimension table is set to Import mode the Filter visual did not fire a query Databricks SQL. Because the fact table is set to Direct Query mode the Card visual fired 1 query in the backend.  
-![Data Source Connection](./images/Import/QueryHistory.png)
-As I/O stats shows, in this method **~500k** rows are returned. This resultset is then processed on Power BI end. This is the reason why Direct Query mode is faster than Import mode in this case. 
-![Data Source Connection](./images/Import/QueryStats.png)
+As shown on the screenshot of the Performance Analyzer below, the query for the Slicer visual took only **93 ms** as the dimension table is set to *Import* method. However, it took **2529 ms** for the Card visual query. This is much slower than in the previous setup where we used *DirectQuery* mode for both fact and dimension tables.
+<img width="600" src="./images/Import/PerformanceAnalyzer.png" alt="Performance Analyzer" />
 
-### 2.3 Dual mode 
-1. Click **Optimize**>**Performance Analyzer** in Power BI desktop.
-2. In the Performance Analyzer tab click "**Start Recording**".
-3. Open **Dual** report page and change the region in the respective filter visual.
-   
-#### 2.3.1 Query analysis: Performance Analyzer and DBSQL 
+You can also find the query execution time by looking at Databricks Query History. Since the dimension table is set to *Import* mode the Filter visual did not fire a query. Because the fact table is set to *DirectQuery* mode the Card visual fired 1 query.  
 
-As shown on the screenshot of the Performance Analyzer below the Slicer visual query took only **56 ms** and Card visual query took **805 ms**. ![Data Source Connection](./images/Dual/PerformanceAnalyzer.png)
+<img width="1000" src="./images/Import/QueryHistory.png" alt="Query History" />
 
-You can also find the query execution time by looking at query history in Databricks SQL. As Dual mode combines  Import and Direct Query modes, Power BI intelligently decides when to use which approach. In this case there was no query fired in Databricks SQL for Filter visual. However, there was a query fired for Card visual.
-![Data Source Connection](./images/Dual/QueryHistory.png)
-As I/O stats shows, in this case only **1** row was returned because the value from Filter visual was passed to the query of Card visual. Thus Card visual query was much more efficient, hence faster.
-![Data Source Connection](./images/Dual/QueryStats.png)
+As I/O stats shows, in this setup almost **500k** rows are returned. This resultset is then processed on Power BI end. This is the reason why using *DirectQuery* mode for dimension tables results in faster performance than using *Import* mode in this case. 
+
+<img width="400" src="./images/Import/QueryIO.png" alt="Query I/O" />
+
+
+### 2.3 Dual
+1. In Power BI Desktop, click **Optimize** → **Performance Analyzer**.
+2. In the Performance Analyzer tab, click **Start Recording**.
+3. Open **Dual** report page and change the region in the respective Filter visual.
+
+As shown on the screenshot of the Performance Analyzer below the Slicer visual query took only **56 ms** and Card visual query took **805 ms**.
+<img width="600" src="./images/Dual/PerformanceAnalyzer.png" alt="Performance Analyzer" />
+
+You can also find the query execution time by looking at Databricks Query History. When using *Dual* mode, Power BI provides the benefits of both *Import* and *DirectQuery* modes by intelligently deciding when to use which approach. In this case, there was no query fired in Databricks SQL for the Filter visual. However, there was a query fired for the Card visual.
+
+<img width="1000" src="./images/Dual/QueryHistory.png" alt="Query History" />
+
+As I/O stats shows, in this case only **1** row was returned because the value from the Filter visual was passed to the query of the Card visual. Thus, the Card visual query was much more efficient, hence faster.
+
+<img width="400" src="./images/Dual/QueryIO.png" alt="Query I/O" />
+
+
 
 ## Conclusion
+
 As we could see above using **Import** storage mode to improve performance of Power BI semantic models does not always lead to positive outcomes. In certain cases it can actually decrease performance. Below you can see our general recommendation for using different storage modes for typical star schema data models.
 
 ![Summary](./images/Summary.png)
 
-By following these recommendations you can ensure the best possible user experience and minimize the workload on Power BI and Databricks SQL. Please note that switching storage mode to Import is irreversible operation. Therefore, we strongly recommend creating a backup of your reports before switching tables to Import mode for experimentation purposes.
+Using **Dual** mode for dimension tables in Power BI offers key benefits over Import mode, especially when working with DirectQuery fact tables. **Dual** mode enables Power BI to intelligently switch between *Import* and *DirectQuery* behaviors based on the visual and context: simple slicers or filters can leverage fast, cached data (like Import mode), resulting in very quick response times; meanwhile, aggregations or visuals involving the fact table can operate in *DirectQuery* mode, ensuring only the necessary data is queried from the source. In practice, this reduces unnecessary large data transfers - unlike Import mode, which can force Power BI to retrieve and process entire datasets on the client side, often leading to slower performance and heavier workload. By using **Dual** mode, reports achieve both the efficiency of in-memory querying for dimension-only visuals and the accuracy and freshness of *DirectQuery* for interactions with large fact tables, ultimately resulting in faster query times, reduced backend workload, and a much smoother end-user experience.
+
+> [!WARNING]
+> Switching storage mode to Import is irreversible operation. Therefore, we strongly recommend creating a backup of your reports before switching tables to Import mode for experimentation purposes.
+
 
 ## Power BI Template 
-To automate the process and ease the deployment process save the report as Power BI template. A sample Power BI template [DirectQuery-Dual-Import.pbit](./DirectQuery-Dual-Import.pbit) is already present in the current folder pointing to  **samples** catalog and **tpch** tables. When you open the template enter respective **ServerHostname** and **HTTP Path** values of your Databricks SQL warehouse. The template will contain three report pages using Direct Query, Import, and Dual storage modes for dimension tables. You can then follow secion 2.2 and 2.3 above to compare behaviour and performance. 
+A Power BI template [DirectQuery-Dual-Import.pbit](./DirectQuery-Dual-Import.pbit) is present in this folder to demonstrate the difference in Power BI behaviour when using *Import*, *DirectQuery*, and *Dual* storage modes outlined above. To use the template, simply enter your Databricks SQL Warehouse's **`ServerHostname`** and **`HttpPath`** that correspond to the environment set up in the instructions above.
