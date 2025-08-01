@@ -47,7 +47,7 @@ Before you begin, ensure you have the following:
     - `lineitem`
     
 4. Create table relationships as shown on the picture below.
-    <img width="800" src="./images/DataModel.png" alt="Data model" />
+    <img width="800" src="./images/01.png" alt="Data model" />
 
 5. In **`orders`** table create 3 calculated measures using the following DAX-formulas. These measures calculate the number of orders where an order item is delivered in Large, Medium, or Small bag.
     ```
@@ -57,11 +57,11 @@ Before you begin, ensure you have the following:
     ```
     
 6. Create a table visual and add **`region.r_name`** column, as well as prevously created measures **`CountOrdersLargeBag`**, **`CountOrdersMediumBag`**, and **`CountOrdersSmallBag`**. Turn off Totals for the table visual.
-    <img width="400" src="./images/TableVisual1.png" alt="Table visual" />
+    <img width="400" src="./images/02.png" alt="Table visual" />
 7. Refresh visuals using [Performance Analyzer](https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-performance-analyzer) in Power BI Desktop.
 
 8. Check the number of SQL-queries in Databricks Query History. You should see 3 SQL-queries, each calculating one of the measures used in the table visual.
-    <img width="800" src="./images/QueryHistory1.png" alt="Query history" /> 
+    <img width="800" src="./images/03.png" alt="Query history" /> 
 The reason why Power BI generated 3 SQL-queries is that the measures use related table **`part`** to filter data. Therefore, Power BI is not able to combine these 3 queries into a single one.
 
 9. Next we will be using **`orders_transformed`** view which for every order item identifies the type of bag.  
@@ -85,12 +85,12 @@ The reason why Power BI generated 3 SQL-queries is that the measures use related
     ```
 
 11. Create a new report page, add a table visual, and add **`region.r_name`** column, as well as prevously created measures **`CountOrdersLargeBag_v2`**, **`CountOrdersMediumBag_v2`**, and **`CountOrdersSmallBag_v2`**. Turn off Totals for the table visual.
-    <img width="400" src="./images/TableVisual2.png" alt="Table visual" /> 
+    <img width="400" src="./images/04.png" alt="Table visual" /> 
 
 12. Refresh visuals using [Performance Analyzer](https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-performance-analyzer) in Power BI Desktop.
 
 13. Check the number of SQL-queries in Databricks Query History. You should see only 1 SQL-queries.
-    <img width="800" src="./images/QueryHistory2.png" alt="Query history" /> 
+    <img width="800" src="./images/05.png" alt="Query history" /> 
 The reason why Power BI generated only 1 SQL-queries in this case is that the measures use SUM aggregation function over columns in the same table **`orders_transformed`**. Therefore, Power BI could use as single SQL-query.
 
 
