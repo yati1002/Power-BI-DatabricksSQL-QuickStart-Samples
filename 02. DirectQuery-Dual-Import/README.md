@@ -16,7 +16,18 @@ Before you begin, ensure you have the following:
 
 ## Step by Step Instructions
 
-## 1. Databricks Data Source Connection 
+In the next section we will compare different storage modes and showcase which storage mode is a good fit for dimension table. There are two common query patterns for dimension tables:
+1. Retrieving values for slicers/filters.
+2. Aggregation on fact tables using dimension data.
+
+In the next section we will compare different storage modes and showcase which storage mode is a good fit for dimension table. There are two common query patterns for dimension tables:
+1. Retrieving values for slicers/filters.
+2. Aggregation on fact tables using dimension data.
+
+For our testing scenario we use a **Small** Pro SQL Warehouse. We will create report with both query pattterns highlighted above. 
+
+
+### 1. Databricks connection 
 
 1. Open Power BI Desktop → **"Home"** → **"Get Data"** → **"More..."**.
 
@@ -28,17 +39,9 @@ Before you begin, ensure you have the following:
 
    <img width="600" src="./images/01-1.png" alt="Azure Databricks connection" />
 
-
 > [!TIP]
 > It is always a good practice to parameterize your connections. This really helps ease out the development expeience as you can dynamically connect to any Databricks SQL warehouse. For details on how to paramterize your connection string you can refer to [this](/01.%20Connecting%20Power%20BI%20to%20Databricks%20SQL%20using%20Parameters) article.
 
-
-## 2. Performance with different storage modes for dimension table
-In the next section we will compare different storage modes and showcase which storage mode is a good fit for dimension table. There are two common query patterns for dimension tables:
-1. Retrieving values for slicers/filters.
-2. Aggregation on fact tables using dimension data.
-
-For our testing scenario we use a **Small** Pro SQL Warehouse and we will create report with both query pattterns highlighted above. 
 
 ### 2.1. Data Model
 1. Open Power BI Desktop, create a new report.
@@ -82,7 +85,7 @@ Below is the screenshot demonstrating the resulting data model and a report.
 
 As shown on the screenshot of the Performance Analyzer below, in our environment the query took **953 ms** for the flicer and **946 ms** for the card visual.
 
-<img width="600" src="./images/DirectQuery/PerformanceAnalyzer.png" alt="Performance Analyzer" />
+<img width="500" src="./images/DirectQuery/PerformanceAnalyzer.png" alt="Performance Analyzer" />
 
 You can also find the query execution time by looking at Databricks Query History. Since both the dimension and fact tables are set to *DirectQuery* mode, the Filter and the Card visuals fired 2 queries in the backend. 
 
@@ -100,7 +103,7 @@ Also the I/O stats show 1 row returned for the Card visual query.
 
 As shown on the screenshot of the Performance Analyzer below, the query for the Slicer visual took only **93 ms** as the dimension table is set to *Import* method. However, it took **2529 ms** for the Card visual query. This is much slower than in the previous setup where we used *DirectQuery* mode for both fact and dimension tables.
 
-<img width="600" src="./images/Import/PerformanceAnalyzer.png" alt="Performance Analyzer" />
+<img width="500" src="./images/Import/PerformanceAnalyzer.png" alt="Performance Analyzer" />
 
 You can also find the query execution time by looking at Databricks Query History. Since the dimension table is set to *Import* mode the Filter visual did not fire a query. Because the fact table is set to *DirectQuery* mode the Card visual fired 1 query.  
 
@@ -118,7 +121,7 @@ As I/O stats shows, in this setup almost **500k** rows are returned. This result
 
 As shown on the screenshot of the Performance Analyzer below the Slicer visual query took only **56 ms** and Card visual query took **805 ms**.
 
-<img width="600" src="./images/Dual/PerformanceAnalyzer.png" alt="Performance Analyzer" />
+<img width="500" src="./images/Dual/PerformanceAnalyzer.png" alt="Performance Analyzer" />
 
 You can also find the query execution time by looking at Databricks Query History. When using *Dual* mode, Power BI provides the benefits of both *Import* and *DirectQuery* modes by intelligently deciding when to use which approach. In this case, there was no query fired in Databricks SQL for the Filter visual. However, there was a query fired for the Card visual.
 
