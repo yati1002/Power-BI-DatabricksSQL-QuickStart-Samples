@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Understanding the relationships between columns in your tables is essential for effective data management and analytics. Primary key constraints play a crucial role in defining these relationships, making it easier for users and tools to interpret data structure. In Databricks, while primary key constraints are not enforced, the platform provides a **RELY** option for primary key constraints. This option allows the Databricks engine to utilize these constraints as hints for optimizing query performance in certain scenarios. For a detailed explanation of how this feature can enhance query optimization, refer to the Query optimization using primary key constraints](https://learn.microsoft.com/en-us/azure/databricks/sql/user/queries/query-optimization-constraints) article.
+Understanding the relationships between columns in your tables is essential for effective data management and analytics. Primary key constraints play a crucial role in defining these relationships, making it easier for users and tools to interpret data structure. In Databricks, while primary key constraints are not enforced, the platform provides a **RELY** option for primary key constraints. This option allows the Databricks engine to utilize these constraints as hints for optimizing query performance in certain scenarios. For a detailed explanation of how this feature can enhance query optimization, refer to the [Query optimization using primary key constraints](https://learn.microsoft.com/en-us/azure/databricks/sql/user/queries/query-optimization-constraints) article.
 
 
 ## Pre-requisites
