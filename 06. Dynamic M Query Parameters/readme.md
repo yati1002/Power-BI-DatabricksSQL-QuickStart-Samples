@@ -1,20 +1,32 @@
 # Dynamic M Query Parameters
 
 ## Introduction
-As per Microsoft [documenation](!https://learn.microsoft.com/en-us/power-bi/connect-data/desktop-dynamic-m-query-parameters), with dynamic M query parameters, model authors can configure the filter or slicer values that report viewers can use as an M query parameter. Dynamic M query parameters give model authors more control over the filter selections to incorporate into Direct Query source queries. With dynamic M query parameters, model authors can ensure that filter selections incorporate into source queries at the right point to achieve the intended results with optimum performance. Dynamic M query parameters can be especially useful for query performance optimization.
 
-## Pre-requisites
-1. [Databricks account](https://databricks.com/), access to a Databricks workspace.
-2. Databricks SQL Warehouse.
-3. [Power BI Desktop](https://powerbi.microsoft.com/desktop/), latest version is recommended.
+[Dynamic M query parameters](!https://learn.microsoft.com/en-us/power-bi/connect-data/desktop-dynamic-m-query-parameters) empower model authors to let report viewers set filter or slicer values that are directly passed as M query parameters. This powerful capability allows authors to precisely control how filter selections are incorporated into _DirectQuery_ source queries, ensuring that queries are constructed for optimal performance and accuracy. By using dynamic M query parameters, you can fine-tune your Power BI reports to deliver more efficient, responsive analytics - making them especially valuable for optimizing query performance in complex data scenarios
+
+
+
+## Prerequisites
+
+Before you begin, ensure you have the following:
+
+- [Databricks account](https://databricks.com/), access to a Databricks workspace, Unity Catalog, and SQL Warehouse
+- [Power BI Desktop](https://powerbi.microsoft.com/desktop/) installed, latest version is highly recommended
+
+
 
 ## Step by Step Walkthrough
-1. We have an initial Power BI dataset which is based on **samples** catalog, **tpch** schema. There is only one fact table **lineitem** which is set to **Direct Query** mode.
-2. Next, in the Power Query Editor, we define 2 parameters - **ShipStartDateParameter** and **ShipEndDateParameter** - which we will use to filter data in the fact table.
 
-    ![Parameters](./images/Parameters.PNG)
+1. Open Power BI Desktop, create a new report.
 
-3. Next we adjust M-query for **lineitem** table as follows. Here we add an extra operation to filter the records based on **l_shipdate** column and **ShipStartDateParameter**/**ShipEndDateParameter** parameter values.
+2. Connect to Databricks SQL warehouse, **`samples`** catalog, **`tpch`** schema.
+
+3. Add **`lineitem`** table. Set the table to **DirectQuery** mode.
+
+4. Next, in the Power Query Editor, define 2 parameters - **`ShipStartDateParameter`** and **`ShipEndDateParameter`** - which we will use to filter data in the fact table.
+    <img width="400" src="./images/01.png" alt="Parameters" />
+
+5. Next, adjust M-query for **`lineitem`** table as follows. Here, add an extra operation to filter the records based on **`l_shipdate`** column and **`ShipStartDateParameter`**/**`ShipEndDateParameter`** parameter values.
     ```
     let
         Source = Databricks.Catalogs(HostName, HttpPath, [Catalog=null, Database=null, EnableAutomaticProxyDiscovery=null]),
@@ -26,17 +38,21 @@ As per Microsoft [documenation](!https://learn.microsoft.com/en-us/power-bi/conn
     in
         #"Filtered Rows"
     ```
-4. Next we need to create 2 tables for each parameter which contain possible values available to be dynamically set based on filter selection. You can use a query to a data source to create such tabler. Alternatively you can define them as calculated tables. 
+
+6. Next, create 2 tables for each parameter which contain possible values available to be dynamically set based on filter selection. You can use a query to a data source to create such tabler. Alternatively you can define them as calculated tables. 
     ```
     ShipStartDates = CALENDAR("1/1/1992", "31/12/1998")
     ShipEndDates = CALENDAR("1/1/1992", "31/12/1998")
     ```
-5. At the next step we bind previously created parameters to the columns in date tables.
-    - ShipStartDateParameter --> ShipStartDates.ShipStartDate
-    - ShipEndDateParameter --> ShipEndDates.ShipEndDate
-    ![Parameters binding](./images/Parameter-Binding.PNG)
-6. Finally, we can build a sample report and filter data based on **ShipStartDate** and **ShipEndDate** columns.
-![Report Layout](./images/Report-Layout.PNG)
+
+7. At the next step we bind previously created parameters to the columns in date tables.
+    - `ShipStartDateParameter` → `ShipStartDates.ShipStartDate`
+    - `ShipEndDateParameter` → `ShipEndDates.ShipEndDate`
+    <img width="600" src="./images/02.png" alt="Parameters binding" />
+
+6. Finally, build a sample report and filter data based on **`ShipStartDate`** and **`ShipEndDate`** columns.
+
+    <img width="600" src="./images/03.png" alt="Report layout" />
 
     The report generates the following SQL-query.
     ```sql
@@ -63,9 +79,10 @@ As per Microsoft [documenation](!https://learn.microsoft.com/en-us/power-bi/conn
 
 
 ## Conclusion
-With this simple technique you can have a better control over the filter selections to incorporate into DirectQuery source queries. Dynamic M query parameters can be especially useful for query performance optimization.
-More details can be found in Microsoft documentation - [Dynamic M query parameters in Power BI Desktop](!https://learn.microsoft.com/en-us/power-bi/connect-data/desktop-dynamic-m-query-parameters).
+
+Using [Dynamic M query parameters in Power BI](!https://learn.microsoft.com/en-us/power-bi/connect-data/desktop-dynamic-m-query-parameters) enables model authors to pass filter or slicer values specified by report viewers directly into M queries, which are then incorporated into DirectQuery source queries. This approach provides precise control over how filter selections are reflected in SQL queries, ensuring queries are generated for maximum efficiency and accuracy. The key benefits include more efficient and responsive analytics, improved query performance - especially with large datasets or complex data scenarios - and reduced workload for both the data source and Power BI itself. Ultimately, this technique helps optimize report interactivity and delivers a smoother user experience by minimizing unnecessary data retrieval and processing.
+
 
 
 ## Power BI Template 
-A sample Power BI template [Dynamic_M_Query_Parameters.pbit](./Dynamic_M_Query_Parameters.pbit) is present in the current folder. When opening the template, enter respective **ServerHostname** and **HTTP Path** values of your Databricks SQL Warehouse. The template uses **samples** catalog, therefore you don't need to prepare any additional data for this report.
+A Power BI template [Dynamic M Query Parameters.pbit](./Dynamic%20M%20Query%20Parameters.pbit) is present in this folder to demonstrate the approach of Dynamic M query parameters outlined above. To use the template, simply enter your Databricks SQL Warehouse's **`ServerHostname`** and **`HttpPath`** that correspond to the environment set up in the instructions above.
