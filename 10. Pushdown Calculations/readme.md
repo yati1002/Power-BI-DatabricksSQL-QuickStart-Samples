@@ -7,13 +7,13 @@ When working with Power BI on Databricks Lakehouse, reports built using DirectQu
 This quickstart demonstrates a data modeling approach that can, in certain scenarios, help minimize the number of SQL queries generated. By following these techniques, you’ll be able to achieve faster performance and a smoother end-user experience.
 
 
+
 ## Prerequisites
 
 Before you begin, ensure you have the following:
 
 - [Databricks account](https://databricks.com/), access to a Databricks workspace, Unity Catalog, and SQL Warehouse
 - [Power BI Desktop](https://powerbi.microsoft.com/desktop/) installed, latest version is highly recommended
-
 
 
   
