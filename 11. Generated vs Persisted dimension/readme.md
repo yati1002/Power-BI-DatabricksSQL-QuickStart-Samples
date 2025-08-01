@@ -43,13 +43,13 @@ Before you begin, ensure you have the following:
     FROM orders;
     ```
 
-2. Open Power BI Desktop, create a new report.
+3. Open Power BI Desktop, create a new report.
    
-3. Connect to Databricks SQL Warehouse, **`powerbiquickstarts`** catalog, **`tpch`** schema, and add the following tables to the semantic model
+4. Connect to Databricks SQL Warehouse, **`powerbiquickstarts`** catalog, **`tpch`** schema, and add the following tables to the semantic model
     - **`orders`** → Direct Query 
     - **`dim_date`** → Dual Mode. Rename the table to **`date_persisted`**.
       
-4. Create a calculated **`date_generated`** table by using the below DAX-formula. This generated table contains the dates based on minimum and maximum **`o_orderdate`** values in **`orders`** table
+5. Create a calculated **`date_generated`** table by using the below DAX-formula. This generated table contains the dates based on minimum and maximum **`o_orderdate`** values in **`orders`** table
     ```
     date_generated = 
     VAR StartDate = CALCULATE(MIN('orders'[o_orderdate]))
@@ -64,24 +64,24 @@ Before you begin, ensure you have the following:
         )
     ```
 
-5. Create table relationships as shown on the picture below.
+6. Create table relationships as shown on the picture below.
     <img width="600" src="./images/data_model.png" alt="Data model" />
 
-6. Create a table visual and add **`Year`** column from **`date_generated`** table, as well as **`Count of o_orderkey`**. Turn off Totals for the table visual.
+7. Create a table visual and add **`Year`** column from **`date_generated`** table, as well as **`Count of o_orderkey`**. Turn off Totals for the table visual.
 
     <img width="200" src="./images/generate_table.png" alt="Table visual" />
 
-7. Refresh visuals using [Performance Analyzer](https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-performance-analyzer) in Power BI Desktop.
+8. Refresh visuals using [Performance Analyzer](https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-performance-analyzer) in Power BI Desktop.
    
-8. Check the number of SQL-queries in Databricks Query History. You should see 8 SQL-queries, 1 SQL-query to retrieve records for **date_generated** table and 7 SQL-queries to calculate counts of orders per year.
+9. Check the number of SQL-queries in Databricks Query History. You should see 8 SQL-queries, 1 SQL-query to retrieve records for **date_generated** table and 7 SQL-queries to calculate counts of orders per year.
     <img width="1000" src="./images/generate_queries.png" alt="Query History" />
 
-9. Next create a table visual and add **`year`** column from **`date_persisted`** table, as well as **`Count of o_orderkey`**. Turn off Totals for the table visual.
+10. Next create a table visual and add **`year`** column from **`date_persisted`** table, as well as **`Count of o_orderkey`**. Turn off Totals for the table visual.
     <img width="200" src="./images/persist_table.png" alt="Table visual" />
 
-10. Refresh visuals using [Performance Analyzer](https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-performance-analyzer) in Power BI Desktop.
+11. Refresh visuals using [Performance Analyzer](https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-performance-analyzer) in Power BI Desktop.
     
-11. Check the number of SQL-queries in Databricks Query History. You should see only 1 SQL-query to retrieve counts of orders for all years at once. As **`date_persisted`** table is set to Dual mode, data for this table is cached in memory.
+12. Check the number of SQL-queries in Databricks Query History. You should see only 1 SQL-query to retrieve counts of orders for all years at once. As **`date_persisted`** table is set to Dual mode, data for this table is cached in memory.
     <img width="1000" src="./images/persisted_queries.png" alt="Query History" />
 
 
