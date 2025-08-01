@@ -1,4 +1,4 @@
-# Using storage modes - DirectQuery vs Dual vs Import
+# Storage modes - DirectQuery vs Dual vs Import
 
 ## Introduction
 
@@ -68,11 +68,11 @@ For our testing scenario we use a **Small** Pro SQL Warehouse. We will create re
    - **Import** page - use **`r_name`** column from **`region_Import`** table
    - **Dual** page - use **`r_name`** column from **`region_Dual`** table.
 
-Below is the screenshot demonstrating the resulting data model and a report.
+Below is the screenshot demonstrating the resulting data model and the report.
 <img width="1000" src="./images/DataModel.png" alt="Data model" />
 
 
-### 2.2. Direct Query 
+### 2. Direct Query 
 > [!Note]
 > In order to get similar results we recommend running the test on a SQL Warehouse which is already started.
 
@@ -93,7 +93,7 @@ Also the I/O stats show 1 row returned for the Card visual query.
 <img width="400" src="./images/DirectQuery/QueryIO.png" alt="Query I/O" />
 
 
-### 2.2 Import 
+### 3. Import 
 1. In Power BI Desktop, click **Optimize** → **Performance Analyzer**.
 2. In the Performance Analyzer tab, click **Start Recording**.
 3. Open **Import** report page and change the region in the respective Filter visual.
@@ -111,7 +111,7 @@ As I/O stats shows, in this setup almost **500k** rows are returned. This result
 <img width="400" src="./images/Import/QueryIO.png" alt="Query I/O" />
 
 
-### 2.3 Dual
+### 4. Dual
 1. In Power BI Desktop, click **Optimize** → **Performance Analyzer**.
 2. In the Performance Analyzer tab, click **Start Recording**.
 3. Open **Dual** report page and change the region in the respective Filter visual.
@@ -134,7 +134,7 @@ As I/O stats shows, in this case only **1** row was returned because the value f
 
 As we could see above using **Import** storage mode to improve performance of Power BI semantic models does not always lead to positive outcomes. In certain cases it can actually decrease performance. Below you can see our general recommendation for using different storage modes for typical star schema data models.
 
-<img width="600" src="./images/Summary.png" alt="Summary" />
+<img width="800" src="./images/Summary.png" alt="Summary" />
 
 Using **Dual** mode for dimension tables in Power BI offers key benefits over Import mode, especially when working with DirectQuery fact tables. **Dual** mode enables Power BI to intelligently switch between *Import* and *DirectQuery* behaviors based on the visual and context: simple slicers or filters can leverage fast, cached data (like Import mode), resulting in very quick response times; meanwhile, aggregations or visuals involving the fact table can operate in *DirectQuery* mode, ensuring only the necessary data is queried from the source. In practice, this reduces unnecessary large data transfers - unlike Import mode, which can force Power BI to retrieve and process entire datasets on the client side, often leading to slower performance and heavier workload. By using **Dual** mode, reports achieve both the efficiency of in-memory querying for dimension-only visuals and the accuracy and freshness of *DirectQuery* for interactions with large fact tables, ultimately resulting in faster query times, reduced backend workload, and a much smoother end-user experience.
 
@@ -143,4 +143,4 @@ Using **Dual** mode for dimension tables in Power BI offers key benefits over Im
 
 
 ## Power BI Template 
-A Power BI template [DirectQuery-Dual-Import.pbit](./DirectQuery-Dual-Import.pbit) is present in this folder to demonstrate the difference in Power BI behaviour when using *Import*, *DirectQuery*, and *Dual* storage modes outlined above. To use the template, simply enter your Databricks SQL Warehouse's **`ServerHostname`** and **`HttpPath`** that correspond to the environment set up in the instructions above.
+A Power BI template [Storage Modes.pbit](./Storage%20Modes.pbit) is present in this folder to demonstrate the difference in Power BI behaviour when using *Import*, *DirectQuery*, and *Dual* storage modes outlined above. To use the template, simply enter your Databricks SQL Warehouse's **`ServerHostname`** and **`HttpPath`** that correspond to the environment set up in the instructions above.
