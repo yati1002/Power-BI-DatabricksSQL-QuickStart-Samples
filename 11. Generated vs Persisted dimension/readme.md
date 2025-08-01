@@ -68,12 +68,13 @@ Before you begin, ensure you have the following:
     <img width="600" src="./images/data_model.png" alt="Data model" />
 
 6. Create a table visual and add **`Year`** column from **`date_generated`** table, as well as **`Count of o_orderkey`**. Turn off Totals for the table visual.
+
     <img width="200" src="./images/generate_table.png" alt="Table visual" />
 
 7. Refresh visuals using [Performance Analyzer](https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-performance-analyzer) in Power BI Desktop.
    
 8. Check the number of SQL-queries in Databricks Query History. You should see 8 SQL-queries, 1 SQL-query to retrieve records for **date_generated** table and 7 SQL-queries to calculate counts of orders per year.
-    <img width="800" src="./images/generate_queries.png" alt="Query History" />
+    <img width="1000" src="./images/generate_queries.png" alt="Query History" />
 
 9. Next create a table visual and add **`year`** column from **`date_persisted`** table, as well as **`Count of o_orderkey`**. Turn off Totals for the table visual.
     <img width="200" src="./images/persist_table.png" alt="Table visual" />
@@ -81,7 +82,7 @@ Before you begin, ensure you have the following:
 10. Refresh visuals using [Performance Analyzer](https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-performance-analyzer) in Power BI Desktop.
     
 11. Check the number of SQL-queries in Databricks Query History. You should see only 1 SQL-query to retrieve counts of orders for all years at once. As **`date_persisted`** table is set to Dual mode, data for this table is cached in memory.
-    <img width="800" src="./images/persisted_queries.png" alt="Query History" />
+    <img width="1000" src="./images/persisted_queries.png" alt="Query History" />
 
 
 
