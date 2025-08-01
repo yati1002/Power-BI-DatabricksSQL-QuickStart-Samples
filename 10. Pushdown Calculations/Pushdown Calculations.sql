@@ -1,19 +1,37 @@
-create catalog if not exists powerbisamples;
-create schema if not exists powerbisamples.tpch;
+-- =====================================================================================================================
+-- 1. Create test catalog and schema
+-- =====================================================================================================================
 
-create or replace table powerbisamples.tpch.region as select * from samples.tpch.region;
-create or replace table powerbisamples.tpch.nation as select * from samples.tpch.nation;
-create or replace table powerbisamples.tpch.customer as select * from samples.tpch.customer;
-create or replace table powerbisamples.tpch.part as select * from samples.tpch.part;
-create or replace table powerbisamples.tpch.orders as select * from samples.tpch.orders;
-create or replace table powerbisamples.tpch.lineitem as select * from samples.tpch.lineitem;
+CREATE CATALOG IF NOT EXISTS powerbiquickstarts;
+USE CATALOG powerbiquickstarts;
+CREATE SCHEMA IF NOT EXISTS tpch;
+USE SCHEMA tpch;
 
-create or replace view powerbisamples.tpch.orders_transformed as
-select o_orderkey, o_custkey, o_orderstatus, o_totalprice, o_orderdate, o_orderpriority, o_clerk, o_shippriority
-    , max(if(p_container='SM BAG', 1, 0)) as sm_bag
-    , max(if(p_container='MED BAG', 1, 0)) as med_bag
-    , max(if(p_container='LG BAG', 1, 0)) as lg_bag
-from powerbisamples.tpch.orders
-    join powerbisamples.tpch.lineitem on o_orderkey=l_orderkey
-    join powerbisamples.tpch.part on l_partkey=p_partkey
-group by all;
+
+-- =====================================================================================================================
+-- 2. Create test tables with COLLATION
+-- =====================================================================================================================
+
+CREATE OR REPLACE TABLE TABLE region AS SELECT * FROM samples.tpch.region;
+CREATE OR REPLACE TABLE TABLE nation AS SELECT * FROM samples.tpch.nation;
+CREATE OR REPLACE TABLE TABLE customer AS SELECT * FROM samples.tpch.customer;
+CREATE OR REPLACE TABLE TABLE part AS SELECT * FROM samples.tpch.part;
+CREATE OR REPLACE TABLE TABLE orders AS SELECT * FROM samples.tpch.orders;
+CREATE OR REPLACE TABLE TABLE lineitem AS SELECT * FROM samples.tpch.lineitem;
+
+CREATE OR REPLACE VIEW orders_transformed AS
+SELECT o_orderkey, o_custkey, o_orderstatus, o_totalprice, o_orderdate, o_orderpriority, o_clerk, o_shippriority
+    , max(if(p_container='SM BAG', 1, 0)) AS sm_bag
+    , max(if(p_container='MED BAG', 1, 0)) AS med_bag
+    , max(if(p_container='LG BAG', 1, 0)) AS lg_bag
+FROM orders
+    JOIN lineitem on o_orderkey=l_orderkey
+    JOIN part on l_partkey=p_partkey
+GROUP BY ALL;
+
+
+-- =====================================================================================================================
+-- 3. Cleanup
+-- =====================================================================================================================
+
+DROP CATALOG IF EXISTS powerbiquickstarts CASCADE;

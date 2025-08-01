@@ -24,7 +24,7 @@ Before you begin, ensure you have the following:
     USE SCHEMA tpch;
     ```
 
-2. Create a table in the catalog by replicating tables from **samples** catalog.
+2. Create a table in the catalog by replicating tables from **`samples`** catalog.
     ```sql
     CREATE OR REPLACE TABLE table customer_lcase (
         c_custkey bigint,
@@ -43,13 +43,13 @@ Before you begin, ensure you have the following:
 3. Open Power BI Desktop, create a new report.
    
 4. Connect to Databricks SQL Warehouse, **powerbisamples** catalog, **tpch** schema, and add the following tables to the semantic model
-    - **customer_lcase** → Direct Query.
+    - **`customer_lcase`** → Direct Query.
       
-4. Create a table visual, add **c_mktsegment** and **c_custkey** columns, configure the latter to use Count aggregation.
+4. Create a table visual, add **`c_mktsegment`** and **`c_custkey`** columns, configure the latter to use Count aggregation.
     
     <img width="200" src="./images/01.png" alt="Table visual" />
 
-7. Add **c_mktsegment** column to Filters, configure it to use Advanced filtering and *contains* filter. 
+7. Add **`c_mktsegment`** column to Filters, configure it to use Advanced filtering and *contains* filter. 
    
     <img width="200" src="./images/02.png" alt="Filter" />
 
@@ -75,5 +75,6 @@ For more information about Collations, including locales and case and accent mod
 
 
 
-## Power BI template 
-A Power BI template [Collations.pbit](./Collations.pbit) is provided in this folder to demonstrate the usage of Collations outlined above. To use the template, simply enter your Databricks SQL Warehouse's **ServerHostname** and **HttpPath**, along with the **Catalog** and **Schema** names that correspond to the environment set up in the instructions above.
+## Power BI template
+
+A Power BI template [Collations.pbit](./Collations.pbit) and [Collations.sql](./Collations.sql) script are  provided in this folder to demonstrate the usage of Collations outlined above. To use the template, simply enter your Databricks SQL Warehouse's **`ServerHostname`** and **`HttpPath`**, along with the **`Catalog`** and **`Schema`** names that correspond to the environment set up in the instructions above.
