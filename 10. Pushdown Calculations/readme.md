@@ -63,7 +63,7 @@ Before you begin, ensure you have the following:
 
 8. Check the number of SQL-queries in Databricks Query History. You should see 3 SQL-queries, each calculating one of the measures used in the table visual.
 
-    <img width="800" src="./images/03.png" alt="Query history" /> 
+    <img width="1000" src="./images/03.png" alt="Query history" /> 
 
 > [!IMPORTANT]
 >  The reason why Power BI generated 3 SQL-queries is that the measures use related table **`part`** to filter data. Therefore, Power BI is not able to combine these 3 queries into a single one.
@@ -94,7 +94,7 @@ Before you begin, ensure you have the following:
 12. Refresh visuals using [Performance Analyzer](https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-performance-analyzer) in Power BI Desktop.
 
 13. Check the number of SQL-queries in Databricks Query History. You should see only 1 SQL-queries.
-    <img width="800" src="./images/05.png" alt="Query history" />
+    <img width="1000" src="./images/05.png" alt="Query history" />
 
 > [!IMPORTANT]
 > The reason why Power BI generated only 1 SQL-queries in this case is that the measures use SUM aggregation function over columns in the same table **`orders_transformed`**. Therefore, Power BI could use as single SQL-query.

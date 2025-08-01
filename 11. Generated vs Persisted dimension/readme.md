@@ -77,6 +77,7 @@ Before you begin, ensure you have the following:
     <img width="1000" src="./images/generate_queries.png" alt="Query History" />
 
 10. Next create a table visual and add **`year`** column from **`date_persisted`** table, as well as **`Count of o_orderkey`**. Turn off Totals for the table visual.
+
     <img width="200" src="./images/persist_table.png" alt="Table visual" />
 
 11. Refresh visuals using [Performance Analyzer](https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-performance-analyzer) in Power BI Desktop.
