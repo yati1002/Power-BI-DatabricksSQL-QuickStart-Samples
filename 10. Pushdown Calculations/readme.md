@@ -57,7 +57,8 @@ Before you begin, ensure you have the following:
     ```
     
 6. Create a table visual and add **`region.r_name`** column, as well as prevously created measures **`CountOrdersLargeBag`**, **`CountOrdersMediumBag`**, and **`CountOrdersSmallBag`**. Turn off Totals for the table visual.
-    <img width="400" src="./images/02.png" alt="Table visual" />
+<img width="400" src="./images/02.png" alt="Table visual" />
+
 7. Refresh visuals using [Performance Analyzer](https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-performance-analyzer) in Power BI Desktop.
 
 8. Check the number of SQL-queries in Databricks Query History. You should see 3 SQL-queries, each calculating one of the measures used in the table visual.
