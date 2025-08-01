@@ -62,8 +62,8 @@ Before you begin, ensure you have the following:
 7. Refresh visuals using [Performance Analyzer](https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-performance-analyzer) in Power BI Desktop.
 
 8. Check the number of SQL-queries in Databricks Query History. You should see 3 SQL-queries, each calculating one of the measures used in the table visual.
-<img width="800" src="./images/03.png" alt="Query history" /> 
-The reason why Power BI generated 3 SQL-queries is that the measures use related table **`part`** to filter data. Therefore, Power BI is not able to combine these 3 queries into a single one.
+    <img width="800" src="./images/03.png" alt="Query history" /> 
+    The reason why Power BI generated 3 SQL-queries is that the measures use related table **`part`** to filter data. Therefore, Power BI is not able to combine these 3 queries into a single one.
 
 9. Next we will be using **`orders_transformed`** view which for every order item identifies the type of bag.  
     ``` sql
@@ -92,11 +92,11 @@ The reason why Power BI generated 3 SQL-queries is that the measures use related
 
 13. Check the number of SQL-queries in Databricks Query History. You should see only 1 SQL-queries.
     <img width="800" src="./images/05.png" alt="Query history" />
-    
-The reason why Power BI generated only 1 SQL-queries in this case is that the measures use SUM aggregation function over columns in the same table **`orders_transformed`**. Therefore, Power BI could use as single SQL-query.
+
+    The reason why Power BI generated only 1 SQL-queries in this case is that the measures use SUM aggregation function over columns in the same table **`orders_transformed`**. Therefore, Power BI could use as single SQL-query.
 
 
-10. Clean up your environment by dropping the catalog.
+14. Clean up your environment by dropping the catalog.
     ```sql
     DROP CATALOG IF EXISTS powerbiquickstarts CASCADE;
     ```
