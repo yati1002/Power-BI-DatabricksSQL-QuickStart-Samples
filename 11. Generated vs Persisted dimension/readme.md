@@ -46,8 +46,8 @@ Before you begin, ensure you have the following:
 3. Open Power BI Desktop, create a new report.
    
 4. Connect to Databricks SQL Warehouse, **`powerbiquickstarts`** catalog, **`tpch`** schema, and add the following tables to the semantic model
-    - **`orders`** → Direct Query 
-    - **`dim_date`** → Dual Mode. Rename the table to **`date_persisted`**.
+    - **`orders`** → _DirectQuery_. 
+    - **`dim_date`** → _Dual_ mode. Rename the table to **`date_persisted`**.
       
 5. Create a calculated **`date_generated`** table by using the below DAX-formula. This generated table contains the dates based on minimum and maximum **`o_orderdate`** values in **`orders`** table
     ```
@@ -82,7 +82,7 @@ Before you begin, ensure you have the following:
 
 11. Refresh visuals using [Performance Analyzer](https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-performance-analyzer) in Power BI Desktop.
     
-12. Check the number of SQL-queries in Databricks Query History. You should see only 1 SQL-query to retrieve counts of orders for all years at once. As **`date_persisted`** table is set to Dual mode, data for this table is cached in memory.
+12. Check the number of SQL-queries in Databricks Query History. You should see only 1 SQL-query to retrieve counts of orders for all years at once. As **`date_persisted`** table is set to _Dual_ mode, data for this table is cached in memory.
     <img width="1000" src="./images/persisted_queries.png" alt="Query History" />
 
 
