@@ -66,24 +66,19 @@ Before you begin, ensure you have the following:
 
     The report generates the following SQL-query.
     ```sql
-    select
-    count(1) as `C1`
+    select ...
     from
     (
-        select
-        ...
-        `C1`
+        select ...
         from
         (
-            select
-            ...
-            cast(`l_shipdate` as TIMESTAMP) as `C1`
+            select ...
             from
-            `samples`.`tpch`.`lineitem`
+                `samples`.`tpch`.`lineitem`
         ) as `ITBL`
         where
-        `C1` >= { ts '1992-01-01 00:00:00' }
-        and `C1` <= { ts '1995-01-01 00:00:00' }
+            `C1` >= { ts '1992-01-01 00:00:00' }
+            and `C1` <= { ts '1995-01-01 00:00:00' }
     ) as `ITBL`
     ```
 
