@@ -42,12 +42,13 @@ Before you begin, ensure you have the following:
 
 7. The semantic model should look as on the screenshot below.
 
-    ![sample report](./images/DataModel.png)
     <img width="800" src="./images/DataModel.png" alt="Data model" />
 
 8. Create a simple tabular report displaying the **count** of orders, **min** shipment date, **sum** of discounts, and **sum** of quantities . Also add the slicer with **nation** names, as shown below.
 
     ![sample report](./images/DQ_Report_1.png)
+    <img width="500" src="./images/DQ_Report_1.png" alt="Test report" />
+
 
 9. Publish the report to Power BI Service, **Premium** workspace.
 
