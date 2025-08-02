@@ -98,7 +98,7 @@ Next, we will analyze the performance of a test report using pure *DirectQuery* 
 4. In the Performance Analyzer tab, click **Start Recording** → **Refresh visuals**.
 5. Perfomance Analyzer tab will display the Table visual and a DAX query. Click on **Copy Query**. The DAX query should look similar to [Sample DAX Query](./scripts/Sample_DAX_Query.dax) script. Below is the screenshot of Direct Query report page.
    
-   ![DirectQuery report](./images/DirectQueryReport.png) 
+   <img width="600" src="./images/DirectQueryReport.png" alt="DirectQuery - report" />
 
 6. To compare the performance between *pure DirectQuery* and *User-defined Aggregations*, it is important to get objective and precise query execution times.
 
@@ -106,11 +106,12 @@ Next, we will analyze the performance of a test report using pure *DirectQuery* 
 
 8. Open the [Sample_DAX_Query.dax](./scripts/Sample_DAX_Query.dax) query or paste DAX-query that was previously copied in Power BI Desktop. Click **Run**. As shown in screenshot below, the query takes **5.7s**.
 
-   ![Data Source Connection](./images/DirectQueryDAXStudio.png)
+   <img width="800" src="./images/DirectQueryDAXStudio.png" alt="DirectQuery - DAX Studio" />
 
 10. You can also find the SQL-query execution time by looking at Databricks Query History. As shown below, the query took **~3.7s** and read **~38M** rows. 
 
-   ![Data Source Connection](./images/DirectQueryExecutionQueryHistory.png)
+   <img width="600" src="./images/DirectQueryExecutionQueryHistory.png" alt="DirectQuery - query profile" />
+
 
 > [!TIP]
 > If you get much better performance, this may be due to results being served from Query Result Cache. To mitigate this, you may recreate test tables by running SQL-statements mentioned above.
@@ -173,7 +174,8 @@ Next, we will analyze the performance of a test report using pure *DirectQuery* 
 6. Open **Optimize** → **Performance Analyzer**.
 7. In the Performance Analyzer tab, click **Start Recording** → **Refresh visuals**.
 5. Perfomance Analyzer tab will display the Table visual and a DAX query. Click on **Copy Query**. The DAX query should look similar to [Sample_DAX_Query_Using_Aggregations](./scripts/Sample_DAX_Query_Using_Aggregations.dax) script. Below is the screenshot of **User-defined Aggregation** report page.
-   <img width="600" src="./images/AggTableReport.png" alt="Aggregated table - report" />
+
+   <img width="800" src="./images/AggTableReport.png" alt="Aggregated table - report" />
 
 6. Open **DAX Studio** and click **Server Timings**.
 
