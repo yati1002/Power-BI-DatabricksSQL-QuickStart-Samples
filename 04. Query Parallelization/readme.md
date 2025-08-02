@@ -177,8 +177,8 @@ In conclusion, optimizing query parallelization in Power BI with *DirectQuery* m
 
 > [!IMPORTANT]
 > Please note that actual query parallelism is always limited by the lowest of all limiting factors which include:
-> - Max Parallelism Per Query
-> - Data Source Default Max Connections
+> - **`Max Parallelism Per Query`**
+> - **`Data Source Default Max Connections`**
 > - Databricks SQL Warehouse capacity
 > - On-premises / VNET managed gateway capacity (if used)
 
