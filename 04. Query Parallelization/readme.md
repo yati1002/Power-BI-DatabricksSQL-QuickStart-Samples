@@ -58,7 +58,6 @@ _TotalPrice20 = CALCULATE([_SumTotalPrice], part[p_container]="MED CASE")
 
 The report layout include a single table visual where all 20 calculated measures are displayed (the screenshot is clipped to 5 measures only).
 
-![Report Layout](./images/ReportLayout.PNG)
 <img width="500" src="./images/ReportLayout.png" alt="Report Layout" />
 
 
