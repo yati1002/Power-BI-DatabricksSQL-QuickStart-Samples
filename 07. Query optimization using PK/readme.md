@@ -61,9 +61,9 @@ Before you begin, ensure you have the following:
     <img width="800" src="./images/01.png" alt="Power BI data model" />
 
 6. On a report page, add a table visual, add columns:
-    - part[p_brand], **NO** aggregation
-    - v_lineitems[l_quantity], **SUM** aggregation
-    - v_lineitems[l_tax], **SUM** aggregation
+    - `part[p_brand]` - **NO** aggregation
+    - `v_lineitems[l_quantity]` - **SUM** aggregation
+    - `v_lineitems[l_tax]` - **SUM** aggregation
 
 7. In Databricks Query History you should be able to see the query profile for the SQL-query executed by Power BI. The engine scanned 3 tables **`lineitem`**, **`orders`**, and **`part`** and **261 MB** of data.
     <img width="800" src="./images/02.png" alt="Query Profile #1" />
