@@ -14,7 +14,7 @@ Before you begin, ensure you have the following:
 - [Power BI](https://powerbi.com) subscription 
 
 
-## Step by Step Instructions
+## Step by step walkthrough
 
 ### 1. Connect to Databricks data
 

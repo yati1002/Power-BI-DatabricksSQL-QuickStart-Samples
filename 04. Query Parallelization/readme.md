@@ -1,21 +1,33 @@
 # Query Parallelization
 
 ## Introduction
-When using Databrics Lakehouse, one of the greatest benefits of using Power BI is that we can build reports which process hundreds gigabytes or even terabytes of data. That is possible when using **Direct Query** mode which uses Databricks SQL as the backend and does not require loading all data into in-memory cache. Therefore, in order to achieve optimal performance it's important to understand to understand how Power BI generates and executes SQL-query when using **Direct Query** mode.
 
-In this sample we will see some of the aspects of query parallelization in Power BI model when using Direct Query mode.
+One of the major advantages of integrating Power BI with Databricks Lakehouse is the ability to create reports that analyze massive datasets - ranging from hundreds of gigabytes to even terabytes - without loading all data into memory. This is accomplished through ***DirectQuery*** mode, which leverages Databricks SQL as the backend, allowing you to work seamlessly with large-scale data and keep reports highly scalable. To unlock the best performance and user experience, it’s essential to understand how Power BI generates and executes SQL queries in *DirectQuery* mode, ensuring report designs make the most of Databricks’ capabilities.
 
-## Pre-requisites
-1. Databricks workspace.
-2. Databricks SQL Warehouse, Small cluster size, min=max=2.
-3. Power BI Desktop, latest version is recommended.
-4. Power BI **Premium** workspace, the demos are built using Power BI Embedded A4, A6, A7.
-5. [Tabular Editor](!https://tabulareditor.com/), free version is sufficient.
-6. [DAX Studio](!https://daxstudio.org/).
+In this quickstart, we’ll explore key aspects of query parallelization in Power BI models when leveraging ***DirectQuery***, helping you optimize performance and gain deeper insight into how your reports interact with the Databricks backend.
 
-## Step by Step Walkthrough
+
+
+## Prerequisites
+
+Before you begin, ensure you have the following:
+
+- [Databricks account](https://databricks.com/), access to a Databricks workspace, Unity Catalog
+- Databricks SQL Warehouse
+	- Cluster size - **Small**
+	- Scaling Min. **2** Max. **2** clusters
+- [Power BI Desktop](https://powerbi.microsoft.com/desktop/) installed, latest version is highly recommended
+- Power BI **Premium** workspace, the demos are built using Power BI Embedded A4, A5, A6, A7
+- [Tabular Editor](!https://tabulareditor.com/), free version is sufficient
+- [DAX Studio](!https://daxstudio.org/)
+
+
+
+## Step by step walkthrough
+
+
 ### Report Design
-Our report is based on **samples** catalog, **tpch** schema. It uses **orders** as fact table and **region**, **nation**, and **customer** as dimension tables. All tables are set to **Direct Query** storage mode.
+The test report is based on **`samples`** catalog, **`tpch`** schema. It uses **`orders`** as a fact table and **`region`**, **`nation`**, and **`customer`** as dimension tables. All tables are set to **Direct Query** storage mode.
 ![Data model](./images/DataModel.PNG)
 
 There are also 20 calculated measures defined in the model in **MeasuresTable**.
@@ -28,6 +40,7 @@ _TotalPrice02 = CALCULATE([_SumTotalPrice], part[p_container]="JUMBO BOX")
 
 The report layout include a single table visual where all 20 calculated measures are displayed (the screenshot is clipped to 5 measures only).
 ![Report Layout](./images/ReportLayout.PNG)
+
 
 ### Testing Approach
 The report is purposefully designed in such way that it generates **20** separate SQL-queries to render the Table visual.
@@ -73,64 +86,70 @@ We published the report to a Power BI Premium workspace and used DAX-query in [D
 
 
 ### Default Behavior
-#### P1/A4 SKU
+
+#### P1/A4/F64 SKU
 ![Default behavior - P1/A4](./images/No-parallelization-A4.PNG)
 
-#### P2/A5 SKU
+#### P2/A5/F128 SKU
 ![Default behavior - P2/A5](./images/No-parallelization-A5.PNG)
 
-#### P3/A6 SKU
+#### P3/A6/F256 SKU
 ![Default behavior - P3/A6](./images/No-parallelization-A6.PNG)
 
-#### P4/A7 SKU
+#### P4/A7/F512 SKU
 ![Default behavior - P4/A7](./images/No-parallelization-A7.PNG)
 
 #### Summary
-So we achieved the following results.
-| SKU    | v-Cores | Parallelism | End-to-end performance |
-| ------ | ------- | ----------- | ---------------------- |
-| P1/A4  | 8       |    4        |        3,377 ms        |
-| P2/A5  | 16      |    6        |        3,422 ms        |
-| P3/A6  | 32      |    8        |        3,017 ms        |
-| P4/A7  | 64      |    10       |        2,391 ms        |
+Thus, we achieved the following results.
+| SKU        | v-Cores | Parallelism | End-to-end performance |
+| ---------- | ------- | ----------- | ---------------------- |
+| P1/A4/F64  | 8       |    4        |        3,377 ms        |
+| P2/A5/F128 | 16      |    6        |        3,422 ms        |
+| P3/A6/F256 | 32      |    8        |        3,017 ms        |
+| P4/A7/F512 | 64      |    10       |        2,391 ms        |
 
-As we can see the query parallelism increases with the SKU, hence the performance. However, when using P4/A7 and higher SKU the query parallelism does not grow further, because it's limited by Data Source Default Max Connection setting in the report which is equal **10** by default. 
+As we can see, the default query parallelism increases with the SKU, hence the performance. However, when using P4/A7 and higher SKU the query parallelism does not grow further, because it's limited by `Data Source Default Max Connection` setting in the report which is equal **10** by default. 
 
-***Please note that: 1) performance numbers are not precise. You may observe different performance in your environment; 2) Microsoft has not documented the default behaviour of query parallelism, hence it may change and your results may be different.***
+> [!NOTE]
+> Please note that: 1) performance numbers are not precise. You may observe different performance in your environment; 2) Microsoft has not documented the default behaviour of query parallelism, hence it may change and your results may be different.
 
-### Adjusting Model Properties
-As we may not be satisfied with the achieved query parallelisation and overall performance, we may want to increase query parallelism. This was introduced by Microsoft back in March 2023 and described in the following blog post - 
+
+### Tuning Semantic Model Settings
+As we may not be satisfied with the achieved query parallelisation and overall performance, we may want to increase the query parallelism. This was introduced by Microsoft back in March 2023 and described in the following blog post - 
 [Query parallelization helps to boost Power BI dataset performance in DirectQuery mode](!https://powerbi.microsoft.com/en-us/blog/query-parallelization-helps-to-boost-power-bi-dataset-performance-in-directquery-mode/).
 According to Microsoft blog post, we change the properties of the published semantic models with the help of [Tabular Editor](!https://tabulareditor.com/). We change the properties as follows:
-1. Database Compatibility Level = 1569 to unlock new settings
-2. Max Parallelism Per Query = 20 to parallelize all 20 queries in our report
-3. Data Source Default Max Connections = 20 to enable 20 connections to Databricks SQL.
+1. `Database Compatibility Level` = **1569** to unlock new settings
+2. `Max Parallelism Per Query` = **20** to parallelize all 20 queries in our report
+3. `Data Source Default Max Connections` = **20** to enable 20 connections to Databricks SQL.
 ![Model Properties](./images/Model-Properties.PNG)
 
-Additionally we need to make sure that our backend, i.e. Databricks SQL Warehouse, is capable to handle more SQL-queries concurrently. Therefore, we recommend setting **min** number of clusters as at least 2 in order to get more concurrency.
+Additionally we need to make sure that our backend, i.e. Databricks SQL Warehouse, is capable to handle more SQL-queries concurrently. Therefore, we recommend setting **Min** number of clusters as at least 2 in order to get more concurrency.
 
 
 ### Increased Query Parallelization
 
-#### P1/A4 SKU
+#### P1/A4/F64 SKU
 ![Query Parallelization - P1/A4](./images/Query-parallelization-A4.PNG)
-#### P2/A5 SKU
+#### P2/A5/F128 SKU
 ![Query Parallelization - P2/A5](./images/Query-parallelization-A5.PNG)
-#### P3/A6 SKU
+#### P3/A6/F256 SKU
 ![Query Parallelization - P3/A6](./images/Query-parallelization-A6.PNG)
-#### P4/A7 SKU
+#### P4/A7/F512 SKU
 ![Query Parallelization - P4/A7](./images/Query-parallelization-A7.PNG)
 
 #### Summary
 So we achieved the following results.
-| SKU    | v-Cores | Parallelism | End-to-end performance |
-| ------ | ------- | ----------- | ---------------------- |
-| P1/A4  | 8       |     8       |        2,110 ms        |
-| P2/A5  | 16      |     12      |        2,375 ms        |
-| P3/A6  | 32      |     16      |        1,547 ms        |
-| P4/A7  | 64      |     20      |        860 ms          |
+| SKU         | v-Cores | Parallelism | End-to-end performance |
+| ----------- | ------- | ----------- | ---------------------- |
+| P1/A4/F64   | 8       |     8       |        2,110 ms        |
+| P2/A5/F128  | 16      |     12      |        2,375 ms        |
+| P3/A6/F256  | 32      |     16      |        1,547 ms        |
+| P4/A7/F512  | 64      |     20      |        860 ms          |
+
+
 
 ## Conclusion
+
 As we saw in this example, with the fine tuning of the semantic models in Power BI Premium SKUs we can achieve a better query parallelism, hence better performance and user experience.
 Please note that actual query parallelism is always limited by the lowest of all limiting factors which include:
 1. Max Parallelism Per Query
@@ -138,5 +157,18 @@ Please note that actual query parallelism is always limited by the lowest of all
 3. Databricks SQL Warehouse capacity
 4. Power BI Gateway capacity (if used).
 
+--
+
+In conclusion, optimizing query parallelization in Power BI with *DirectQuery* mode has a significant impact on report performance and user experience when working with Databricks Lakehouse. By adjusting semantic model settings such as `Max Parallelism Per Query` and `Data Source Default Max Connections`, you can optimize Power BI's ability to run multiple SQL queries simultaneously. This results in faster overall report response times, especially for reports with many complex measures, as more queries are executed in parallel rather than sequentially. Ultimately, tuning for greater parallelism allows you to make the most of both the Power BI Premium capacity and Databricks backend, enabling scalable analytics that remain responsive even as data volume and report complexity grow.
+
+> [!NOTE]
+> Please note that actual query parallelism is always limited by the lowest of all limiting factors which include:
+> - Max Parallelism Per Query
+> - Data Source Default Max Connections
+> - Databricks SQL Warehouse capacity
+> - On-premises / VNET managed gateway capacity (if used)
+
+
 ## Power BI Template 
-A sample Power BI template [Query-Parallelization.pbit](Query-Parallelization.pbit) is present in the current folder. When opening the template, enter respective **ServerHostname** and **HTTP Path** values of your Databricks SQL Warehouse. The template uses **samples** catalog, therefore you don't need to prepare any additional data for this report.
+
+A Power BI template [Query Parallelization.pbit](./Query%20Parallelization.pbit) is present in this folder to demonstrate the behaviour of Power BI query parallelism when using different SKUs and tuning semantic model settings. To use the template, simply enter your Databricks SQL Warehouse's **`ServerHostname`** and **`HttpPath`** that correspond to the environment set up in the instructions above.

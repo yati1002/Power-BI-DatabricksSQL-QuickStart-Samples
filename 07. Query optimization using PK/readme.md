@@ -15,7 +15,7 @@ Before you begin, ensure you have the following:
 
 
 
-## Step by Step Instructions
+## Step by step walkthrough
 1. Create a catalog and a schema in Databricks Unity Catalog.
     ```sql
     CREATE CATALOG IF NOT EXISTS powerbiquickstarts;

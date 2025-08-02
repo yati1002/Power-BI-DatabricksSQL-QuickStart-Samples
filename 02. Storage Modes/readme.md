@@ -14,7 +14,7 @@ Before you begin, ensure you have the following:
 - [Power BI Desktop](https://powerbi.microsoft.com/desktop/) installed, latest version is highly recommended
 
 
-## Step by Step Instructions
+## Step by step walkthrough
 
 In the next section we will compare different storage modes and showcase which storage mode is a good fit for dimension table. There are two common query patterns for dimension tables:
 1. Retrieving values for slicers/filters.
@@ -145,4 +145,5 @@ Using **Dual** mode for dimension tables in Power BI offers key benefits over Im
 
 
 ## Power BI Template 
+
 A Power BI template [Storage Modes.pbit](./Storage%20Modes.pbit) is present in this folder to demonstrate the difference in Power BI behaviour when using *Import*, *DirectQuery*, and *Dual* storage modes outlined above. To use the template, simply enter your Databricks SQL Warehouse's **`ServerHostname`** and **`HttpPath`** that correspond to the environment set up in the instructions above.
