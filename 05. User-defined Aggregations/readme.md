@@ -114,10 +114,8 @@ Next, we will analyze the performance of a test report using pure *DirectQuery* 
 
    <img width="400" src="./images/DirectQuery-QueryProfile-v3.png" alt="DirectQuery - query profile" />
 
-> [!TIP]
-> If you get much better performance, this may be due to results being served from Query Result Cache. To mitigate this, you may recreate test tables by running SQL-statements mentioned above.
-
-   The SQL-query looks as follows. Power BI built a SQL-query joining **`nation`** dimension table with **`orders`** and **`lineitem`** fact tables.
+   The SQL-query looks as follows. Power BI built a SQL-query joining **`nation`** dimension table with **`orders`** and **`lineitem`** fact tables.   
+   
 
    ``` sql
    select ...
