@@ -35,7 +35,24 @@ There are also 20 calculated measures defined in the model in **MeasuresTable**.
 _SumTotalPrice = SUM(orders[o_totalprice])
 _TotalPrice01 = CALCULATE([_SumTotalPrice], part[p_container]="JUMBO BAG")
 _TotalPrice02 = CALCULATE([_SumTotalPrice], part[p_container]="JUMBO BOX")
-...
+_TotalPrice03 = CALCULATE([_SumTotalPrice], part[p_container]="JUMBO CAN")
+_TotalPrice04 = CALCULATE([_SumTotalPrice], part[p_container]="JUMBO CASE")
+_TotalPrice05 = CALCULATE([_SumTotalPrice], part[p_container]="JUMBO DRUM")
+_TotalPrice06 = CALCULATE([_SumTotalPrice], part[p_container]="JUMBO JAR")
+_TotalPrice07 = CALCULATE([_SumTotalPrice], part[p_container]="JUMBO PACK")
+_TotalPrice08 = CALCULATE([_SumTotalPrice], part[p_container]="JUMBO PKG")
+_TotalPrice09 = CALCULATE([_SumTotalPrice], part[p_container]="LG BAG")
+_TotalPrice10 = CALCULATE([_SumTotalPrice], part[p_container]="LG BOX")
+_TotalPrice11 = CALCULATE([_SumTotalPrice], part[p_container]="LG CAN")
+_TotalPrice12 = CALCULATE([_SumTotalPrice], part[p_container]="LG CASE")
+_TotalPrice13 = CALCULATE([_SumTotalPrice], part[p_container]="LG DRUM")
+_TotalPrice14 = CALCULATE([_SumTotalPrice], part[p_container]="LG JAR")
+_TotalPrice15 = CALCULATE([_SumTotalPrice], part[p_container]="LG PACK")
+_TotalPrice16 = CALCULATE([_SumTotalPrice], part[p_container]="LG PKG")
+_TotalPrice17 = CALCULATE([_SumTotalPrice], part[p_container]="MED BAG")
+_TotalPrice18 = CALCULATE([_SumTotalPrice], part[p_container]="MED BOX")
+_TotalPrice19 = CALCULATE([_SumTotalPrice], part[p_container]="MED CAN")
+_TotalPrice20 = CALCULATE([_SumTotalPrice], part[p_container]="MED CASE")
 ```
 
 The report layout include a single table visual where all 20 calculated measures are displayed (the screenshot is clipped to 5 measures only).
