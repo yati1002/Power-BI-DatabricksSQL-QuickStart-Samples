@@ -16,7 +16,7 @@ Before you begin, ensure you have the following:
 - Databricks SQL Warehouse
 	- Cluster size - **Small**
 	- Scaling Min. **2** Max. **2** clusters
-- [Power BI Desktop](https://powerbi.microsoft.com/desktop/) installed, latest version is highly recommended
+- [Power BI Desktop](https://powerbi.microsoft.com/desktop/), latest version is highly recommended
 - Power BI **Premium** workspace, the demos are built using Power BI Embedded A4, A5, A6, A7
 - [Tabular Editor](https://tabulareditor.com/), free version is sufficient
 - [DAX Studio](https://daxstudio.org/)

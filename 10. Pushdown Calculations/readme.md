@@ -13,7 +13,7 @@ This quickstart demonstrates a data modeling approach that can, in certain scena
 Before you begin, ensure you have the following:
 
 - [Databricks account](https://databricks.com/), access to a Databricks workspace, Unity Catalog, and SQL Warehouse
-- [Power BI Desktop](https://powerbi.microsoft.com/desktop/) installed, latest version is highly recommended
+- [Power BI Desktop](https://powerbi.microsoft.com/desktop/), latest version is highly recommended
 
 
   
