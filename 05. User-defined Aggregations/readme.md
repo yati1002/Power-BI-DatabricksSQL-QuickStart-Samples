@@ -94,9 +94,7 @@ Next, we will analyze the performance of a test report using pure *DirectQuery* 
    - Sum of **`l_quantity`** from **`lineitem`** table
    - Earliest **`l_shipdate`** from **`lineitem`** table
 
-2. Open **Optimize** → **Performance Analyzer**.
-
-3. In the Performance Analyzer tab, click **Start Recording** → **Refresh visuals**.
+2. Open **Optimize** → **Performance Analyzer** → **Start Recording** → **Refresh visuals**.
 
 4. Perfomance Analyzer tab will display the Table visual and a DAX query. Click on **Copy Query**. The DAX query should look similar to [Sample DAX Query](./scripts/Sample_DAX_Query.dax) script. Below is the screenshot of Direct Query report page.
    
@@ -172,9 +170,7 @@ Next, we will analyze the performance of a test report using pure *DirectQuery* 
    - Sum of **`l_quantity`** from **`lineitem_agg`** table
    - Earliest **`l_shipdate`** from **`lineitem_agg`** table
 
-5. Open **Optimize** → **Performance Analyzer**.
-
-6. In the Performance Analyzer tab, click **Start Recording** → **Refresh visuals**.
+2. Open **Optimize** → **Performance Analyzer** → **Start Recording** → **Refresh visuals**.
 
 7. Perfomance Analyzer tab will display the Table visual and a DAX query. Click on **Copy Query**. The DAX query should look similar to [Sample_DAX_Query_Using_Aggregations](./scripts/Sample_DAX_Query_Using_Aggregations.dax) script. Below is the screenshot of **User-defined Aggregation** report page.
 
