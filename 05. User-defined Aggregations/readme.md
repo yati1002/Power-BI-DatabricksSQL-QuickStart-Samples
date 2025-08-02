@@ -96,9 +96,7 @@ Next, we will analyze the performance of a test report using pure *DirectQuery* 
    - Earliest **`l_shipdate`** from **`lineitem`** table
 3. Open **Optimize** → **Performance Analyzer**.
 4. In the Performance Analyzer tab, click **Start Recording** → **Refresh visuals**.
-5. Perfomance Analyzer tab will display the Table visual and a DAX query. Click on **Copy Query**. The DAX query should look similar to [Sample DAX Query](./scripts/Sample_DAX_Query.dax) script.
-
-   Below is the screenshot of Direct Query report page.
+5. Perfomance Analyzer tab will display the Table visual and a DAX query. Click on **Copy Query**. The DAX query should look similar to [Sample DAX Query](./scripts/Sample_DAX_Query.dax) script. Below is the screenshot of Direct Query report page.
    
    ![DirectQuery report](./images/DirectQueryReport.png) 
 
@@ -106,13 +104,11 @@ Next, we will analyze the performance of a test report using pure *DirectQuery* 
 
 7. Open **DAX Studio** and click **Server Timings**.
 
-8. Open the [Sample_DAX_Query.dax](./scripts/Sample_DAX_Query.dax) query or paste DAX-query that was previously copied in Power BI Desktop. Click **Run**.
-
-9. As shown in screenshot below the query takes **5.7s**.
+8. Open the [Sample_DAX_Query.dax](./scripts/Sample_DAX_Query.dax) query or paste DAX-query that was previously copied in Power BI Desktop. Click **Run**. As shown in screenshot below, the query takes **5.7s**.
 
    ![Data Source Connection](./images/DirectQueryDAXStudio.png)
 
-10. You can also find the SQL-query execution time by looking at Databricks Query History. As shown below the query took **~3.7s** and read **~38M** rows. 
+10. You can also find the SQL-query execution time by looking at Databricks Query History. As shown below, the query took **~3.7s** and read **~38M** rows. 
 
    ![Data Source Connection](./images/DirectQueryExecutionQueryHistory.png)
 
@@ -188,6 +184,11 @@ Next, we will analyze the performance of a test report using pure *DirectQuery* 
 9. You can also find the query execution time by looking at Databricks Query History. As shown below the query took **~2.8s** and read only **50** rows (instead of ~**38M** rows). 
 
    <img width="600" src="./images/AggTableExecutionQueryHistory.png" alt="Query profile" />
+
+   The SQL-query looks as follows. Power BI built a SQL-query joining fact table **`lineitem`** with **`orders`** and **`nation`**.
+
+   ``` sql
+   ```
 
 
 
