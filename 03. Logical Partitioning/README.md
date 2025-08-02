@@ -2,6 +2,12 @@
 ## Introduction
 [Logical Partitioning](https://learn.microsoft.com/en-us/analysis-services/tabular-models/create-and-manage-tabular-model-partitions?view=asallproducts-allversions) is an important feature of Power BI which helps improving the refresh time of Power BI semantic models. In this example we will showcase and compare how Logical Partitioning can provide a faster data refresh by enabling parallel processing of multiple partitions. You can follow the steps mentioned in the [Step by Step Instructions](#step-by-step-instructions) section.
 
+--
+
+[Logical Partitioning](https://learn.microsoft.com/en-us/analysis-services/tabular-models/create-and-manage-tabular-model-partitions?view=asallproducts-allversions) is a powerful feature that enables you to divide large tables into logical segments, allowing each partition to be refreshed independently. This can dramatically improve the refresh performance of your Power BI semantic models by enabling parallel processing of multiple partitions. In this quickstart, we'll demonstrate how Logical Partitioning can accelerate data refresh times and show you how to implement it step by step. For detailed instructions, refer to the [Step by step walkthrough](#step-by-step-walkthrough) section.
+
+> [!NOTE]
+> We use the term **Logical Partitioning** to distinguish from [Delta partitioning](https://docs.databricks.com/gcp/en/tables/partitions). By Logical Partitioning, we assume splitting tables into logical segments within **Power BI semantic models**.
 
 
 ## Prerequisites
