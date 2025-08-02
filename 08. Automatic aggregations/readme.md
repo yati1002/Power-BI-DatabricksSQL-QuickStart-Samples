@@ -20,16 +20,36 @@ Before you begin, ensure you have the following:
 
 ## Step by step walkthrough
 
-1. Create an initial Power BI dataset based on **samples** catalog, **tpch** schema. Add tables and relationships as shown on the screenshot below. The dimension tables **customer** and **nation** should be set to Dual storage mode. The fact tables **orders** and **lineitem** should be set to Direct Query storage mode. Below is the data model for the sample report.
+1. Open Power BI Desktop → **"Home"** → **"Get Data"** → **"More..."**.
+
+2. Search for **Databricks** and select **Azure Databricks** (or **Databricks** when using Databricks on AWS or GCP).
+
+3. Enter the following values:
+   - **Server Hostname**: Enter the Server hostname value from Databricks SQL Warehouse connection details tab.
+   - **HTTP Path**: Enter the HTTP path value  from Databricks SQL Warehouse connection details tab.
+
+4. Connect to **`samples`** catalog, **`tpch`** schema.
+
+5. Add tables as follows.Below is the data model for the sample report.
+   - **`nation`** - dimension table set to **Dual** storage mode
+   - **`customer`** - dimension table set to **Dual** storage mode
+   - **`orders`** - fact table set to **DirectQuery** storage mode
+   - **`lineitem`** - fact table set to **DirectQuery** storage mode.
+
+6. Create table relationships as follows.
+   - **`nation`** → **`customer`** → **`orders`** → **`lineitem`** 
+
+7. The semantic model should look as on the screenshot below.
 
     ![sample report](./images/DataModel.png)
 
-2. Create a simple tabular report showing the **count** of orders and **min** shipment date, **sum** of discounts and **sum** of quantities . Also add the slicer with **nation** names, as shown below.
+8. Create a simple tabular report displaying the **count** of orders, **min** shipment date, **sum** of discounts, and **sum** of quantities . Also add the slicer with **nation** names, as shown below.
 
     ![sample report](./images/DQ_Report_1.png)
 
+9. Publish the report to Power BI Service, **Premium** workspace.
 
-3. As shown below when we run the report it Power BI takes ~20sec to run the query . Below is the snapshot from the Network Trace :
+9. As shown below, when we run the report it Power BI takes ~20sec to run the query . Below is the snapshot from the Network Trace :
 
     ![sample report](./images/PreeAA.png)
 

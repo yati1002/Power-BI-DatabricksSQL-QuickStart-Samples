@@ -63,7 +63,7 @@ For our testing scenario we use a **Small** Pro SQL Warehouse. We will create re
 > Switching storage mode to *Import* is irreversible operation. Therefore, we strongly recommend creating a backup of your reports before switching tables to *Import* mode for experimentation purposes.
 
 
-6. Create table relationsships as follows.
+6. Create table relationships as follows.
    - **`region_DQ`** → **`nation_DQ`** → **`customer_DQ`** → **`orders_DQ`**
    - **`region_Import`** → **`nation_Import`** → **`customer_Import`** → **`orders_DQ`**
    - **`region_Dual`** → **`nation_Dual`** → **`customer_Dual`** → **`orders_DQ`**
