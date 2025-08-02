@@ -80,7 +80,7 @@ Before you begin, ensure you have the following:
 
    The resulting data model should look like on the screenshot below.
 
-   ![Data Model](./images/DataModel-v2.png)
+   <img width="1000" src="./images/DataModel-v2.png" alt="Data Model" />
 
 
 Next, we will analyze the performance of a test report using pure *DirectQuery* mode and *User-defined Aggregation*.
