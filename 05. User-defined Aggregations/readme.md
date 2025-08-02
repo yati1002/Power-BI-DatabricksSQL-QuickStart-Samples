@@ -190,8 +190,7 @@ Next, we will analyze the performance of a test report using pure *DirectQuery* 
 10. As shown in screenshot below the query takes **2.8 sec**.
 
    <img width="800" src="./images/AggTableDAXStudio.png" alt="Aggregated table - DAX Studio" />
-
-
+   
    Also, as shown in the screenshot, the first row under **RewriteAttempted** shows **MatchFound**, i.e., Power BI was able to find the aggregate table for this query. Hence, during the query execution as shown in the screenshot the values are fetched from **`lineitem_by_nation_agg`** instead of **`lineitem_agg`** fact table.
 
 11. You can also find the query execution time by looking at Databricks Query History. As shown below the query took **~2.8s** and read only **50** rows (instead of ~**38M** rows). 
