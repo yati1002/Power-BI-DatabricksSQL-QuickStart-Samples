@@ -154,10 +154,13 @@ Next, we will analyze the performance of a test report using pure *DirectQuery* 
 1. Switch to Power BI Desktop → **Model view**.
 2. Right Click **lineitem_by_nation_agg** → **Manage aggregations**.
 3. Configure aggregation table as shown below on the screenshot.
-   - **`EarliestShipdate`** - Min / lineitem_agg / l_shipdate
-   - **`n_nationkey`** - None
-   - **`SumofDiscount`** - Min / lineitem_agg / l_discount
-   - **`SumOfQuantity`** - Min / lineitem_agg / l_quantity 
+
+   | Aggregation column | Summarization | Detail table | Detail column |
+   | ---------------------- | --- | ------------------ | ---------------- |
+   | **`n_nationkey`**      | -   |     -              |        -         |
+   | **`EarliestShipdate`** | Min | **`lineitem_agg`** | **`l_shipdate`** |
+   | **`SumofDiscount`**    | Sum | **`lineitem_agg`** | **`l_discount`** |
+   | **`SumOfQuantity`**    | Sum | **`lineitem_agg`** | **`l_quantity`** |
 
    <img width="600" src="./images/ManageAggregations-v2.png" alt="Manage aggregations" />
 
