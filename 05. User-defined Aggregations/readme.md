@@ -188,6 +188,7 @@ Next, we will analyze the performance of a test report using pure *DirectQuery* 
 9. Open the [Sample_DAX_Query_Using_Aggregations.dax](./scripts/Sample_DAX_Query_Using_Aggregations.dax) query or paste DAX-query that was previously copied in Power BI Desktop. Click **Run**.
 
 10. As shown in screenshot below the query takes **2.8 sec**.
+
    <img width="800" src="./images/AggTableDAXStudio.png" alt="Aggregated table - DAX Studio" />
 
 
