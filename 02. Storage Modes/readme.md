@@ -43,6 +43,7 @@ For our testing scenario we use a **Small** Pro SQL Warehouse. We will create re
 > It is always a good practice to parameterize your connections. This really helps ease out the development expeience as you can dynamically connect to any Databricks SQL warehouse. For details on how to paramterize your connection string you can refer to [this](/01.%20Connecting%20Power%20BI%20to%20Databricks%20SQL%20using%20Parameters) article.
 
 4. Connect to **`samples`** catalog, **`tpch`** schema.
+
 5. Add tables as follows.
    - **`region_DQ`** - *region* dimension table set to **DirectQuery** storage mode.
    - **`nation_DQ`** - *nation* dimension table set to **DirectQuery** storage mode.
