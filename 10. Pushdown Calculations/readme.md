@@ -37,7 +37,7 @@ Before you begin, ensure you have the following:
     CREATE OR REPLACE TABLE lineitem AS SELECT * FROM samples.tpch.lineitem;
     ```
 
-3. Connect to Databricks SQL Warehouse, **powerbiquickstarts** catalog, **tpch** schema, and add the following tables/views to the semantic model. All tables should be set to **DirectQuery** storage mode.
+3. Connect to Databricks SQL Warehouse, **`powerbiquickstarts`** catalog, **`tpch`** schema, and add the following tables/views to the semantic model. All tables should be set to **DirectQuery** storage mode.
     - `region`
     - `nation`
     - `part`

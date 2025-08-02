@@ -29,6 +29,9 @@ Before you begin, ensure you have the following:
    - **Server Hostname**: Enter the Server hostname value from Databricks SQL Warehouse connection details tab.
    - **HTTP Path**: Enter the HTTP path value  from Databricks SQL Warehouse connection details tab.
 
+> [!TIP]
+> It is always a good practice to parameterize your connections. This really helps ease out the development expeience as you can dynamically connect to any Databricks SQL warehouse. For details on how to paramterize your connection string you can refer to [Connection Parameters](/01.%20Connection%20Parameters/) article.s
+
 4. Connect to **`samples`** catalog, **`tpch`** schema.
 
 5. Add tables as follows.Below is the data model for the sample report.
@@ -69,35 +72,56 @@ Before you begin, ensure you have the following:
 
     ![Automatic aggregations settings](./images/AAenablement.png)
 
-6. Power BI uses an internal query log to train aggregations. Thus, we need to populate the query log. We can achieve this by opening the report and interacting with the report by selecting different **`nation`** names in the slicer. Alternatively, you can run a sample DAX-query in the [DAX Studio](https://daxstudio.org/).
+6. Power BI uses an internal query log to train aggregations. Thus, we need to populate the query log. We can achieve this by opening the report and interacting with the report by selecting different **`nation`** names in the slicer. Alternatively, you can run a sample [DAX-query](./Query.dax) in the [DAX Studio](https://daxstudio.org/).
 
     ```
-    TREATAS({"BRAZIL"}, 'nation'[n_name])
+    DEFINE
+        VAR __DS0FilterTable = 
+            TREATAS({"BRAZIL"}, 'nation'[n_name])
+
+        VAR __DS0Core = 
+            SUMMARIZECOLUMNS(
+                'nation'[n_name],
+                __DS0FilterTable,
+                "Suml_discount", CALCULATE(SUM('lineitem'[l_discount])),
+                "Suml_quantity", CALCULATE(SUM('lineitem'[l_quantity])),
+                "Minl_shipdate", CALCULATE(MIN('lineitem'[l_shipdate])),
+                "count_orderkey", 'lineitem'[count_orderkey]
+            )
+
+        VAR __DS0PrimaryWindowed = 
+            TOPN(501, __DS0Core, 'nation'[n_name], 1)
+
+    EVALUATE
+        __DS0PrimaryWindowed
+
+    ORDER BY
+        'nation'[n_name]
     ```
 > [!NOTE]
 > Please note that for better aggregations training you need to run the multiple times by using different filter values for `n_nation` column.
  
-For Power BI to be able to create aggregations, we need to populate the Power BI query log which stores internal queries created by Power BI when users interact with a report. Thus, you can either open the deplopyed Power BI Report and interact with report by selecting different **nation** names in the slicer or you can open the DAX studio and run the sample DAX query mentioned [here](./DAX/Dax_query).
-   
-    **Please note** that for better model training you need to set different values for the slicer or the filter in DAX-query and run it multiple times.
-    ```
-    TREATAS({"BRAZIL"}, 'nation'[n_name])
-    ```
-
-7. You can now start the model training manually or schedule it.
+7. Start the model training manually or schedule it.
 
     ![sample report](./images/TrainAA.png)
    
-8. Once the model is trained, Power BI will have aggregated values in in-memory cache. The next time you interact with the report using similar patterns (dimensions, measures, filters) Power BI will leverage cached aggregations to server the queries and will not send queries to Databricks SQL Warehouse. Hence, you may expect sub-second report refresh performance.
-Below screenshot shows how post enabling Automatic Aggregation no queries are fired as the data is read from cache.
+8. Once the model is trained, Power BI will have aggregated values in in-memory cache. Next time you interact with the report using similar patterns (dimensions, measures, filters) Power BI will leverage cached aggregations to serve the queries and will not send queries to Databricks SQL Warehouse. Hence, you may expect sub-second report refresh performance.
+
+9. Below screenshot shows how post enabling Automatic Aggregation no queries are fired as the data is read from cache.
 
     ![sample report](./images/postAA.png)
 
+
+
 ## Conclusion
-When using **Direct Query** storage mode in Power BI, configuring [Automatic Aggregations](https://learn.microsoft.com/en-us/power-bi/enterprise/aggregations-auto) may significantly improve overall 
-report performance, hence user experience. Unlike [User-defined aggregations](https://learn.microsoft.com/en-us/power-bi/transform-model/aggregations-advanced), Automatic aggregations do not require extensive data modeling and query-optimization skills to configure and maintain. [Automatic Aggregations](https://learn.microsoft.com/en-us/power-bi/enterprise/aggregations-auto) are easy to enable and maintain.
+
+Power BI [Automatic Aggregations](https://learn.microsoft.com/en-us/power-bi/enterprise/aggregations-auto) leverage advanced machine learning to optimize *DirectQuery* semantic models and dramatically improve report performance. By analyzing user query patterns, Power BI automatically creates and manages in-memory aggregation tables, allowing frequently requested data to be served rapidly from cache instead of querying the backend data source each time. This results in much faster report visuals, reduced load on the source systems, and increased scalability - especially beneficial for large and complex datasets.
+
+Unlike [User-defined aggregations](https://learn.microsoft.com/en-us/power-bi/transform-model/aggregations-advanced), automatic aggregations don't require extensive data modeling and query-optimization skills to configure and maintain.
+Automatic aggregations require minimal setup, self-optimize over time, and remove the need for extensive manual modeling, making high-performance analytics accessible to users of all skill levels.
+
+
 
 ## Power BI Template 
 
-A sample Power BI template [Automatic_Aggregate_Template.pbit](./Automatic_Aggregations.pbit) is present in the current folder. When opening the template, enter respective **ServerHostname** and **HTTP Path** values of your Databricks SQL Warehouse. The template uses **samples** catalog, therefore you don't need to prepare any additional data for this report.
-
+A Power BI template [Automatic Aggregations.pbit](./Storage%20Modes.pbit) is present in this folder to demonstrate the difference in Power BI behaviour when using *Import*, *DirectQuery*, and *Dual* storage modes outlined above. To use the template, simply enter your Databricks SQL Warehouse's **`ServerHostname`** and **`HttpPath`** that correspond to the environment set up in the instructions above. The template uses **`samples`** catalog, therefore you don't need to prepare any additional dataset.
