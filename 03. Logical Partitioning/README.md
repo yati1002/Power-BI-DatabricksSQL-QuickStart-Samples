@@ -58,17 +58,13 @@ Before you begin, ensure you have the following:
 
 ## Conclusion
 
-When using **Import** mode in Power BI, configuring partitions for large tables may significantly improve overall table processing performance. While for a non-partitioned table Power BI uses a single thread and ingests and compresses data as a single chunk, for a partitioned table Power BI uses multiple threads where each thread ingests and compresses own chunk of data. Therefore, end-to-end table processing is much faster.
-As we saw above in our case the performance gain was **~50%**. For bigger tables the performance gain can be even higher.
-
---
-
 When using **Import** mode, Logical partitioning in Power BI allows large tables to be divided into separate segments, with each partition able to be refreshed independently. This approach significantly improves data refresh performance because multiple partitions can be processed in parallel, reducing total refresh time compared to refreshing a single, monolithic table. As demonstrated, partitioning can cut refresh durations, making data updates much faster and more efficient, especially for large datasets. By leveraging logical partitioning, Power BI semantic models become more scalable, providing a better experience for both administrators and end users.
 
 > [!IMPORTANT]
-> Please note that actual performance improvement due to logical partitioning may vary, as it depends on multiple factors.
+> Please note that actual performance improvement due to logical partitioning may vary, as it depends on multiple factors, such as number of columns, data types, data distribution, etc.
+
 
 
 ## Power BI Template 
 
-A Power BI template [Logical-Partitioning.pbit](./Logical-Partitioning.pbit) is present in this folder to demonstrate the benefits of Logical Partitioning. To use the template, simply enter your Databricks SQL Warehouse's **`ServerHostname`** and **`HttpPath`** that correspond to the environment set up in the instructions above. The template uses **`samples`** catalog, therefore you don't need to prepare any additional dataset.
+A Power BI template [Logical Partitioning.pbit](./Logical%20Partitioning.pbit) is present in this folder to demonstrate the benefits of Logical Partitioning. To use the template, simply enter your Databricks SQL Warehouse's **`ServerHostname`** and **`HttpPath`** that correspond to the environment set up in the instructions above. The template uses **`samples`** catalog, therefore you don't need to prepare any additional dataset.
