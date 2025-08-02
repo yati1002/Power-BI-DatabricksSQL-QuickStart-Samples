@@ -187,7 +187,6 @@ Next, we will analyze the performance of a test report using pure *DirectQuery* 
 9. Open the [Sample_DAX_Query_Using_Aggregations.dax](./scripts/Sample_DAX_Query_Using_Aggregations.dax) query or paste DAX-query that was previously copied in Power BI Desktop. Click **Run**.
 
 10. As shown in screenshot below the query takes **1.593 sec**.
-
    <img width="800" src="./images/AggTable-DAXStudio-v3.png" alt="Aggregated table - DAX Studio" />
    
    Also, as shown in the screenshot, the first row under **RewriteAttempted** shows **MatchFound**, i.e., Power BI was able to find the aggregate table for this query. Hence, during the query execution as shown in the screenshot the values are fetched from **`lineitem_by_nation_agg`** instead of **`lineitem_agg`** fact table.
