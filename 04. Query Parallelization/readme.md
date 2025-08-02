@@ -39,6 +39,7 @@ _TotalPrice02 = CALCULATE([_SumTotalPrice], part[p_container]="JUMBO BOX")
 ```
 
 The report layout include a single table visual where all 20 calculated measures are displayed (the screenshot is clipped to 5 measures only).
+
 ![Report Layout](./images/ReportLayout.PNG)
 
 
