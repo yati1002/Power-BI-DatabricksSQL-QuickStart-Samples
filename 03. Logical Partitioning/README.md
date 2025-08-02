@@ -2,18 +2,23 @@
 ## Introduction
 [Logical Partitioning](https://learn.microsoft.com/en-us/analysis-services/tabular-models/create-and-manage-tabular-model-partitions?view=asallproducts-allversions) is an important feature of Power BI which helps improving the refresh time of Power BI semantic models. In this example we will showcase and compare how Logical Partitioning can provide a faster data refresh by enabling parallel processing of multiple partitions. You can follow the steps mentioned in the [Step by Step Instructions](#step-by-step-instructions) section.
 
-## Pre-requisites
+
+
+## Prerequisites
 
 Before you begin, ensure you have the following:
 
-- [Databricks account](https://databricks.com/), access to a Databricks workspace, and Databricks SQL Warehouse set up 
-- [Power BI Desktop](https://powerbi.microsoft.com/desktop/) installed on your machine.
+- [Databricks account](https://databricks.com/), access to a Databricks workspace, Unity Catalog, and Databricks SQL Warehouse
+- [Power BI Desktop](https://powerbi.microsoft.com/desktop/), latest version is highly recommended
 - Power BI **Premium** workspace
-- [DAX Studio](https://daxstudio.org/)
 - [Tabular Editor](https://tabulareditor.com/), free version is sufficient
+- [DAX Studio](https://daxstudio.org/)
 - [SQL Server Management Studio](https://aka.ms/ssmsfullsetup)
+
   
-## Step by Step Instructions
+
+## Step by step walkthrough
+
 1. We have an initial Power BI dataset which is based on **samples** catalog, **tpch** schema. There is only one table **orders** which is set to Import mode.
 2. Publish this report to a **Premium** workspace.
 2. Next, we connect to XMLA-endpoint of the published dataset using [SQL Server Management Studio](https://aka.ms/ssmsfullsetup) and create a non-partitioned version of **orders** table - **orders-non-partitioned** - by executing [Create-non-partitioned-table.xmla](./Create-non-partitioned-table.xmla) script.
