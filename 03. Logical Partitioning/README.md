@@ -49,12 +49,14 @@ Before you begin, ensure you have the following:
 9. To demonstrate the benefits of partioning, we process  **`orders-non-partitioned`** table by executing [Process non-partitioned table](./Process-non-partitioned-table.xmla) in [SQL Server Management Studio](https://aka.ms/ssmsfullsetup). As shown below, it took **8min 25sec**. 
    
     **`orders-non-partitioned`**
-    <img width="600" src="./images/03.png" alt="Processing orders-non-partitioned table" />
+
+    <img width="500" src="./images/03.png" alt="Processing orders-non-partitioned table" />
 
 10. Finally, we process **`orders-partitioned`** table by executing [Process partitioned table](./Process-partitioned-table.xmla) XMLA-script. Whereas the processing of *parititioned* table took just under **4min** for the same total number of records. 
 
     **`orders-partitioned`**
-    <img width="600" src="./images/04.png" alt="Processing orders-partitioned table" />
+
+    <img width="500" src="./images/04.png" alt="Processing orders-partitioned table" />
 
 
 
