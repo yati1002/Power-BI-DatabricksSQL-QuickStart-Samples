@@ -114,11 +114,10 @@ Next, we will analyze the performance of a test report using pure *DirectQuery* 
 
    <img width="600" src="./images/DirectQueryExecutionQueryHistory.png" alt="DirectQuery - query profile" />
 
-
 > [!TIP]
 > If you get much better performance, this may be due to results being served from Query Result Cache. To mitigate this, you may recreate test tables by running SQL-statements mentioned above.
 
-   The SQL-query looks as follows. Power BI built a SQL-query joining fact table **`lineitem`** with **`orders`** and **`nation`**.
+   The SQL-query looks as follows. Power BI built a SQL-query joining **`nation`** dimension table with **`orders`** and **`lineitem`** fact tables.
 
    ``` sql
    select ...
@@ -197,9 +196,25 @@ Next, we will analyze the performance of a test report using pure *DirectQuery* 
 
    <img width="600" src="./images/AggTableExecutionQueryHistory.png" alt="Query profile" />
 
-   The SQL-query looks as follows. Power BI built a SQL-query joining fact table **`lineitem`** with **`orders`** and **`nation`**.
+   The SQL-query looks as follows. Power BI built a SQL-query joining **`nation`** dimension table with aggregated table **`lineitem_by_nation_agg`** which is much smaller than **`orders`** and **`lineitem`**, hence the query is much more efficient.
 
    ``` sql
+   select ...
+   from
+   (
+      select ...
+      from
+         (
+         select ...
+         from
+            `powerbiquickstarts`.`tpch`.`lineitem_by_nation_agg` as `OTBL`
+               inner join `powerbiquickstarts`.`tpch`.`nation` as `ITBL`
+               on (`OTBL`.`n_nationkey` = `ITBL`.`n_nationkey`)
+         ) as `ITBL`
+      group by
+         `n_name`
+   ) as `ITBL`
+   where ...
    ```
 
 
