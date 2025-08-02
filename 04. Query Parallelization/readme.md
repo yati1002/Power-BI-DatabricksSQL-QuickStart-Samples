@@ -29,8 +29,7 @@ Before you begin, ensure you have the following:
 ### Report Design
 The test report is based on **`samples`** catalog, **`tpch`** schema. It uses **`orders`** as a fact table and **`region`**, **`nation`**, and **`customer`** as dimension tables. All tables are set to **Direct Query** storage mode.
 
-![Data model](./images/01.PNG)
-<img width="800" src="./images/01.png" alt="Data Model" />
+<img width="800" src="./images/DataModel.png" alt="Data Model" />
 
 There are also 20 calculated measures defined in the model in **MeasuresTable**.
 ```
