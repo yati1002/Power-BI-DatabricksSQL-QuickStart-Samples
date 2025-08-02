@@ -106,11 +106,11 @@ Next, we will analyze the performance of a test report using pure *DirectQuery* 
 
 6. Open **DAX Studio**, clicl **Connect**, choose local Power BI mode, click **Connect**, and click **Server Timings**.
 
-7. Open the [Sample_DAX_Query.dax](./scripts/Sample_DAX_Query.dax) query or paste DAX-query that was previously copied in Power BI Desktop. Click **Run**. As shown in screenshot below, the query takes **5.7s**.
+7. Open the [Sample_DAX_Query.dax](./scripts/Sample_DAX_Query.dax) query or paste DAX-query that was previously copied in Power BI Desktop. Click **Run**. As shown in screenshot below, the query takes **3.977 sec**.
 
    <img width="800" src="./images/DirectQuery-DAXStudio-v3.png" alt="DirectQuery - DAX Studio" />
 
-9. You can also find the SQL-query execution time by looking at Databricks Query History. As shown below, the query took **~3.7s** and read **~38M** rows. 
+9. You can also find the SQL-query execution time by looking at Databricks Query History. As shown below, the query took **3.011 sec** and read **~38M** rows. 
 
    <img width="400" src="./images/DirectQuery-QueryProfile-v3.png" alt="DirectQuery - query profile" />
 
@@ -186,13 +186,13 @@ Next, we will analyze the performance of a test report using pure *DirectQuery* 
 
 9. Open the [Sample_DAX_Query_Using_Aggregations.dax](./scripts/Sample_DAX_Query_Using_Aggregations.dax) query or paste DAX-query that was previously copied in Power BI Desktop. Click **Run**.
 
-10. As shown in screenshot below the query takes **2.8 sec**.
+10. As shown in screenshot below the query takes **1.593 sec**.
 
    <img width="800" src="./images/AggTable-DAXStudio-v3.png" alt="Aggregated table - DAX Studio" />
    
    Also, as shown in the screenshot, the first row under **RewriteAttempted** shows **MatchFound**, i.e., Power BI was able to find the aggregate table for this query. Hence, during the query execution as shown in the screenshot the values are fetched from **`lineitem_by_nation_agg`** instead of **`lineitem_agg`** fact table.
 
-11. You can also find the query execution time by looking at Databricks Query History. As shown below the query took **~2.8s** and read only **50** rows (instead of ~**38M** rows). 
+11. You can also find the query execution time by looking at Databricks Query History. As shown below the query took **~0.639 sec** and read only **50** rows (instead of ~**38M** rows). 
 
    <img width="400" src="./images/AggTable-QueryProfile-v3.png" alt="Query profile" />
 
