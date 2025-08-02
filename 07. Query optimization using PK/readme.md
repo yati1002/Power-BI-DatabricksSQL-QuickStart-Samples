@@ -57,6 +57,7 @@ Before you begin, ensure you have the following:
     ```
 
 5. Create a Power BI report, connect to Databricks SQL Warehouse, **`powerbiquickstarts`** catalog, **`tpch`** schema, add tables **`region`**, **`nation`**, **`customer`**, **`part`**, **`supplier`**, and the view **`v_lineitems`**. Use **DirectQuery** mode for all tables. Create relationships as show on the screenshot.
+    
     <img width="800" src="./images/01.png" alt="Power BI data model" />
 
 6. On a report page, add a table visual, add columns:
