@@ -80,7 +80,7 @@ Before you begin, ensure you have the following:
 
    The resulting data model should look like on the screenshot below.
 
-   <img width="1000" src="./images/DataModel-v2.png" alt="Data Model" />
+   <img width="1000" src="./images/DataModel.png" alt="Data Model" />
 
 
 Next, we will analyze the performance of a test report using pure *DirectQuery* mode and *User-defined Aggregation*.
@@ -100,19 +100,19 @@ Next, we will analyze the performance of a test report using pure *DirectQuery* 
 
 4. Perfomance Analyzer tab will display the Table visual and a DAX query. Click on **Copy Query**. The DAX query should look similar to [Sample DAX Query](./scripts/Sample_DAX_Query.dax) script. Below is the screenshot of Direct Query report page.
    
-   <img width="800" src="./images/DirectQuery-Report-v2.png" alt="DirectQuery - report" />
+   <img width="800" src="./images/DirectQuery-Report.png" alt="DirectQuery - report" />
 
 5. To compare the performance between *pure DirectQuery* and *User-defined Aggregations*, it is important to get objective and precise query execution times.
 
-6. Open **DAX Studio**, clicl **Connect**, choose local Power BI mode, click **Connect**, and click **Server Timings**.
+6. Open **DAX Studio**, click **Connect**, choose local Power BI mode, click **Connect**, and click **Server Timings**.
 
 7. Open the [Sample_DAX_Query.dax](./scripts/Sample_DAX_Query.dax) query or paste DAX-query that was previously copied in Power BI Desktop. Click **Run**. As shown in screenshot below, the query takes **3.977 sec**.
 
-   <img width="800" src="./images/DirectQuery-DAXStudio-v3.png" alt="DirectQuery - DAX Studio" />
+   <img width="800" src="./images/DirectQuery-DAXStudio.png" alt="DirectQuery - DAX Studio" />
 
 9. You can also find the SQL-query execution time by looking at Databricks Query History. As shown below, the query took **3.011 sec** and read **~38M** rows. 
 
-   <img width="400" src="./images/DirectQuery-QueryProfile-v3.png" alt="DirectQuery - query profile" />
+   <img width="400" src="./images/DirectQuery-QueryProfile.png" alt="DirectQuery - query profile" />
 
    The SQL-query looks as follows. Power BI built a SQL-query joining **`nation`** dimension table with **`orders`** and **`lineitem`** fact tables.   
    
@@ -164,7 +164,7 @@ Next, we will analyze the performance of a test report using pure *DirectQuery* 
    | **`SumofDiscount`**    | Sum | **`lineitem_agg`** | **`l_discount`** |
    | **`SumOfQuantity`**    | Sum | **`lineitem_agg`** | **`l_quantity`** |
 
-   <img width="600" src="./images/ManageAggregations-v2.png" alt="Manage aggregations" />
+   <img width="600" src="./images/ManageAggregations.png" alt="Manage aggregations" />
 
 4. Create a new report page. Add a Table visual. Add columns to the Table visual as follows.
    - **`n_nation`** from **`nation`** table
@@ -178,21 +178,21 @@ Next, we will analyze the performance of a test report using pure *DirectQuery* 
 
 7. Perfomance Analyzer tab will display the Table visual and a DAX query. Click on **Copy Query**. The DAX query should look similar to [Sample_DAX_Query_Using_Aggregations](./scripts/Sample_DAX_Query_Using_Aggregations.dax) script. Below is the screenshot of **User-defined Aggregation** report page.
 
-   <img width="800" src="./images/AggTable-Report-v2.png" alt="Aggregated table - report" />
+   <img width="800" src="./images/AggTable-Report.png" alt="Aggregated table - report" />
 
-8. Open **DAX Studio** and click **Server Timings**.
+8. Open **DAX Studio**, click **Connect**, choose local Power BI mode, click **Connect**, and click **Server Timings**.
 
 9. Open the [Sample_DAX_Query_Using_Aggregations.dax](./scripts/Sample_DAX_Query_Using_Aggregations.dax) query or paste DAX-query that was previously copied in Power BI Desktop. Click **Run**.
 
 10. As shown in screenshot below the query takes **1.593 sec**.
    
-      <img width="800" src="./images/AggTable-DAXStudio-v3.png" alt="Aggregated table - DAX Studio" />
+      <img width="800" src="./images/AggTable-DAXStudio.png" alt="Aggregated table - DAX Studio" />
    
       Also, as shown in the screenshot, the first row under **RewriteAttempted** shows **MatchFound**, i.e., Power BI was able to find the aggregate table for this query. Hence, during the query execution as shown in the screenshot the values are fetched from **`lineitem_by_nation_agg`** instead of **`lineitem_agg`** fact table.
 
 11. You can also find the query execution time by looking at Databricks Query History. As shown below the query took **~0.639 sec** and read only **50** rows (instead of ~**38M** rows). 
       
-      <img width="400" src="./images/AggTable-QueryProfile-v3.png" alt="Query profile" />
+      <img width="400" src="./images/AggTable-QueryProfile.png" alt="Query profile" />
       
       The SQL-query looks as follows. Power BI built a SQL-query joining **`nation`** dimension table with aggregated table **`lineitem_by_nation_agg`** which is much smaller than **`orders`** and **`lineitem`**, hence the query is much more efficient.
 
@@ -215,10 +215,16 @@ Next, we will analyze the performance of a test report using pure *DirectQuery* 
    where ...
    ```
 
+**Thus, by utilizing User-defined aggregation we achieved much higher performance and decreased the amount of I/O operations.**
+
+> [!TIP]
+> If you observe similar performance for both non-aggregated and aggregated tables, this may be due to results being served from Query Result Cache. To mitigate this, you may recreate test tables by running SQL-statements mentioned above.
+
 
 
 ## Conclusion
-As we can see **User-defined Aggregations** tables give performance benefit of ~**50%** over pure Direct Query by reading much less data, **order of magnitude** in our case, from **lineitem_by_nation_agg** as compared to pure Direct Query which reads directly from fact tables.
+
+[User-defined aggregations](https://learn.microsoft.com/en-us/power-bi/transform-model/aggregations-advanced) in Power BI provide significant performance benefits, especially for large semantic models utilizing *DirectQuery*. By defining specialized aggregation tables, Power BI can automatically redirect queries for summary information to these pre-aggregated tables, allowing frequently needed results to be served from a much smaller and efficient in-memory cache instead of the full detail tables in the backend. This results in much faster and more responsive reporting, drastically reducing query times and the number of rows scanned during execution - for example, dropping from tens of millions of rows to just a few dozen in test scenarios. This approach not only speeds up report visuals but also decreases the workload on source systems like Databricks SQL, leading to increased scalability, reduced resource consumption, and better overall efficiency for enterprise analytics solutions. User-defined aggregations are powerful for enabling high performance and responsive analytics on vast datasets without compromising detail or accuracy.
 
 
 
