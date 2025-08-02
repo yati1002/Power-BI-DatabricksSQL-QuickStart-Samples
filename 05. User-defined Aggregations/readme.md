@@ -96,7 +96,7 @@ Next, we will analyze the performance of a test report using pure *DirectQuery* 
 
 2. Open **Optimize** → **Performance Analyzer** → **Start Recording** → **Refresh visuals**.
 
-4. Perfomance Analyzer tab will display the Table visual and a DAX query. Click on **Copy Query**. The DAX query should look similar to [Sample DAX Query](./scripts/Sample_DAX_Query.dax) script. Below is the screenshot of Direct Query report page.
+4. Perfomance Analyzer tab will display the Table visual and a DAX query. Click on **Copy Query**. The DAX query should look similar to [Sample DAX Query](./scripts/Sample_DAX_Query.dax) script. Below is the screenshot of *DirectQuery* report page.
    
    <img width="800" src="./images/DirectQuery-Report.png" alt="DirectQuery - report" />
 

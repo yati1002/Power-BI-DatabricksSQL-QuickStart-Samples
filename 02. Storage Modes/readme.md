@@ -77,7 +77,7 @@ Below is the screenshot demonstrating the resulting data model and the report.
 <img width="1000" src="./images/DataModel.png" alt="Data model" />
 
 
-### 2. Direct Query 
+### 2. DirectQuery 
 > [!Note]
 > In order to get similar results we recommend running the test on a SQL Warehouse which is already started.
 
