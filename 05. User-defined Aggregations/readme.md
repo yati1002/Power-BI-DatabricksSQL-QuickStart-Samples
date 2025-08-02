@@ -75,7 +75,7 @@ Before you begin, ensure you have the following:
    - **`nation`** → **`customer`** → **`orders_agg`** → **`lineitem_agg`** 
    - **`nation`** → **`lineitem_by_nation_agg`**
    
-> ![IMPORTANT]
+> [!IMPORTANT]
 > The relationship between **`nation`** and **`lineitem_by_nation_agg`** must **be One to many (1:*)** with **Single** cross-filter direction.
 
    The resulting data model should look like on the screenshot below.
