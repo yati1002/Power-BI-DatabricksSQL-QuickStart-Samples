@@ -108,7 +108,7 @@ Next, we will analyze the performance of a test report using pure *DirectQuery* 
 
    <img width="800" src="./images/DirectQueryDAXStudio.png" alt="DirectQuery - DAX Studio" />
 
-10. You can also find the SQL-query execution time by looking at Databricks Query History. As shown below, the query took **~3.7s** and read **~38M** rows. 
+9. You can also find the SQL-query execution time by looking at Databricks Query History. As shown below, the query took **~3.7s** and read **~38M** rows. 
 
    <img width="600" src="./images/DirectQueryExecutionQueryHistory.png" alt="DirectQuery - query profile" />
 
