@@ -71,4 +71,4 @@ When using **Import** mode, Logical partitioning in Power BI allows large tables
 
 ## Power BI Template 
 
-A sample Power BI template [Logical-Partitioning.pbit](./Logical-Partitioning.pbit) is present in the current folder. When opening the template, enter respective **ServerHostname** and **HTTP Path** values of your Databricks SQL Warehouse. The template uses **samples** catalog, therefore you don't need to prepare any additional data for this report.
+A Power BI template [Logical-Partitioning.pbit](./Logical-Partitioning.pbit) is present in this folder to demonstrate the benefits of Logical Partitioning. To use the template, simply enter your Databricks SQL Warehouse's **`ServerHostname`** and **`HttpPath`** that correspond to the environment set up in the instructions above. The template uses **`samples`** catalog, therefore you don't need to prepare any additional dataset.

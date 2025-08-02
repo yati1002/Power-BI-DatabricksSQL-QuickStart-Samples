@@ -185,4 +185,4 @@ In conclusion, optimizing query parallelization in Power BI with *DirectQuery* m
 
 ## Power BI Template 
 
-A Power BI template [Query Parallelization.pbit](./Query%20Parallelization.pbit) is present in this folder to demonstrate the behaviour of Power BI query parallelism when using different SKUs and tuning semantic model settings. To use the template, simply enter your Databricks SQL Warehouse's **`ServerHostname`** and **`HttpPath`** that correspond to the environment set up in the instructions above.
+A Power BI template [Query Parallelization.pbit](./Query%20Parallelization.pbit) is present in this folder to demonstrate the behaviour of Power BI query parallelism when using different SKUs and tuning semantic model settings. To use the template, simply enter your Databricks SQL Warehouse's **`ServerHostname`** and **`HttpPath`** that correspond to the environment set up in the instructions above. The template uses **`samples`** catalog, therefore you don't need to prepare any additional dataset.

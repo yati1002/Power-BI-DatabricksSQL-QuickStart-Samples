@@ -98,8 +98,12 @@ Before you begin, ensure you have the following:
 
 
 
-
 ## Conclusion
 
 Using parameters in Power BI when connecting to Databricks SQL offers significant benefits by simplifying and streamlining the process of managing connections to different Databricks workspaces and SQL Warehouses. Instead of manually updating connection details each time you need to switch environments - a process prone to errors and inefficiency - parameters enable you to define key connection attributes like the server hostname and HTTP path as configurable values. This not only makes the workflow more flexible and efficient, but also reduces the chances of mistakes. With parameters, you can easily change connections directly within Power BI Service or when reusing a template, allowing for quicker report deployment and adaptability across various projects and teams.
 
+
+
+## Power BI Template 
+
+A Power BI template [Connection Parameters.pbit](./Connection%20Parameters.pbit) is present in this folder as a reference implementation. To use the template, simply enter your Databricks SQL Warehouse's **`Hostname`** and **`HttpPath`** that correspond to the environment set up in the instructions above. The template uses **`samples`** catalog, therefore you don't need to prepare any additional dataset.

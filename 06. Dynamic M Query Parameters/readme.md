@@ -87,4 +87,4 @@ Using [Dynamic M query parameters in Power BI](!https://learn.microsoft.com/en-u
 
 
 ## Power BI Template 
-A Power BI template [Dynamic M Query Parameters.pbit](./Dynamic%20M%20Query%20Parameters.pbit) is present in this folder to demonstrate the approach of Dynamic M query parameters outlined above. To use the template, simply enter your Databricks SQL Warehouse's **`ServerHostname`** and **`HttpPath`** that correspond to the environment set up in the instructions above.
+A Power BI template [Dynamic M Query Parameters.pbit](./Dynamic%20M%20Query%20Parameters.pbit) is present in this folder to demonstrate the approach of Dynamic M query parameters outlined above. To use the template, simply enter your Databricks SQL Warehouse's **`ServerHostname`** and **`HttpPath`** that correspond to the environment set up in the instructions above. The template uses **`samples`** catalog, therefore you don't need to prepare any additional dataset.
