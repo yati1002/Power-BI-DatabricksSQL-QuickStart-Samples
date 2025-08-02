@@ -43,7 +43,7 @@ Before you begin, ensure you have the following:
     ![Non partitioned table](./images/Nonpartitioned.png)
 
 8. Create another version of **`orders`** table - **`orders-partitioned`** - using [Create-partitioned-table.xmla](./Create-partitioned-table.xmla) script.
-    Alternatively, you can use [Tabular Editor](https://tabulareditor.com/) to create partitions. [This video](https://www.youtube.com/watch?v=6CRqdsLjHNA) demonstrates how you can create parititons. In our example we have created these partitions based on the **o_priority** column which results in even data distribution. As shown below in DAX Studio screenshot, 5 parittions are created in **orders-partitioned** table and every partition contains ~1.5M records:
+    Alternatively, you can use [Tabular Editor](https://tabulareditor.com/) to create partitions. [This video](https://www.youtube.com/watch?v=6CRqdsLjHNA) demonstrates how you can create parititons. In our example we have created these partitions based on the **o_priority** column which results in even data distribution. As shown below in DAX Studio screenshot, 5 parittions are created in **orders-partitioned** table, every partition contains ~1.5M records:
     ![Partitioned table](./images/Partitioned.png)
 
 4. To demonstrate the benefits of partioning, we process both the **`orders-partitioned`** and **`orders-non-partitioned`** tables using [SQL Server Management Studio](https://aka.ms/ssmsfullsetup). As shown below, it took **8min 25sec** to process non-paritioned table. Whereas the processing of parititioned table took just under **4min** for the same total number of records. 
