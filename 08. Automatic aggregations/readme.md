@@ -1,19 +1,25 @@
-# Automatic Aggregation
+# Automatic Aggregations
+
 ## Introduction
 As per Microsoft documentation, _[Automatic Aggregations](https://learn.microsoft.com/en-us/power-bi/enterprise/aggregations-auto) in Power BI use state-of-the-art machine learning (ML) to continuously optimize DirectQuery semantic models for maximum report query performance. Automatic aggregations are built on top of existing user-defined aggregations infrastructure first introduced with composite models for Power BI_.
-In this example we will showcase how to enable Automatic Aggregations on Power BI semantic model and train Automatic Aggregations in order to speed up exploring report. You can follow the steps mentioned in the [Step by Step Instructions](#step-by-step-instructions) section.
 
-## Pre-requisites
+In this quickstart, we showcase how to enable [Automatic Aggregations](https://learn.microsoft.com/en-us/power-bi/enterprise/aggregations-auto) on Power BI semantic model and train Automatic Aggregations in order to speed up exploring report. You can follow the steps mentioned in the [Step by step walkthrough](#step-by-step-walkthrough) section.
+
+
+
+## Prerequisites
 
 Before you begin, ensure you have the following:
 
-- [Databricks account](https://databricks.com/), access to a Databricks workspace, and Databricks SQL Warehouse. 
-- [Power BI Desktop](https://powerbi.microsoft.com/desktop/) installed on your machine. Latest version is highly recommended.
+- [Databricks account](https://databricks.com/), access to a Databricks workspace, Unity Catalog, and Databricks SQL Warehouse
+- [Power BI Desktop](https://powerbi.microsoft.com/desktop/), latest version is highly recommended
 - Power BI **Premium** workspace
 - [DAX Studio](https://daxstudio.org/)
 
-  
-## Step by Step Instructions
+
+
+## Step by step walkthrough
+
 1. Create an initial Power BI dataset based on **samples** catalog, **tpch** schema. Add tables and relationships as shown on the screenshot below. The dimension tables **customer** and **nation** should be set to Dual storage mode. The fact tables **orders** and **lineitem** should be set to Direct Query storage mode. Below is the data model for the sample report.
 
     ![sample report](./images/DataModel.png)
