@@ -47,14 +47,10 @@ Before you begin, ensure you have the following:
     ![Partitioned table](./images/Partitioned.png)
 
 9. To demonstrate the benefits of partioning, we process  **`orders-non-partitioned`** table by executing [Process non-partitioned table](./Process-non-partitioned-table.xmla) in [SQL Server Management Studio](https://aka.ms/ssmsfullsetup). As shown below, it took **8min 25sec**. 
-   
-    **`orders-non-partitioned`**
 
     <img width="500" src="./images/03.png" alt="Processing orders-non-partitioned table" />
 
 10. Finally, we process **`orders-partitioned`** table by executing [Process partitioned table](./Process-partitioned-table.xmla) XMLA-script. Whereas the processing of *parititioned* table took just under **4min** for the same total number of records. 
-
-    **`orders-partitioned`**
 
     <img width="500" src="./images/04.png" alt="Processing orders-partitioned table" />
 
@@ -64,6 +60,14 @@ Before you begin, ensure you have the following:
 
 When using **Import** mode in Power BI, configuring partitions for large tables may significantly improve overall table processing performance. While for a non-partitioned table Power BI uses a single thread and ingests and compresses data as a single chunk, for a partitioned table Power BI uses multiple threads where each thread ingests and compresses own chunk of data. Therefore, end-to-end table processing is much faster.
 As we saw above in our case the performance gain was **~50%**. For bigger tables the performance gain can be even higher.
+
+--
+
+When using **Import** mode, Logical partitioning in Power BI allows large tables to be divided into separate segments, with each partition able to be refreshed independently. This approach significantly improves data refresh performance because multiple partitions can be processed in parallel, reducing total refresh time compared to refreshing a single, monolithic table. As demonstrated, partitioning can cut refresh durations, making data updates much faster and more efficient, especially for large datasets. By leveraging logical partitioning, Power BI semantic models become more scalable, providing a better experience for both administrators and end users.
+
+> [!IMPORTANT]
+> Please note that actual performance improvement due to logical partitioning may vary, as it depends on multiple factors.
+
 
 ## Power BI Template 
 
