@@ -76,7 +76,6 @@ Before you begin, ensure you have the following:
    - **`nation`** → **`lineitem_by_nation_agg`**
    
 > ![IMPORTANT]
-
 > The relationship between **`nation`** and **`lineitem_by_nation_agg`** must **be One to many (1:*)** with **Single** cross-filter direction.
 
    The resulting data model should look like on the screenshot below.
@@ -84,10 +83,7 @@ Before you begin, ensure you have the following:
    ![Data Model](./images/DataModel-v2.png)
 
 
-
-### 2. Perfromance Improvement with User-defined Aggregations
-In the next section we will showcase how **User-defined Aggregation** table help improve performance of your Power BI report. We will do this by analyzing query performance of two similar reports. The first will be using original tables using Direct Query mode and in the other we will be using **User-defined Aggregation** table. For our testing scenario we are using a **Small** Pro SQL Warehouse.
-
+Next, we will analyze the performance of a test report using pure *DirectQuery* mode and *User-defined Aggregation*.
 
 
 #### 2.2. DirectQuery
