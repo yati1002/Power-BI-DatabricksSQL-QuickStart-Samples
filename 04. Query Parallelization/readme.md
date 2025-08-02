@@ -18,8 +18,8 @@ Before you begin, ensure you have the following:
 	- Scaling Min. **2** Max. **2** clusters
 - [Power BI Desktop](https://powerbi.microsoft.com/desktop/) installed, latest version is highly recommended
 - Power BI **Premium** workspace, the demos are built using Power BI Embedded A4, A5, A6, A7
-- [Tabular Editor](!https://tabulareditor.com/), free version is sufficient
-- [DAX Studio](!https://daxstudio.org/)
+- [Tabular Editor](https://tabulareditor.com/), free version is sufficient
+- [DAX Studio](https://daxstudio.org/)
 
 
 
@@ -170,18 +170,9 @@ So we achieved the following results.
 
 ## Conclusion
 
-As we saw in this example, with the fine tuning of the semantic models in Power BI Premium SKUs we can achieve a better query parallelism, hence better performance and user experience.
-Please note that actual query parallelism is always limited by the lowest of all limiting factors which include:
-1. Max Parallelism Per Query
-2. Data Source Default Max Connections
-3. Databricks SQL Warehouse capacity
-4. Power BI Gateway capacity (if used).
-
---
-
 In conclusion, optimizing query parallelization in Power BI with *DirectQuery* mode has a significant impact on report performance and user experience when working with Databricks Lakehouse. By adjusting semantic model settings such as `Max Parallelism Per Query` and `Data Source Default Max Connections`, you can optimize Power BI's ability to run multiple SQL queries simultaneously. This results in faster overall report response times, especially for reports with many complex measures, as more queries are executed in parallel rather than sequentially. Ultimately, tuning for greater parallelism allows you to make the most of both the Power BI Premium capacity and Databricks backend, enabling scalable analytics that remain responsive even as data volume and report complexity grow.
 
-> [!NOTE]
+> [!IMPORTANT]
 > Please note that actual query parallelism is always limited by the lowest of all limiting factors which include:
 > - Max Parallelism Per Query
 > - Data Source Default Max Connections
