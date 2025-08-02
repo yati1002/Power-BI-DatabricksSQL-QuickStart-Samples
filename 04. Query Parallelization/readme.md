@@ -126,7 +126,7 @@ Thus, we achieved the following results.
 | P3/A6/F256 | 32      |    8        |        3,017 ms        |
 | P4/A7/F512 | 64      |    10       |        2,391 ms        |
 
-As we can see, the default query parallelism increases with the SKU, hence the performance. However, when using P4/A7 and higher SKU the query parallelism does not grow further, because it's limited by `Data Source Default Max Connection` setting in the report which is equal **10** by default. 
+As we can see, the default query parallelism increases with the SKU, hence the performance. However, when using P4/A7/F512 and higher SKU the query parallelism does not grow further, because it's limited by `Data Source Default Max Connection` setting in the semantic model which is equal **10** by default. 
 
 > [!NOTE]
 > Please note that: 1) performance numbers are not precise. You may observe different performance in your environment; 2) Microsoft has not documented the default behaviour of query parallelism, hence it may change and your results may be different.
@@ -134,7 +134,7 @@ As we can see, the default query parallelism increases with the SKU, hence the p
 
 ### Tuning Semantic Model Settings
 As we may not be satisfied with the achieved query parallelisation and overall performance, we may want to increase the query parallelism. This was introduced by Microsoft back in March 2023 and described in the following blog post - 
-[Query parallelization helps to boost Power BI dataset performance in DirectQuery mode](!https://powerbi.microsoft.com/en-us/blog/query-parallelization-helps-to-boost-power-bi-dataset-performance-in-directquery-mode/).
+[Query parallelization helps to boost Power BI dataset performance in DirectQuery mode](https://powerbi.microsoft.com/en-us/blog/query-parallelization-helps-to-boost-power-bi-dataset-performance-in-directquery-mode/).
 According to Microsoft blog post, we change the properties of the published semantic models with the help of [Tabular Editor](!https://tabulareditor.com/). We change the properties as follows:
 1. `Database Compatibility Level` = **1569** to unlock new settings
 2. `Max Parallelism Per Query` = **20** to parallelize all 20 queries in our report
