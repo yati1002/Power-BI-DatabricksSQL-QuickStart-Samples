@@ -57,7 +57,7 @@ Before you begin, ensure you have the following:
    - **HTTP Path**: Enter the HTTP path value  from Databricks SQL Warehouse connection details tab.
 
 > [!TIP]
-> It is always a good practice to parameterize your connections. This really helps ease out the development expeience as you can dynamically connect to any Databricks SQL warehouse. For details on how to paramterize your connection string you can refer to [Connection Parameters](/01.%20Connection%20Parameters/) article.
+> We recommend parameterizing your connections. This really helps ease out the Power BI development and administration expeience as you can easily switch between different environments, i.e., Databricks Workspaces and SQL Warehouses. For details on how to paramterize your connection string, you can refer to [Connection Parameters](/01.%20Connection%20Parameters/) article.
 
 4. Connect to **`powerbiquickstarts`** catalog, **`tpch`** schema.
 
@@ -196,24 +196,24 @@ Next, we will analyze the performance of a test report using pure *DirectQuery* 
       
       The SQL-query looks as follows. Power BI built a SQL-query joining **`nation`** dimension table with aggregated table **`lineitem_by_nation_agg`** which is much smaller than **`orders`** and **`lineitem`**, hence the query is much more efficient.
 
-   ``` sql
-   select ...
-   from
-   (
+      ``` sql
       select ...
       from
-         (
+      (
          select ...
          from
-            `powerbiquickstarts`.`tpch`.`lineitem_by_nation_agg` as `OTBL`
-               inner join `powerbiquickstarts`.`tpch`.`nation` as `ITBL`
-               on (`OTBL`.`n_nationkey` = `ITBL`.`n_nationkey`)
-         ) as `ITBL`
-      group by
-         `n_name`
-   ) as `ITBL`
-   where ...
-   ```
+            (
+            select ...
+            from
+               `powerbiquickstarts`.`tpch`.`lineitem_by_nation_agg` as `OTBL`
+                  inner join `powerbiquickstarts`.`tpch`.`nation` as `ITBL`
+                  on (`OTBL`.`n_nationkey` = `ITBL`.`n_nationkey`)
+            ) as `ITBL`
+         group by
+            `n_name`
+      ) as `ITBL`
+      where ...
+      ```
 
 **Thus, by utilizing User-defined aggregation we achieved much higher performance and decreased the amount of I/O operations.**
 
@@ -228,11 +228,6 @@ Next, we will analyze the performance of a test report using pure *DirectQuery* 
 
 
 
-## Power BI Template 
+## Power BI Template
 
-To automate the process and ease the deployment process save the report as Power BI template. A sample Power BI template [User-Defined-Aggregations.pbit](./User-Defined-Aggregations.pbit) is already present in the current folder pointing to  **samples** catalog and **tpch** schema. Please run [lineitem_by_customer_agg.sql](./scripts/lineitem_by_customer_agg.sql) DDL script to create table in HMS before running opening Power BI template. Once done when you open the template enter respective **ServerHostname** and **HTTP Path** values of your Databricks SQL Warehouse. The report will contain **Warmup** report page (to warm up SQL Warehouse), **Direct Query** report page reading from original tables, and **User-defined Aggregations** report page which use aggregation table. You can then follow secion 2.2 and 2.3 above to do performance analysis between both the reports. 
-
-
---
-
-A Power BI template [User-defined-Aggregations.pbit](./User-Defined-Aggregations.pbit) and [Collations.sql](./Collations.sql) script are  provided in this folder to demonstrate the usage of Collations outlined above. To use the template, simply enter your Databricks SQL Warehouse's **`ServerHostname`** and **`HttpPath`**, along with the **`Catalog`** and **`Schema`** names that correspond to the environment set up in the instructions above.
+A Power BI template [User-defined-Aggregations.pbit](./User-Defined-Aggregations.pbit), as well as supporting [scripts](./scripts/), are present in this folder to demonstrate the usage of *User-defined Aggregations* outlined above. To use the template, simply enter your Databricks SQL Warehouse's **`ServerHostname`** and **`HttpPath`**, along with the **`Catalog`** and **`Schema`** names that correspond to the environment set up in the instructions above.

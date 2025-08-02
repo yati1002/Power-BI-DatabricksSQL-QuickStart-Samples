@@ -3,7 +3,7 @@
 ## Introduction
 Switching between Databricks SQL Warehouses or even Databricks workspaces can be a time-consuming and error-prone process for Power BI developers and administrators. This repository provides a streamlined approach to managing these connections by leveraging Power BI parameters. By using parameters, you can easily and flexibly connect to various Databricks workspaces and SQL Warehouses without repetitive manual configuration.
 
-This guide will walk you through how to set up and use parameters in Power BI for Databricks connections. To get started with creating a parameterized report, please refer to the [Step by Step Instructions](#step-by-step-instructions) section.
+This guide will walk you through how to set up and use parameters in Power BI for Databricks connections. To get started with creating a parameterized report, please refer to the [Step by step walkthrough](#step-by-step-walkthrough) section.
 
 ## Prerequisites
 

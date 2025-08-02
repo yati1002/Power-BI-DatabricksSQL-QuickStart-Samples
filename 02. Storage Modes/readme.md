@@ -2,7 +2,7 @@
 
 ## Introduction
 
-[Storage modes](https://learn.microsoft.com/en-us/power-bi/transform-model/desktop-storage-mode) are a critical component of Power BI data modeling. Whether you’re a seasoned practitioner or just getting started, grasping how storage modes work is key to optimizing report performance and managing data efficiently. This quickstart will help you navigate the different storage modes available in Power BI - _DirectQuery_, _Import_, and _Dual_ - and explains how each option impacts performance and user experience. Through practical examples, you’ll see side-by-side comparisons and learn how leveraging _Dual_ storage mode can significantly enhance report responsiveness. To get started, follow the detailed instructions in the [Step by Step Instructions](#step-by-step-instructions) section.
+[Storage modes](https://learn.microsoft.com/en-us/power-bi/transform-model/desktop-storage-mode) are a critical component of Power BI data modeling. Whether you’re a seasoned practitioner or just getting started, grasping how storage modes work is key to optimizing report performance and managing data efficiently. This quickstart will help you navigate the different storage modes available in Power BI - _DirectQuery_, _Import_, and _Dual_ - and explains how each option impacts performance and user experience. Through practical examples, you’ll see side-by-side comparisons and learn how leveraging _Dual_ storage mode can significantly enhance report responsiveness. To get started, follow the detailed instructions in the [Step by step walkthrough](#step-by-step-walkthrough) section.
 
 
 
@@ -40,7 +40,7 @@ For our testing scenario we use a **Small** Pro SQL Warehouse. We will create re
    <img width="600" src="./images/01-1.png" alt="Azure Databricks connection" />
 
 > [!TIP]
-> It is always a good practice to parameterize your connections. This really helps ease out the development expeience as you can dynamically connect to any Databricks SQL warehouse. For details on how to paramterize your connection string you can refer to [Connection Parameters](/01.%20Connection%20Parameters/) article.
+> We recommend parameterizing your connections. This really helps ease out the Power BI development and administration expeience as you can easily switch between different environments, i.e., Databricks Workspaces and SQL Warehouses. For details on how to paramterize your connection string, you can refer to [Connection Parameters](/01.%20Connection%20Parameters/) article.
 
 4. Connect to **`samples`** catalog, **`tpch`** schema.
 
