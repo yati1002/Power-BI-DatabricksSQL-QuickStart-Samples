@@ -51,22 +51,33 @@ Before you begin, ensure you have the following:
 
 9. Publish the report to Power BI Service, **Premium** workspace.
 
-9. As shown below, when we run the report it Power BI takes ~20sec to run the query . Below is the snapshot from the Network Trace :
+10. Open the report in a web browser. Use **Developer Tools** → **Network** to analyze performance.
+> [!TIP]
+> See more details here - [Capture a browser trace for troubleshooting](https://learn.microsoft.com/en-us/azure/azure-portal/capture-browser-trace)
 
-    ![sample report](./images/PreeAA.png)
+11. Refresh visual. As shown below, in our environment it took **~20sec** to refresh the visuals.
 
-    Also below screenshot shows query hit the Databricks SQL Warehouse and read 38M records. 
+    ![Browser network trace](./images/PreAA.png)
 
-    ![sample report](./images/PreAADBSQL.png)
+    The screenshot below shows the query hit the Databricks SQL Warehouse and read 38M records. 
 
+    ![Query profile](./images/PreAADBSQL.png)
 
-4. Now publish this report to a **Premium** workspace.
+4. Now open the settings of the published semantic model in the **Premium** Power BI workspace.
 
-5. Enable the Automatic Aggregations in the samentic model settings. You can set the **Query coverage** according to your needs. This setting will increase the number of user queries analyzed and considered for performance improvement. The higher percentage of Query coverage will lead to more queries being analyzed, hence higher potential benefits, however aggregations training will take longer. 
+5. Enable the Automatic Aggregations in the semantic model settings. You can set the **Query coverage** according to your needs. This setting will increase the number of user queries analyzed and considered for performance improvement. The higher percentage of Query coverage will lead to more queries being analyzed, hence higher potential benefits, however aggregations training will take longer. 
 
-    ![sample report](./images/AAenablement.png)
+    ![Automatic aggregations settings](./images/AAenablement.png)
 
-6. For Power BI to be able to create aggregations, we need to populate the Power BI query log which stores internal queries created by Power BI when users interact with a report. Thus, you can either open the deplopyed Power BI Report and interact with report by selecting different **nation** names in the slicer or you can open the DAX studio and run the sample DAX query mentioned [here](./DAX/Dax_query).
+6. Power BI uses an internal query log to train aggregations. Thus, we need to populate the query log. We can achieve this by opening the report and interacting with the report by selecting different **`nation`** names in the slicer. Alternatively, you can run a sample DAX-query in the [DAX Studio](https://daxstudio.org/).
+
+    ```
+    TREATAS({"BRAZIL"}, 'nation'[n_name])
+    ```
+> [!NOTE]
+> Please note that for better aggregations training you need to run the multiple times by using different filter values for `n_nation` column.
+ 
+For Power BI to be able to create aggregations, we need to populate the Power BI query log which stores internal queries created by Power BI when users interact with a report. Thus, you can either open the deplopyed Power BI Report and interact with report by selecting different **nation** names in the slicer or you can open the DAX studio and run the sample DAX query mentioned [here](./DAX/Dax_query).
    
     **Please note** that for better model training you need to set different values for the slicer or the filter in DAX-query and run it multiple times.
     ```
