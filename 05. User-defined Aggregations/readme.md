@@ -88,23 +88,25 @@ Next, we will analyze the performance of a test report using pure *DirectQuery* 
 
 #### 2.2. DirectQuery
 
-1. Create a new report page. Add a Table visual.
-2. Add columns to the Table visual as follows.
+1. Create a new report page. Add a Table visual. Add columns to the Table visual as follows.
    - **`n_nation`** from **`nation`** table
    - Sum of **`l_discount`** from **`lineitem`** table
    - Sum of **`l_quantity`** from **`lineitem`** table
    - Earliest **`l_shipdate`** from **`lineitem`** table
-3. Open **Optimize** → **Performance Analyzer**.
-4. In the Performance Analyzer tab, click **Start Recording** → **Refresh visuals**.
-5. Perfomance Analyzer tab will display the Table visual and a DAX query. Click on **Copy Query**. The DAX query should look similar to [Sample DAX Query](./scripts/Sample_DAX_Query.dax) script. Below is the screenshot of Direct Query report page.
+
+2. Open **Optimize** → **Performance Analyzer**.
+
+3. In the Performance Analyzer tab, click **Start Recording** → **Refresh visuals**.
+
+4. Perfomance Analyzer tab will display the Table visual and a DAX query. Click on **Copy Query**. The DAX query should look similar to [Sample DAX Query](./scripts/Sample_DAX_Query.dax) script. Below is the screenshot of Direct Query report page.
    
    <img width="800" src="./images/DirectQueryReport.png" alt="DirectQuery - report" />
 
-6. To compare the performance between *pure DirectQuery* and *User-defined Aggregations*, it is important to get objective and precise query execution times.
+5. To compare the performance between *pure DirectQuery* and *User-defined Aggregations*, it is important to get objective and precise query execution times.
 
-7. Open **DAX Studio** and click **Server Timings**.
+6. Open **DAX Studio** and click **Server Timings**.
 
-8. Open the [Sample_DAX_Query.dax](./scripts/Sample_DAX_Query.dax) query or paste DAX-query that was previously copied in Power BI Desktop. Click **Run**. As shown in screenshot below, the query takes **5.7s**.
+7. Open the [Sample_DAX_Query.dax](./scripts/Sample_DAX_Query.dax) query or paste DAX-query that was previously copied in Power BI Desktop. Click **Run**. As shown in screenshot below, the query takes **5.7s**.
 
    <img width="800" src="./images/DirectQueryDAXStudio.png" alt="DirectQuery - DAX Studio" />
 
@@ -153,7 +155,9 @@ Next, we will analyze the performance of a test report using pure *DirectQuery* 
 #### 2.3. User-defined Aggregations
 
 1. Switch to Power BI Desktop → **Model view**.
+
 2. Right Click **lineitem_by_nation_agg** → **Manage aggregations**.
+
 3. Configure aggregation table as shown below on the screenshot.
 
    | Aggregation column | Summarization | Detail table | Detail column |
@@ -165,23 +169,25 @@ Next, we will analyze the performance of a test report using pure *DirectQuery* 
 
    <img width="600" src="./images/ManageAggregations-v2.png" alt="Manage aggregations" />
 
-4. Create a new report page. Add a Table visual.
-5. Add columns to the Table visual as follows.
+4. Create a new report page. Add a Table visual. Add columns to the Table visual as follows.
    - **`n_nation`** from **`nation`** table
    - Sum of **`l_discount`** from **`lineitem_agg`** table
    - Sum of **`l_quantity`** from **`lineitem_agg`** table
    - Earliest **`l_shipdate`** from **`lineitem_agg`** table
-6. Open **Optimize** → **Performance Analyzer**.
-7. In the Performance Analyzer tab, click **Start Recording** → **Refresh visuals**.
-5. Perfomance Analyzer tab will display the Table visual and a DAX query. Click on **Copy Query**. The DAX query should look similar to [Sample_DAX_Query_Using_Aggregations](./scripts/Sample_DAX_Query_Using_Aggregations.dax) script. Below is the screenshot of **User-defined Aggregation** report page.
+
+5. Open **Optimize** → **Performance Analyzer**.
+
+6. In the Performance Analyzer tab, click **Start Recording** → **Refresh visuals**.
+
+7. Perfomance Analyzer tab will display the Table visual and a DAX query. Click on **Copy Query**. The DAX query should look similar to [Sample_DAX_Query_Using_Aggregations](./scripts/Sample_DAX_Query_Using_Aggregations.dax) script. Below is the screenshot of **User-defined Aggregation** report page.
 
    <img width="800" src="./images/AggTableReport.png" alt="Aggregated table - report" />
 
-6. Open **DAX Studio** and click **Server Timings**.
+8. Open **DAX Studio** and click **Server Timings**.
 
-7. Open the [Sample_DAX_Query_Using_Aggregations.dax](./scripts/Sample_DAX_Query_Using_Aggregations.dax) query or paste DAX-query that was previously copied in Power BI Desktop. Click **Run**.
+9. Open the [Sample_DAX_Query_Using_Aggregations.dax](./scripts/Sample_DAX_Query_Using_Aggregations.dax) query or paste DAX-query that was previously copied in Power BI Desktop. Click **Run**.
 
-8. As shown in screenshot below the query takes **2.8 sec**.
+10. As shown in screenshot below the query takes **2.8 sec**.
    <img width="600" src="./images/AggTableDAXStudio.png" alt="Aggregated table - DAX Studio" />
 
    Also, as shown in the screenshot, the first row under **RewriteAttempted** shows **MatchFound**, i.e., Power BI was able to find the aggregate table for this query. Hence, during the query execution as shown in the screenshot the values are fetched from **`lineitem_by_nation_agg`** instead of **`lineitem_agg`** fact table.
