@@ -58,7 +58,7 @@ _TotalPrice20 = CALCULATE([_SumTotalPrice], part[p_container]="MED CASE")
 
 The report layout include a single table visual where all 20 calculated measures are displayed (the screenshot is clipped to 5 measures only).
 
-<img width="500" src="./images/ReportLayout.png" alt="Report Layout" />
+<img width="600" src="./images/ReportLayout.png" alt="Report Layout" />
 
 
 ### Testing Approach
@@ -141,8 +141,7 @@ As per Microsoft guidance, we change the properties of the published semantic mo
 2. `Max Parallelism Per Query` = **20** to parallelize all 20 queries in our report
 3. `Data Source Default Max Connections` = **20** to enable 20 connections to Databricks SQL.
 
-![Model Properties](./images/Model-Properties.PNG)
-<img width="600" src="./images/Model-Properties.PNG" alt="Semantic Model Settings" />
+<img width="600" src="./images/SemanticModelSettings.png" alt="Semantic Model Settings" />
 
 Additionally we need to make sure that our backend, i.e. Databricks SQL Warehouse, is capable to handle more SQL-queries concurrently. Therefore, we recommend setting **Min** number of clusters as at least 2 in order to get more concurrency.
 
