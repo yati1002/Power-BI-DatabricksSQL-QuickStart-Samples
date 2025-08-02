@@ -135,11 +135,13 @@ As we can see, the default query parallelism increases with the SKU, hence the p
 ### Tuning Semantic Model Settings
 As we may not be satisfied with the achieved query parallelisation and overall performance, we may want to increase the query parallelism. This was introduced by Microsoft back in March 2023 and described in the following blog post - 
 [Query parallelization helps to boost Power BI dataset performance in DirectQuery mode](https://powerbi.microsoft.com/en-us/blog/query-parallelization-helps-to-boost-power-bi-dataset-performance-in-directquery-mode/).
-According to Microsoft blog post, we change the properties of the published semantic models with the help of [Tabular Editor](!https://tabulareditor.com/). We change the properties as follows:
+As per Microsoft guidance, we change the properties of the published semantic models with the help of [Tabular Editor](!https://tabulareditor.com/). We change the properties as follows:
 1. `Database Compatibility Level` = **1569** to unlock new settings
 2. `Max Parallelism Per Query` = **20** to parallelize all 20 queries in our report
 3. `Data Source Default Max Connections` = **20** to enable 20 connections to Databricks SQL.
+
 ![Model Properties](./images/Model-Properties.PNG)
+<img width="600" src="./images/Model-Properties.PNG" alt="Semantic Model Settings" />
 
 Additionally we need to make sure that our backend, i.e. Databricks SQL Warehouse, is capable to handle more SQL-queries concurrently. Therefore, we recommend setting **Min** number of clusters as at least 2 in order to get more concurrency.
 
