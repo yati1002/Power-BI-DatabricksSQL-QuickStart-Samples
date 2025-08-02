@@ -98,7 +98,7 @@ Next, we will analyze the performance of a test report using pure *DirectQuery* 
 4. In the Performance Analyzer tab, click **Start Recording** → **Refresh visuals**.
 5. Perfomance Analyzer tab will display the Table visual and a DAX query. Click on **Copy Query**. The DAX query should look similar to [Sample DAX Query](./scripts/Sample_DAX_Query.dax) script. Below is the screenshot of Direct Query report page.
    
-   <img width="600" src="./images/DirectQueryReport.png" alt="DirectQuery - report" />
+   <img width="800" src="./images/DirectQueryReport.png" alt="DirectQuery - report" />
 
 6. To compare the performance between *pure DirectQuery* and *User-defined Aggregations*, it is important to get objective and precise query execution times.
 
