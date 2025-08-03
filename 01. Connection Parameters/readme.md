@@ -87,7 +87,7 @@ Before you begin, ensure you have the following:
    <img width="400" src="./images/06.png" alt="Semantic model parameters" />
 
 > [!TIP]
-> You can parameterize not only SQL Warehouse connectivity information. It's pretty common to parameterize the names of **Catalog** and **Schema**.
+> You can parameterize not only SQL Warehouse connectivity information but any string/number/datetime literals in your M-code. E.g., the names of **Catalog** and **Schema**.
 
 ### 5. Power BI Template 
 1. Switch to Power BI Desktop.
