@@ -214,7 +214,7 @@ Next, we will analyze the performance of a test report using pure *DirectQuery* 
 **Thus, by utilizing User-defined aggregation we achieved much higher performance and decreased the amount of I/O operations.**
 
 > [!TIP]
-> If you observe similar performance for both non-aggregated and aggregated tables, this may be due to results being served from Query Result Cache. To mitigate this, you may recreate test tables by running SQL-statements mentioned above.
+> If you observe similar performance for both non-aggregated and aggregated tables, this may be due to results being served from Query Result Cache. To mitigate this, you may recreate test tables after configuring the report by executing SQL-statements mentioned above.
 
 
 

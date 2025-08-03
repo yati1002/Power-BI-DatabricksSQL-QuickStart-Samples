@@ -1,7 +1,7 @@
-# Power BI on Databricks SQL - QuickStart Samples
+# Power BI on Databricks SQL - QuickStarts
 
 ## Introduction
-This repo contains the samples demonstrating the usage of [Power BI](https://powerbi.microsoft.com/) with [Databricks SQL](https://www.databricks.com/product/databricks-sql). The objective of these samples is to demonstrate reference implementation and some of the best practices using Power BI with Databricks SQL.
+This repo contains the quickstarts demonstrating the usage of [Power BI](https://powerbi.microsoft.com/) on [Databricks SQL](https://www.databricks.com/product/databricks-sql). The objective of these quickstarts is to demonstrate reference implementation and some of the best practices using Power BI on Databricks SQL.
 
 For quick access to [this repository](.) and [Best Practices Cheat Sheet](https://www.databricks.com/sites/default/files/2025-04/2025-04-power-bi-on-databricks-best-practices-cheat-sheet.pdf) please use the QR-code below. 👇
 
