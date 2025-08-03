@@ -82,10 +82,12 @@ Before you begin, ensure you have the following:
 2. Once publish is complete, open Power BI workspace in a web browser.
 3. Open the settings of published semantic model → expand **Parameters**.
 
-> Now you can easily change the values of **Hostname** and **HttpPath** parameters without the need for changing these values in Power BI Desktop and republishing the semantic model.
+4. Now you can easily change the values of **Hostname** and **HttpPath** parameters without the need for changing these values in Power BI Desktop and republishing the semantic model.
 
-<img width="400" src="./images/06.png" alt="Semantic model parameters" />
+   <img width="400" src="./images/06.png" alt="Semantic model parameters" />
 
+> [!TIP]
+> You can parameterize not only SQL Warehouse connectivity information. It's pretty common to parameterize the names of **Catalog** and **Schema**.
 
 ### 5. Power BI Template 
 1. Switch to Power BI Desktop.
