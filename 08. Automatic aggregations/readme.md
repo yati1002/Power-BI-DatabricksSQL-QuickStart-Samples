@@ -50,7 +50,7 @@ Before you begin, ensure you have the following:
 
 7. The semantic model should look as on the screenshot below.
 
-    <img width="600" src="./images/DataModel.png" alt="Data model" />
+    <img width="600" src="./images/DataModel-v2.png" alt="Data model" />
 
 8. Create a simple tabular report displaying **`r_name`**, **`n_name`**, the count* of **`l_orderkey`**, earliest **`l_shipdate`**, sum of **`l_discount`**, and sum of **`l_quantity`** . 
 
