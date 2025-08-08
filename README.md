@@ -1,4 +1,4 @@
-# $\Huge\color{red}{\text{The content has been moved }}$  :point_right: [HERE](https://github.com/databricks-solutions/power-bi-on-databricks-quickstarts).
+# $\Huge\color{red}{\textbf{The content has been moved }}$  :point_right: [HERE](https://github.com/databricks-solutions/power-bi-on-databricks-quickstarts).
 
 # $\Huge\color{red}{\text{Please update bookmarks.}}$
 
