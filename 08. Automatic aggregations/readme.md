@@ -15,7 +15,7 @@ Before you begin, ensure you have the following:
 - [Databricks account](https://databricks.com/), access to a Databricks workspace, Unity Catalog, and Databricks SQL Warehouse
 - [Power BI Desktop](https://powerbi.microsoft.com/desktop/), latest version is highly recommended
 - Power BI **Premium** workspace
-- [DAX Studio](https://daxstudio.org/)
+- Optionally - [DAX Studio](https://daxstudio.org/)
 
 
 
@@ -35,22 +35,26 @@ Before you begin, ensure you have the following:
 4. Connect to **`samples`** catalog, **`tpch`** schema.
 
 5. Add tables as follows.Below is the data model for the sample report.
-   - **`nation`** - dimension table set to **Dual** storage mode
-   - **`customer`** - dimension table set to **Dual** storage mode
-   - **`orders`** - fact table set to **DirectQuery** storage mode
-   - **`lineitem`** - fact table set to **DirectQuery** storage mode.
+   - **`region`** - dimension table, **Dual** storage mode
+   - **`nation`** - dimension table, **Dual** storage mode
+   - **`customer`** - dimension table, **Dual** storage mode
+   - **`part`** - dimension table, **Dual** storage mode
+   - **`supplier`** - dimension table, **Dual** storage mode
+   - **`orders`** - fact table, **DirectQuery** storage mode
+   - **`lineitem`** - fact table, **DirectQuery** storage mode.
 
 6. Create table relationships as follows.
-   - **`nation`** → **`customer`** → **`orders`** → **`lineitem`** 
+   - **`region`** → **`nation`** → **`customer`** → **`orders`** → **`lineitem`** 
+   - **`part`** → **`lineitem`** 
+   - **`supplier`** → **`lineitem`** 
 
 7. The semantic model should look as on the screenshot below.
 
-    <img width="600" src="./images/DataModel.png" alt="Data model" />
+    <img width="600" src="./images/DataModel-v2.png" alt="Data model" />
 
-8. Create a simple tabular report displaying the **count** of orders, **min** shipment date, **sum** of discounts, and **sum** of quantities . Also add the slicer with **nation** names, as shown below.
+8. Create a simple tabular report displaying **`r_name`**, **`n_name`**, the count* of **`l_orderkey`**, earliest **`l_shipdate`**, sum of **`l_discount`**, and sum of **`l_quantity`** . 
 
-    <img width="500" src="./images/DQ_Report_1.png" alt="Test report" />
-
+    <img width="500" src="./images/SampleReport.png" alt="Sample report" />
 
 9. Publish the report to Power BI Service, **Premium** workspace.
 
@@ -58,58 +62,80 @@ Before you begin, ensure you have the following:
 > [!TIP]
 > See more details here - [Capture a browser trace for troubleshooting](https://learn.microsoft.com/en-us/azure/azure-portal/capture-browser-trace)
 
-11. Refresh visual. As shown below, in our environment it took **~20sec** to refresh the visuals.
+11. Refresh visual. As shown below, in our environment it took **6.15s** to refresh the visuals.
 
-    ![Browser network trace](./images/PreAA.png)
+    ![Browser network trace](./images/PreAA-NetworkTrace.png)
 
-    The screenshot below shows the query hit the Databricks SQL Warehouse and read 38M records. 
+    The screenshot below shows the query hit the Databricks SQL Warehouse. 
 
-    ![Query profile](./images/PreAADBSQL.png)
+    ![Query history](./images/QueryHistory.png)
 
 4. Now open the settings of the published semantic model in the **Premium** Power BI workspace.
 
 5. Enable the Automatic Aggregations in the semantic model settings. You can set the **Query coverage** according to your needs. This setting will increase the number of user queries analyzed and considered for performance improvement. The higher percentage of Query coverage will lead to more queries being analyzed, hence higher potential benefits, however aggregations training will take longer. 
 
-    ![Automatic aggregations settings](./images/AAenablement.png)
+    ![Automatic aggregations configuration](./images/AutomaticAggregationsConfiguration.png)
 
-6. Power BI uses an internal query log to train aggregations. Thus, we need to populate the query log. We can achieve this by opening the report and interacting with the report by selecting different **`nation`** names in the slicer. Alternatively, you can run a sample [DAX-query](./Query.dax) in the [DAX Studio](https://daxstudio.org/).
+    Click **Apply** to enable the automatic aggregations.
+
+6. Power BI uses an internal query log to train aggregations. Thus, we need to populate the query log. We can achieve this by opening the report and interacting with the report by selecting different **`r_name`** and **`n_name`** in the Filters pane. Alternatively, you can run a sample [DAX-query](./Query.dax) using [DAX Studio](https://daxstudio.org/). Please make sure to run it multiple times using different values for **`r_name`** and **`n_name`**.
 
     ```
+    // DAX Query
     DEFINE
         VAR __DS0FilterTable = 
-            TREATAS({"BRAZIL"}, 'nation'[n_name])
+            TREATAS({"AFRICA"}, 'region'[r_name])
+
+        VAR __DS0FilterTable2 = 
+            TREATAS({"ALGERIA"}, 'nation'[n_name])
+
+        VAR __DS0FilterTable3 = 
+            TREATAS({"Manufacturer#1"}, 'part'[p_mfgr])
 
         VAR __DS0Core = 
             SUMMARIZECOLUMNS(
                 'nation'[n_name],
+                'region'[r_name],
                 __DS0FilterTable,
+                __DS0FilterTable2,
+                __DS0FilterTable3,
                 "Suml_discount", CALCULATE(SUM('lineitem'[l_discount])),
                 "Suml_quantity", CALCULATE(SUM('lineitem'[l_quantity])),
                 "Minl_shipdate", CALCULATE(MIN('lineitem'[l_shipdate])),
-                "count_orderkey", 'lineitem'[count_orderkey]
+                "Countl_orderkey", CALCULATE(COUNTA('lineitem'[l_orderkey]))
             )
 
         VAR __DS0PrimaryWindowed = 
-            TOPN(501, __DS0Core, 'nation'[n_name], 1)
+            TOPN(501, __DS0Core, 'nation'[n_name], 1, 'region'[r_name], 1)
 
     EVALUATE
         __DS0PrimaryWindowed
 
     ORDER BY
-        'nation'[n_name]
+        'nation'[n_name], 'region'[r_name]
     ```
 > [!NOTE]
-> Please note that for better aggregations training you need to run the multiple times by using different filter values for `n_nation` column.
+> Please note that for better aggregations training you need to run the multiple times by using different filter values for `r_name` and `n_nation` columns.
  
-7. Start the model training manually or schedule it.
+7. Open Power BI workspace settings → Scheduled refresh and performance optimization. You should be able to see the estimated benefits of the automatic aggregations.
+    ![Automatic aggregations impact](./images/AutomaticAggregationsImpact.png)
 
-    ![sample report](./images/TrainAA.png)
+> [!WARNING]
+> If you see a warning message as shown on the screenshot below, it means that Power BI query log is still empty and automatic aggregations can't be created. In this case, you need to interact more with your report to get the query log populated.
+    
+
+![Warning](./images/Warning.png)
+
+
+8. Click Train and Refresh Now to start the aggregations training manually. You can also configure scheduled refresh here.
    
-8. Once the model is trained, Power BI will have aggregated values in in-memory cache. Next time you interact with the report using similar patterns (dimensions, measures, filters) Power BI will leverage cached aggregations to serve the queries and will not send queries to Databricks SQL Warehouse. Hence, you may expect sub-second report refresh performance.
+9. Once the model is trained, Power BI will have aggregated values in in-memory cache. Next time you interact with the report using similar patterns (dimensions, measures, filters) Power BI will leverage cached aggregations to serve the queries and will not send queries to Databricks SQL Warehouse. Hence, you may expect sub-second report refresh performance.
 
-9. Below screenshot shows how post enabling Automatic Aggregation no queries are fired as the data is read from cache.
+9. Open the report in the browser. Set the same filter values as previously. You should see that web requests are now much faster. In our environment, the request took just **302ms** which is much faster than **6s** which we observed before enabling automatic aggregations.
 
-    ![sample report](./images/postAA.png)
+    ![sample report](./images/PostAA-NetworkTrace.png)
+
+11. In Databricks Query History, you should also see that there are no new SQL-queries fired by Power BI to render the report page.
 
 
 
