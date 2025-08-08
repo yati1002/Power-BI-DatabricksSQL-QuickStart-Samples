@@ -1,4 +1,4 @@
-# $\Huge\color{red}{\textsf{This repository is not maintained any longer. The content has been moved to.}}$ 
+# $\Huge\color{red}{\textsf{The conten The content has been moved }}$ [HERE](https://github.com/databricks-solutions/power-bi-on-databricks-quickstarts).
 
 $\Huge\color{red}{\textsf{Please update bookmarks. :point_down:}}$
 
