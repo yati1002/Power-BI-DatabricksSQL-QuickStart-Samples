@@ -1,3 +1,6 @@
+<span style="font-size:40px; color:red;">This repository is not maintained any longer. The content has been moved </span><a href="https://example.com" style="font-size:40px;;">HERE</a><span style="font-size:40px; color:red;">. Please update your bookmarks.</span>
+
+
 # Power BI on Databricks SQL - QuickStarts
 
 ## Introduction
