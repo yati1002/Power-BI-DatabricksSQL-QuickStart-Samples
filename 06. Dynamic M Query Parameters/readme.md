@@ -49,7 +49,7 @@ Before you begin, ensure you have the following:
         #"Filtered Rows"
     ```
 
-6. Next, create 2 tables for each parameter which contain possible values available to be dynamically set based on filter selection. You can use a query to a data source to create such tabler. Alternatively you can define them as calculated tables. 
+6. Next, create 2 tables for each parameter which contain possible values available to be dynamically set based on filter selection. You can use a query to a data source to create such a table. Alternatively you can define them as calculated tables. 
     ```
     ShipStartDates = CALENDAR("1/1/1992", "31/12/1998")
     ShipEndDates = CALENDAR("1/1/1992", "31/12/1998")

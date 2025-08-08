@@ -20,10 +20,6 @@ In the next section we will compare different storage modes and showcase which s
 1. Retrieving values for slicers/filters.
 2. Aggregation on fact tables using dimension data.
 
-In the next section we will compare different storage modes and showcase which storage mode is a good fit for dimension table. There are two common query patterns for dimension tables:
-1. Retrieving values for slicers/filters.
-2. Aggregation on fact tables using dimension data.
-
 For our testing scenario we use a **Small** Pro SQL Warehouse. We will create report with both query pattterns highlighted above. 
 
 
@@ -57,7 +53,7 @@ For our testing scenario we use a **Small** Pro SQL Warehouse. We will create re
    - **`orders_DQ`** - *orders* fact table set to **DirectQuery** storage mode.
 
 > [!TIP]
-> First, add fact table and the first set of dimension tables using *DirectQuery* mode. Then, replicate and rename dimension tables by using *Duplicate* capability. Once all tables added, set desired storage mode in *Model view*.
+> First, add fact table and the first set of dimension tables using *DirectQuery* mode. Then, replicate and rename dimension tables by using *Duplicate* capability. Once all tables are added, set desired storage mode in *Model view*.
 
 > [!WARNING]
 > Switching storage mode to *Import* is irreversible operation. Therefore, we strongly recommend creating a backup of your reports before switching tables to *Import* mode for experimentation purposes.
@@ -85,7 +81,7 @@ Below is the screenshot demonstrating the resulting data model and the report.
 2. In the Performance Analyzer tab, click **Start Recording**.
 3. Open **DirectQuery** report page and change the region in the respective Filter visual.
 
-As shown on the screenshot of the Performance Analyzer below, in our environment the query took **953 ms** for the flicer and **946 ms** for the card visual.
+As shown on the screenshot of the Performance Analyzer below, in our environment the query took **953 ms** for the slicer and **946 ms** for the card visual.
 
 <img width="500" src="./images/DirectQuery/PerformanceAnalyzer.png" alt="Performance Analyzer" />
 

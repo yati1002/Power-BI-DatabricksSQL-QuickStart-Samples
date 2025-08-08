@@ -70,7 +70,7 @@ Before you begin, ensure you have the following:
    Source = Databricks.Catalogs(Hostname, HttpPath, [Catalog=null, Database=null, EnableAutomaticProxyDiscovery=null]),
    ```
 3. Click **Done** → **Close & Apply**.
-4. Saved the file.
+4. Save the file.
 
 
 ### 4. Validate in Power BI Service
