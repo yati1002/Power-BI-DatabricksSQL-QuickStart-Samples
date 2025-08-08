@@ -52,9 +52,9 @@ Before you begin, ensure you have the following:
 
     <img width="600" src="./images/DataModel-v2.png" alt="Data model" />
 
-8. Create a simple tabular report displaying **`r_name`**, **`n_name`**, the count* of **`l_orderkey`**, earliest **`l_shipdate`**, sum of **`l_discount`**, and sum of **`l_quantity`** . 
+8. Create a simple tabular report displaying **`r_name`**, **`n_name`**, Count of **`l_orderkey`**, Earliest **`l_shipdate`**, Sum of **`l_discount`**, and Sum of **`l_quantity`** . 
 
-    <img width="500" src="./images/SampleReport.png" alt="Sample report" />
+    <img width="600" src="./images/SampleReport.png" alt="Sample report" />
 
 9. Publish the report to Power BI Service, **Premium** workspace.
 
@@ -64,17 +64,17 @@ Before you begin, ensure you have the following:
 
 11. Refresh visual. As shown below, in our environment it took **6.15s** to refresh the visuals.
 
-    ![Browser network trace](./images/PreAA-NetworkTrace.png)
+    <img width="800" src="./images/PreAA-NetworkTrace.png" alt="Browser network trace" />
 
     The screenshot below shows the query hit the Databricks SQL Warehouse. 
 
-    ![Query history](./images/QueryHistory.png)
+    <img width="800" src="./images/QueryHistory.png" alt="Query history" />
 
 4. Now open the settings of the published semantic model in the **Premium** Power BI workspace.
 
 5. Enable the Automatic Aggregations in the semantic model settings. You can set the **Query coverage** according to your needs. This setting will increase the number of user queries analyzed and considered for performance improvement. The higher percentage of Query coverage will lead to more queries being analyzed, hence higher potential benefits, however aggregations training will take longer. 
 
-    ![Automatic aggregations configuration](./images/AutomaticAggregationsConfiguration.png)
+    <img width="800" src="./images/AutomaticAggregationsConfiguration.png" alt="Automatic aggregations configuration" />
 
     Click **Apply** to enable the automatic aggregations.
 
@@ -118,13 +118,14 @@ Before you begin, ensure you have the following:
 > Please note that for better aggregations training you need to run the multiple times by using different filter values for `r_name` and `n_nation` columns.
  
 7. Open Power BI workspace settings → Scheduled refresh and performance optimization. You should be able to see the estimated benefits of the automatic aggregations.
-    ![Automatic aggregations impact](./images/AutomaticAggregationsImpact.png)
+    
+    <img width="800" src="./images/AutomaticAggregationsImpact.png" alt="Automatic aggregations impact" />
+
 
 > [!WARNING]
 > If you see a warning message as shown on the screenshot below, it means that Power BI query log is still empty and automatic aggregations can't be created. In this case, you need to interact more with your report to get the query log populated.
-    
 
-![Warning](./images/Warning.png)
+<img width="800" src="./images/Warning.png" alt="Warning" />
 
 
 8. Click Train and Refresh Now to start the aggregations training manually. You can also configure scheduled refresh here.
@@ -133,7 +134,7 @@ Before you begin, ensure you have the following:
 
 9. Open the report in the browser. Set the same filter values as previously. You should see that web requests are now much faster. In our environment, the request took just **302ms** which is much faster than **6s** which we observed before enabling automatic aggregations.
 
-    ![sample report](./images/PostAA-NetworkTrace.png)
+    <img width="800" src="./images/PostAA-NetworkTrace.png" alt="Browser network trace" />
 
 11. In Databricks Query History, you should also see that there are no new SQL-queries fired by Power BI to render the report page.
 
