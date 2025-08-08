@@ -1,7 +1,17 @@
 <span style="font-size:40px; color:red;">This repository is not maintained any longer. The content has been moved </span><a href="https://example.com" style="font-size:40px;;">HERE</a><span style="font-size:40px; color:red;">. Please update your bookmarks.</span>
 
+$\Huge\color{red}{\textsf{This repository is not maintained any longer. The content has been moved to.}}$ 
+$\Huge\color{red}{\textsf{[here](https://github.com/databricks-solutions/power-bi-on-databricks-quickstarts)}}$ 
+
+$\Huge\color{red}{\textsf{Please update bookmarks.}}$
+:point_down:
+# [HERE](https://github.com/databricks-solutions/power-bi-on-databricks-quickstarts).
+
+---
+
 
 # Power BI on Databricks SQL - QuickStarts
+
 
 ## Introduction
 This repo contains the quickstarts demonstrating the usage of [Power BI](https://powerbi.microsoft.com/) on [Databricks SQL](https://www.databricks.com/product/databricks-sql). The objective of these quickstarts is to demonstrate reference implementation and some of the best practices using Power BI on Databricks SQL.
