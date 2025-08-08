@@ -15,7 +15,7 @@ Before you begin, ensure you have the following:
 
 - [Databricks account](https://databricks.com/), access to a Databricks workspace, Unity Catalog, and Databricks SQL Warehouse
 - [Power BI Desktop](https://powerbi.microsoft.com/desktop/), latest version is highly recommended
-- Power BI **Premium** workspace
+- [Power BI](https://powerbi.com) **Premium** workspace
 - [Tabular Editor](https://tabulareditor.com/), free version is sufficient
 - [DAX Studio](https://daxstudio.org/)
 - [SQL Server Management Studio](https://aka.ms/ssmsfullsetup)
