@@ -1,10 +1,7 @@
-<span style="font-size:40px; color:red;">This repository is not maintained any longer. The content has been moved </span><a href="https://example.com" style="font-size:40px;;">HERE</a><span style="font-size:40px; color:red;">. Please update your bookmarks.</span>
+# $\Huge\color{red}{\textsf{This repository is not maintained any longer. The content has been moved to.}}$ 
 
-$\Huge\color{red}{\textsf{This repository is not maintained any longer. The content has been moved to.}}$ 
-$\Huge\color{red}{\textsf{[here](https://github.com/databricks-solutions/power-bi-on-databricks-quickstarts)}}$ 
+$\Huge\color{red}{\textsf{Please update bookmarks. :point_down:}}$
 
-$\Huge\color{red}{\textsf{Please update bookmarks.}}$
-:point_down:
 # [HERE](https://github.com/databricks-solutions/power-bi-on-databricks-quickstarts).
 
 ---
